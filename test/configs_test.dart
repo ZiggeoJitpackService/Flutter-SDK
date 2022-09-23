@@ -227,37 +227,37 @@ void main() {
         stopRecordingConfirmationDialogConfig.convertToMap()["titleResId"], 1);
   });
 
-  test('stopRecordingConfirmationDialogConfig_titleText', () async {
-    expect(stopRecordingConfirmationDialogConfig.convertToMap()["titleText"],
-        null);
-    stopRecordingConfirmationDialogConfig.titleText = Characters("text");
-    expect(stopRecordingConfirmationDialogConfig.convertToMap()["titleText"],
-        Characters("text"));
-  });
+  // test('stopRecordingConfirmationDialogConfig_titleText', () async {
+  //   expect(stopRecordingConfirmationDialogConfig.convertToMap()["titleText"],
+  //       null);
+  //   stopRecordingConfirmationDialogConfig.titleText = Characters("text");
+  //   expect(stopRecordingConfirmationDialogConfig.convertToMap()["titleText"],
+  //       Characters("text"));
+  // });
 
-  test('stopRecordingConfirmationDialogConfig_mesText', () async {
-    expect(
-        stopRecordingConfirmationDialogConfig.convertToMap()["mesText"], null);
-    stopRecordingConfirmationDialogConfig.mesText = Characters("mesText");
-    expect(stopRecordingConfirmationDialogConfig.convertToMap()["mesText"],
-        Characters("mesText"));
-  });
+  // test('stopRecordingConfirmationDialogConfig_mesText', () async {
+  //   expect(
+  //       stopRecordingConfirmationDialogConfig.convertToMap()["mesText"], null);
+  //   stopRecordingConfirmationDialogConfig.mesText = Characters("mesText");
+  //   expect(stopRecordingConfirmationDialogConfig.convertToMap()["mesText"],
+  //       Characters("mesText"));
+  // });
 
-  test('stopRecordingConfirmationDialogConfig_posBtnText', () async {
-    expect(stopRecordingConfirmationDialogConfig.convertToMap()["posBtnText"],
-        null);
-    stopRecordingConfirmationDialogConfig.posBtnText = Characters("posBtnText");
-    expect(stopRecordingConfirmationDialogConfig.convertToMap()["posBtnText"],
-        Characters("posBtnText"));
-  });
+  // test('stopRecordingConfirmationDialogConfig_posBtnText', () async {
+  //   expect(stopRecordingConfirmationDialogConfig.convertToMap()["posBtnText"],
+  //       null);
+  //   stopRecordingConfirmationDialogConfig.posBtnText = Characters("posBtnText");
+  //   expect(stopRecordingConfirmationDialogConfig.convertToMap()["posBtnText"],
+  //       Characters("posBtnText"));
+  // });
 
-  test('stopRecordingConfirmationDialogConfig_negBtnText', () async {
-    expect(stopRecordingConfirmationDialogConfig.convertToMap()["negBtnText"],
-        null);
-    stopRecordingConfirmationDialogConfig.negBtnText = Characters("negBtnText");
-    expect(stopRecordingConfirmationDialogConfig.convertToMap()["negBtnText"],
-        Characters("negBtnText"));
-  });
+  // test('stopRecordingConfirmationDialogConfig_negBtnText', () async {
+  //   expect(stopRecordingConfirmationDialogConfig.convertToMap()["negBtnText"],
+  //       null);
+  //   stopRecordingConfirmationDialogConfig.negBtnText = Characters("negBtnText");
+  //   expect(stopRecordingConfirmationDialogConfig.convertToMap()["negBtnText"],
+  //       Characters("negBtnText"));
+  // });
 
   test('recorderConfig_style', () async {
     expect(recorderConfig.convertToMap()["style"], null);
