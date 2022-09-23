@@ -1,16 +1,16 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:ziggeo/file_selector/file_selector_config.dart';
-// import 'package:ziggeo/player/player_config.dart';
-// import 'package:ziggeo/qr/qr_scanner_config.dart';
-// import 'package:ziggeo/recorder/recorder_config.dart';
-// import 'package:ziggeo/recorder/stop_recording_confirmation_dialog_config.dart';
-// import 'package:ziggeo/styles/camera_recorder.dart';
-// import 'package:ziggeo/styles/player.dart';
-// import 'package:ziggeo/ziggeo.dart';
-//
-// void main() {
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:ziggeo/file_selector/file_selector_config.dart';
+import 'package:ziggeo/player/player_config.dart';
+import 'package:ziggeo/qr/qr_scanner_config.dart';
+import 'package:ziggeo/recorder/recorder_config.dart';
+import 'package:ziggeo/recorder/stop_recording_confirmation_dialog_config.dart';
+import 'package:ziggeo/styles/camera_recorder.dart';
+import 'package:ziggeo/styles/player.dart';
+import 'package:ziggeo/ziggeo.dart';
+
+void main() {
 //   const MessageCodec<String?> string = StringCodec();
 //   late QrScannerConfig qrScannerConfig;
 //   late PlayerStyle playerStyle;
@@ -326,4 +326,4 @@
 //
 //     expect(result, equals('hello'));
 //   });
-// }
+}
