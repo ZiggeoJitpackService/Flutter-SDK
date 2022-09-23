@@ -4,15 +4,11 @@ on:
     branches: [ 'feature_build_cicd' ]
 
 jobs:
-  drive_android:
-    runs-on: macos-latest
-
+  publishing:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '3.0.0'
-          channel: 'stable'
+      - name: 'Checkout'
+        uses: actions/checkout@v2
 
       - name: '>> Dart package <<'
         uses: k-paxian/dart-package-publisher@master
