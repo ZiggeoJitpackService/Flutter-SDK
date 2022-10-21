@@ -1,3 +1,6 @@
+## 0.2.8
+----------------------------
+* Added pausable video uploading.
 ## 0.2.7
 ----------------------------
 * Github packages sdk dependency.

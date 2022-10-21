@@ -18,8 +18,9 @@ class StreamsMethodChannel(private val ziggeo: Ziggeo) : MethodChannel.MethodCal
         when (call.method) {
             "accept" -> ifLet(
                     call.argument<String>("videoToken"),
-                    call.argument<String>("streamToken")) {
-                processRequest(ziggeo.apiRx().streams().bind(it[0], it[1]), call, result)
+                    call.argument<String>("streamToken"),
+                    call.argument<String>("uploadId")) {
+                processRequest(ziggeo.apiRx().streams().bind(it[0], it[1], null, null), call, result)
             }
             "destroy" -> ifLet(
                     call.argument<String>("videoToken"),
