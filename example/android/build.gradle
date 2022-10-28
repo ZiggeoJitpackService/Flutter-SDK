@@ -19,6 +19,7 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven {url = "https://maven.pkg.github.com/ZiggeoJitpackService/androidsdk"
             credentials {
+
                 username = "3akat"
                 password = "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"
             }

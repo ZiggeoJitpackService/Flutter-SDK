@@ -1,3 +1,6 @@
+## 0.2.9
+----------------------------
+* Added pausable audio, image uploading.
 ## 0.2.8
 ----------------------------
 * Added pausable video uploading.
