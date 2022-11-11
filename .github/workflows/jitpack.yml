@@ -40,7 +40,7 @@ jobs:
         working-directory: ./example
     steps:
       - name: Checkout
-          uses: actions/checkout@v1
+        uses: actions/checkout@v1
 
       - name: Setup Java
         uses: actions/setup-java@v1
