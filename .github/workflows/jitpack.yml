@@ -87,11 +87,11 @@ jobs:
         run: flutter test
 
       - name: Create google services file
-          run: cat /home/runner/work/flutter_sdk/flutter_sdk/example/app/google-services.json | base64
+        run: cat /home/runner/work/flutter_sdk/flutter_sdk/example/app/google-services.json | base64
       - name: Putting google services data
-              env:
-                DATA: ${{ secrets.PLAY_CONFIG_JSON }}
-              run: echo $DATA > /home/runner/work/flutter_sdk/flutter_sdk/example/app/google-services.json
+          env:
+            DATA: ${{ secrets.PLAY_CONFIG_JSON }}
+          run: echo $DATA > /home/runner/work/flutter_sdk/flutter_sdk/example/app/google-services.json
 
       - name: Download Android keystore
         id: android_keystore
