@@ -21,13 +21,8 @@ rootProject.allprojects {
     repositories {
         google()
         maven { url 'https://jitpack.io' }
-        maven {url = "https://maven.pkg.github.com/ZiggeoJitpackService/androidsdk"
-            credentials {
-                username = System.getenv('GITHUB_USER') ?: githubProperties['GITHUB_USER']
-                password = System.getenv('GITHUB_PERSONAL_ACCESS_TOKEN') ?: githubProperties['GITHUB_PERSONAL_ACCESS_TOKEN']
-            }
-        }
         jcenter()
+        mavenCentral()
     }
 }
 
@@ -57,7 +52,8 @@ android {
 
 dependencies {
     implementation ('com.google.android.exoplayer:exoplayer:2.17.0')
-    implementation ('com.ziggeo.androidsdk:flutterblur:2.6.8') {
+
+    implementation('com.ziggeo:android-sdk-flutterblur:2.6.9') {
         transitive = true
     }
 
