@@ -19,6 +19,12 @@ jobs:
         with:
           flutter-version: '3.0.0'
           channel: 'stable'
+      - name: Create google services file
+        run: cat /home/runner/work/android-sdk-demo/android-sdk-demo/app/google-services.json | base64
+      - name: Putting google services data
+        env:
+          DATA: ${{ secrets.PLAY_CONFIG_JSON }}
+        run: echo $DATA > /home/runner/work/android-sdk-demo/android-sdk-demo/app/google-services.json
       - name: "Run Flutter Driver tests"
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -71,14 +77,19 @@ jobs:
       - name: Download pub dependencies
         run: flutter pub get
 
-      - name: Run build_runner
-        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      #      - name: Run build_runner
+      #        run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Run analyzer
         run: flutter analyze
 
       - name: Run tests
         run: flutter test
+
+      - name: Putting google services data
+        env:
+          DATA: ${{ secrets.PLAY_CONFIG_JSON }}
+        run: echo $DATA > /home/runner/work/android-sdk-demo/android-sdk-demo/app/google-services.json
 
       - name: Download Android keystore
         id: android_keystore
