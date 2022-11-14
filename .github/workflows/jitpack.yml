@@ -73,6 +73,15 @@ jobs:
           DATA: ${{ secrets.PLAY_CONFIG_JSON }}
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
 
+      - uses: subosito/flutter-action@v1.1.1
+        with:
+          channel: 'dev'
+        env:
+          KEY_JKS: ${{ secrets.KEY_JKS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          run: echo $KEY_JKS > key.jks && flutter pub get && flutter test && flutter build apk --release
+
       - name: Flutter version
         run: flutter --version
 
@@ -85,16 +94,6 @@ jobs:
 
       - name: Download pub dependencies
         run: flutter pub get
-
-      #      - name: Run build_runner
-      #        run: flutter packages pub run build_runner build --delete-conflicting-outputs
-
-      #      todo clean all problems and uncommit it
-      #      - name: Run analyzer
-      #        run: flutter analyze
-
-      #      - name: Run tests
-      #        run: flutter test
 
       - name: Download Android keystore
         id: android_keystore
