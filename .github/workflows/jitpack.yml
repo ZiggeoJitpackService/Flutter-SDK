@@ -48,7 +48,7 @@ jobs:
 #          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
 
   publishing_demo:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 #    needs: publishing_sdk
     defaults:
       run:
@@ -81,7 +81,7 @@ jobs:
           KEY_JKS: ${{ secrets.KEY_JKS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          run: echo $KEY_JKS > key.jks && flutter pub get && flutter test && flutter build apk --release
+          run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --release
 
       - name: Flutter version
         run: flutter --version
