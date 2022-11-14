@@ -74,15 +74,6 @@ jobs:
           DATA: ${{ secrets.PLAY_CONFIG_JSON }}
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
 
-      - uses: subosito/flutter-action@v1.1.1
-        with:
-          channel: 'dev'
-        env:
-          KEY_JKS: ${{ secrets.KEY_JKS }}
-          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --release
-
       - name: Flutter version
         run: flutter --version
 
@@ -112,6 +103,15 @@ jobs:
 
       - name: Build Android App Bundle
         run: flutter build appbundle
+
+      - uses: subosito/flutter-action@v1.1.1
+        with:
+          channel: 'dev'
+        env:
+          KEY_JKS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --release
 
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
