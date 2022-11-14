@@ -25,14 +25,14 @@ jobs:
         env:
           DATA: ${{ secrets.PLAY_CONFIG_JSON }}
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
-#      - name: "Run Flutter Driver tests"
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          api-level: ${{ matrix.api-level }}
-#          target: ${{ matrix.target }}
-#          working-directory: ./example
-#          profile: Nexus 4
-#          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
+      - name: "Run Flutter Driver tests"
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          working-directory: ./example
+          profile: Nexus 4
+          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
 #  publishing_sdk:
 #    runs-on: ubuntu-latest
@@ -48,6 +48,7 @@ jobs:
 
   publishing_demo:
     runs-on: ubuntu-latest
+    needs: run_tests
     defaults:
       run:
         working-directory: ./example
