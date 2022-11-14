@@ -327,7 +327,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'Ziggeo Configs Params:',
             ),
-            buildItemWidget('App Token', _appToken ?? '_appToken is null'),
+            buildItemWidget('appToken: ', 'appToken$_appToken'),
             const Text(
               'PlayerConfig:',
             ),
