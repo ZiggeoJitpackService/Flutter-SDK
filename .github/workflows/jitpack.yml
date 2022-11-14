@@ -19,12 +19,12 @@ jobs:
         with:
           flutter-version: '3.0.0'
           channel: 'stable'
-#      - name: Create google services file
-#        run: cat /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json | base64
-#      - name: Putting google services data
-#        env:
-#          DATA: ${{ secrets.PLAY_CONFIG_JSON }}
-#        run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
+      - name: Create google services file
+        run: cat /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json | base64
+      - name: Putting google services data
+        env:
+          DATA: ${{ secrets.PLAY_CONFIG_JSON }}
+        run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
       - name: "Run Flutter Driver tests"
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -34,21 +34,22 @@ jobs:
           profile: Nexus 4
           script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
-#  publishing_sdk:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: 'Checkout'
-#        uses: actions/checkout@v2
-#
-#      - name: '>> Dart package <<'
-#        uses: k-paxian/dart-package-publisher@master
-#        with:
-#          accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
-#          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
+  publishing_sdk:
+    runs-on: ubuntu-latest
+    needs: run_tests
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: '>> Dart package <<'
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
 
   publishing_demo:
     runs-on: ubuntu-latest
-    needs: run_tests
+    needs: publishing_sdk
     defaults:
       run:
         working-directory: ./example
@@ -56,10 +57,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-#      - name: Setup Java
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: '12.x'
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
