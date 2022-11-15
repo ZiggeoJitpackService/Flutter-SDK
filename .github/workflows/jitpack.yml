@@ -71,8 +71,7 @@ jobs:
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
 
       - run: flutter pub get
-      - run: flutter build apk
-      - run: flutter build appbundle
+      - run: flutter build apk --debug
 
 #      - name: checkout
 #        uses: actions/checkout@v3.0.1
