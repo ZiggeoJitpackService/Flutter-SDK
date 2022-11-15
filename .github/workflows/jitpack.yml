@@ -104,17 +104,18 @@ jobs:
       - name: Build Android App Bundle
         run: flutter clean
 
-      - name: Build Android App Bundle
-        run: flutter build apk
+#      - name: Build Android App Bundle
+#        run: flutter build apk
 
-#      - uses: subosito/flutter-action@v1.1.1
-#        with:
-#          channel: 'dev'
-#        env:
-#          KEY_JKS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-#          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-#          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-#          run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --release
+      - uses: subosito/flutter-action@v1.1.1
+        with:
+          channel: 'dev'
+        env:
+          KEY_JKS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --release
 
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
