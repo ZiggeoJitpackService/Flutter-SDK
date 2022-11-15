@@ -54,6 +54,14 @@ jobs:
       run:
         working-directory: ./example
     steps:
+      - name: log untrusted output
+        run: |
+
+          echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`"
+
+          echo "untrusted output"
+
+          echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::"
       - name: checkout
         uses: actions/checkout@v3.0.1
 
@@ -110,18 +118,21 @@ jobs:
       - name: Clean
         run: flutter clean
 
-      #      - name: Build Android App Bundle
-      #        run: flutter build apk
+      - name: Clean
+        run: flutter clean
 
-      - uses: subosito/flutter-action@v1.1.1
-        with:
-          channel: 'dev'
-        env:
-          KEY_JKS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --debug
+      - name: Build Android App Bundle
+        run: flutter build apk --debug
+
+      #      - uses: subosito/flutter-action@v1.1.1
+      #        with:
+      #          channel: 'dev'
+      #        env:
+      #          KEY_JKS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      #          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      #          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      #          ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      #          run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --debug
 
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
