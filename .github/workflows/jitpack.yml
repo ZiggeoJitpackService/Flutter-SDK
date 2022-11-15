@@ -62,6 +62,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '2.11.0-0.1.pre'
+          channel: beta
       - name: Create google services file
         run: cat /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json | base64
       - name: Putting google services data
