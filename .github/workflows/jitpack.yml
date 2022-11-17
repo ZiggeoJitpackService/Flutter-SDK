@@ -151,7 +151,7 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.ziggeo.flutter.demo
-          releaseFiles: build/app/outputs/flutter-apk/app-debug.apk
+          releaseFiles: build/app/outputs/apk/debug/androidFlutter-v1.0.6-debug.apk
           track: internal
           status: inProgress
           inAppUpdatePriority: 2
