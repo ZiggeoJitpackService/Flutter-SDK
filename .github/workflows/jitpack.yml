@@ -72,14 +72,14 @@ jobs:
 
       - run: flutter pub get
 
-      - uses: subosito/flutter-action@v1.1.1
-        with:
-          channel: 'dev'
-        env:
-          KEY_JKS: ${{ secrets.KEYSTORE }}
-          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          run: echo $KEY_JKS > key.jks && flutter build apk --release
+#      - uses: subosito/flutter-action@v1.1.1
+#        with:
+#          channel: 'dev'
+#        env:
+#          KEY_JKS: ${{ secrets.KEYSTORE }}
+#          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+#          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+#          run: echo $KEY_JKS > key.jks && flutter build apk --release
 
       - run: flutter build apk --release
       #
