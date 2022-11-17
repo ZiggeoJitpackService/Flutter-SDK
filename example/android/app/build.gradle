@@ -24,7 +24,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 31
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -106,5 +106,5 @@ repositories {
 static def getDate() {
     return new Date().format('HH.mm.ss_dd-MM-YYYY')
 }
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 //uncomment for release
