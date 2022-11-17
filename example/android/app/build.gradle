@@ -42,7 +42,7 @@ android {
         versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        setProperty("archivesBaseName", "androidFlutter-v" + versionName + "_" + getDate())
+        setProperty("archivesBaseName", "androidFlutter-v" + versionName)
         missingDimensionStrategy "dim", "flutter" // for internal development
     }
     signingConfigs {
