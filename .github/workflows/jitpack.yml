@@ -1,7 +1,7 @@
 name: Ziggeo Test and Publish Release
 on:
   push:
-    branches: [ 'dev' ]
+    branches: [ 'feature_cicd' ]
 
 jobs:
   #  run_tests:
@@ -53,6 +53,11 @@ jobs:
     defaults:
       run:
         working-directory: ./example
+      env:
+        RELEASE_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        RELEASE_KEYSTORE_PATH: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v2
@@ -88,21 +93,9 @@ jobs:
       #          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       #          run: echo $KEY_JKS > key.jks && flutter build apk --release
 
-      - name: Build Signed APK
-        uses: victorbnl/build-signed-apk@main
-        with:
-          keystore_b64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          keystore_password: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          key_alias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          key_password: ${{ secrets.ANDROID_KEY_PASSWORD }}
-
       - run: flutter build apk --release
-      - uses: actions/upload-artifact@v1
-        with:
-          name: release-apk
-          path: build/app/outputs/apk/release/app-release.apk
       - name: Sign Android Apk
-        run: jarsigner -keystore $RUNNER_TEMP/key.properties -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} -sigalg SHA256withRSA -digestalg SHA-256 -signedjar build/app/outputs/flutter-apk/app-release-signed.apk  build/app/outputs/flutter-apk/*.apk ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: jarsigner -keystore $RUNNER_TEMP/key.properties -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} -sigalg SHA256withRSA -digestalg SHA-256 -signedjar build/app/outputs/apk/release/androidFlutter-v1.0.6-release-signed.apk build/app/outputs/apk/release/*.apk ${{ secrets.ANDROID_KEY_ALIAS }}
       #
       #      - name: Download Android keystore
       #        id: android_keystore
@@ -118,13 +111,18 @@ jobs:
       #          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
       #          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
       #
+#      - uses: actions/upload-artifact@v1
+#        with:
+#            name: androidFlutter-v1.0.6-release-signed.apk
+#            path: build/app/outputs/apk/release/app-release.apk
+#            token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish APK test
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.ziggeo.flutter.demo
-          releaseFiles: Built build/app/outputs/flutter-apk/app-release-signed.apk
+          releaseFiles: build/app/outputs/flutter-apk/app-release-signed.apk
           track: internal
           status: inProgress
           inAppUpdatePriority: 2
