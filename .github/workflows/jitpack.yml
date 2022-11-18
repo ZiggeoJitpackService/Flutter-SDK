@@ -53,11 +53,6 @@ jobs:
     defaults:
       run:
         working-directory: ./example
-      env:
-        RELEASE_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-        RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-        RELEASE_KEYSTORE_PATH: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v2
@@ -111,11 +106,11 @@ jobs:
       #          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
       #          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
       #
-#      - uses: actions/upload-artifact@v1
-#        with:
-#            name: androidFlutter-v1.0.6-release-signed.apk
-#            path: build/app/outputs/apk/release/app-release.apk
-#            token: ${{ secrets.GITHUB_TOKEN }}
+      #      - uses: actions/upload-artifact@v1
+      #        with:
+      #            name: androidFlutter-v1.0.6-release-signed.apk
+      #            path: build/app/outputs/apk/release/app-release.apk
+      #            token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish APK test
         uses: r0adkll/upload-google-play@v1
