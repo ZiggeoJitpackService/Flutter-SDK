@@ -106,7 +106,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: androidFlutter-v1.0.6-release-signed.apk
-          path: build/app/outputs/apk/release/androidFlutter-v1.0.6-release-signed.apk
+          path: example/build/app/outputs/apk/release/androidFlutter-v1.0.6-release-signed.apk
           token: ${{ secrets.UPLOAD_TOKEN }}
 
       - name: Publish APK test
