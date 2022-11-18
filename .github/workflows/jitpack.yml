@@ -90,7 +90,7 @@ jobs:
 
       - run: flutter build apk --release
       - name: Sign Android Apk
-        run: jarsigner -keystore $RUNNER_TEMP/key.properties -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} -sigalg SHA256withRSA -digestalg SHA-256 -signedjar bBuilt build/app/outputs/flutter-apk/app-release-signed.apk Built build/app/outputs/flutter-apk/*.apk ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: jarsigner -keystore $RUNNER_TEMP/key.properties -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} -sigalg SHA256withRSA -digestalg SHA-256 -signedjar build/app/outputs/flutter-apk/app-release-signed.apk  build/app/outputs/flutter-apk/*.apk ${{ secrets.ANDROID_KEY_ALIAS }}
       #
       #      - name: Download Android keystore
       #        id: android_keystore
