@@ -35,17 +35,17 @@ jobs:
           profile: Nexus 4
           script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
-    publishing_sdk:
-      runs-on: ubuntu-latest
-      steps:
-        - name: 'Checkout'
-          uses: actions/checkout@v2
+  publishing_sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
 
-        - name: '>> Dart package <<'
-          uses: k-paxian/dart-package-publisher@master
-          with:
-            accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
-            refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
+      - name: '>> Dart package <<'
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
 
   publishing_demo:
     runs-on: macos-latest
