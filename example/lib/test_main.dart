@@ -127,9 +127,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int? _muteOffImageDrawable;
   int? _muteOnImageDrawable;
 
-  Future<void> _incrementCounter() async {
+  Future<void> _testAllMappingData() async {
     //test App token setting
-    var _appTokenTest = await widget.ziggeo.appToken ?? '';
+    var _appTokenTest = await widget.ziggeo.appToken;
     //test player config
     widget.ziggeo.playerConfig = PlayerConfig(
       isMuted: isMuted,
@@ -420,7 +420,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _testAllMappingData,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
