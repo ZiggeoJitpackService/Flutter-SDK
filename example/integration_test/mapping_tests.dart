@@ -24,7 +24,7 @@ void main() {
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
 
-      // expect(find.text('appToken$appToken'), findsOneWidget);
+      expect(find.text('appToken$appToken'), findsOneWidget);
 
       expect(find.text('isMuted$isMuted'), findsOneWidget);
       expect(
