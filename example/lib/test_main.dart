@@ -76,8 +76,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.ziggeo}) : super(key: key);
-  final Ziggeo ziggeo;
+   MyHomePage({Key? key, required this.ziggeo}) : super(key: key);
+   Ziggeo ziggeo;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -128,6 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int? _muteOnImageDrawable;
 
   Future<void> _testAllMappingData() async {
+    widget.ziggeo = Ziggeo(appToken);
+
     //test App token setting
     var _appTokenTest = await widget.ziggeo.appToken;
     //test player config
