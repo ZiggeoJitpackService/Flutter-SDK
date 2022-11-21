@@ -23,6 +23,7 @@ void main() {
       // Trigger a frame.
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
+      await Future.delayed(const Duration(seconds: 2), (){});
 
       expect(find.text('appToken$appToken'), findsOneWidget);
 
