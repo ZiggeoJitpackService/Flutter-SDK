@@ -25,7 +25,7 @@ void main() {
       await binding.takeScreenshot('test-screenshot');
 
       //todo test
-      expect(find.text('appToken'), findsOneWidget);
+      expect(find.text('appToken: '), findsOneWidget);
       expect(find.text('appToken$appToken'), findsOneWidget);
 
       expect(find.text('isMuted$isMuted'), findsOneWidget);
