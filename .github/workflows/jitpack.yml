@@ -70,21 +70,6 @@ jobs:
           DATA: ${{ secrets.PLAY_CONFIG_JSON }}
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
 
-#      - name: Create the Keystore
-#        env:
-#          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-#        run: |
-#          # import keystore from secrets
-#          echo $KEYSTORE_BASE64 | base64 -d > $RUNNER_TEMP/z_release_keystore.jks
-
-      #      - uses: subosito/flutter-action@v1.1.1
-      #        with:
-      #          channel: 'dev'
-      #        env:
-      #          KEY_JKS: ${{ secrets.KEYSTORE }}
-      #          KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-      #          ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-      #          run: echo $KEY_JKS > key.jks && flutter build apk --release
       - name: Download Android keystore
         id: android_keystore
         uses: timheuer/base64-to-file@v1.0.3
@@ -101,8 +86,6 @@ jobs:
 
       - run: flutter pub get
       - run: flutter build apk --release
-#      - name: Sign Android Apk
-#        run: jarsigner -keystore $RUNNER_TEMP/z_release_keystore.jks -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} -sigalg SHA256withRSA -digestalg SHA-256 -signedjar build/app/outputs/flutter-apk/app-release-signed.apk build/app/outputs/flutter-apk/*.apk ${{ secrets.ANDROID_KEY_ALIAS }}
       - uses: actions/upload-artifact@v1
         with:
           name: androidFlutter-v1.0.6-release-signed.apk
@@ -119,12 +102,3 @@ jobs:
           status: inProgress
           inAppUpdatePriority: 2
           userFraction: 0.33
-
-#      - name: Release to Google Play (internal)
-#        env:
-#          SUPPLY_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
-#          SUPPLY_JSON_KEY_DATA: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-#        run: |
-#          bundle exec fastlane supply \
-#          --aab build/app/outputs/bundle/debug/androidFlutter-v1.0.6-debug.apk \
-#          --track internal

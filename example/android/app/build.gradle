@@ -38,8 +38,8 @@ android {
         applicationId "com.ziggeo.flutter.demo"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 6
-        versionName "1.0.6"
+        versionCode 7
+        versionName "1.0.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         setProperty("archivesBaseName", "androidFlutter-v" + versionName)
@@ -47,7 +47,6 @@ android {
     }
     signingConfigs {
         release {
-            //todo for nonautoRelease
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
@@ -61,7 +60,6 @@ android {
         }
         release {
             manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
-            //todo for nonautoRelease
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
