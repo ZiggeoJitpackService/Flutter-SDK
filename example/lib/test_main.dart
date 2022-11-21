@@ -270,6 +270,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _appToken = _appTokenTest;
+      print("AAAAAAAAAAAAA!!!"+ _appToken!);
+
       _isMuted = _isMutedTest;
       _shouldShowSubtitles = _shouldShowSubtitlesTest;
 
@@ -329,7 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'Ziggeo Configs Params:',
             ),
-            buildItemWidget('appToken: ', 'appToken-$_appToken'),
+            buildItemWidget('appToken: ', 'appToken$_appToken'),
             const Text(
               'PlayerConfig:',
             ),
