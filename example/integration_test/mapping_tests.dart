@@ -26,7 +26,7 @@ void main() {
 
       //todo test
       expect(find.text('appToken: '), findsOneWidget);
-      expect(find.text('appToken$appToken'), findsOneWidget);
+      expect(find.text('appToken-$appToken'), findsOneWidget);
 
       expect(find.text('isMuted$isMuted'), findsOneWidget);
       expect(

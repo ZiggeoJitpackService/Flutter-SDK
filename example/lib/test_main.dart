@@ -129,9 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _testAllMappingData() async {
     widget.ziggeo = Ziggeo(appToken);
-
     //test App token setting
     var _appTokenTest = await widget.ziggeo.appToken;
+    print("AAAAAAAAAAAAA"+ _appTokenTest!);
     //test player config
     widget.ziggeo.playerConfig = PlayerConfig(
       isMuted: isMuted,
@@ -329,7 +329,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'Ziggeo Configs Params:',
             ),
-            buildItemWidget('appToken: ', 'appToken$_appToken'),
+            buildItemWidget('appToken: ', 'appToken-$_appToken'),
             const Text(
               'PlayerConfig:',
             ),

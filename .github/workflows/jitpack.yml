@@ -6,13 +6,13 @@ on:
 jobs:
   run_tests:
     runs-on: macos-latest
-    needs: publishing_sdk
+#    needs: publishing_sdk
     defaults:
       run:
         working-directory: ./example
     strategy:
       matrix:
-        api-level: [ 23 ]
+        api-level: [ 26 ]
         target: [ default ]
     steps:
       - uses: actions/checkout@v2
@@ -26,27 +26,28 @@ jobs:
         env:
           DATA: ${{ secrets.PLAY_CONFIG_JSON }}
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
+      - name: Doctor
+        run: flutter doctor -v
       - name: "Run Flutter Driver tests"
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
           working-directory: ./example
-          arch: x86_64
-          profile: Nexus 6
+          profile: Nexus 4
           script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
-  publishing_sdk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v2
-
-      - name: '>> Dart package <<'
-        uses: k-paxian/dart-package-publisher@master
-        with:
-          accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
-          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
+#  publishing_sdk:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: 'Checkout'
+#        uses: actions/checkout@v2
+#
+#      - name: '>> Dart package <<'
+#        uses: k-paxian/dart-package-publisher@master
+#        with:
+#          accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
+#          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
 
   publishing_demo:
     runs-on: macos-latest
