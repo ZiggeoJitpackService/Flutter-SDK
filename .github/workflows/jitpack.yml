@@ -49,7 +49,7 @@ jobs:
 
   publishing_demo:
     runs-on: macos-latest
-      needs: publishing_sdk
+    needs: publishing_sdk
     defaults:
       run:
         working-directory: ./example
