@@ -21,7 +21,8 @@ final int mediaType = FileSelectorConfig.audioMediaType;
 final int syncInterval = 3000;
 final bool shouldUseWifiOnly = true;
 final bool shouldTurnOffUploader = true;
-final int lostConnectionAction = UploadingConfig.UPLOADING_ERROR_ACTION_ERROR_NOTIFICATION;
+final int lostConnectionAction =
+    UploadingConfig.UPLOADING_ERROR_ACTION_ERROR_NOTIFICATION;
 //qrScanner configs params
 final bool shouldCloseAfterSuccessfulScan = false;
 //recorder configs params
@@ -76,8 +77,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-   MyHomePage({Key? key, required this.ziggeo}) : super(key: key);
-   Ziggeo ziggeo;
+  MyHomePage({Key? key, required this.ziggeo}) : super(key: key);
+  Ziggeo ziggeo;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -131,7 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
     widget.ziggeo = Ziggeo(appToken);
     //test App token setting
     var _appTokenTest = await widget.ziggeo.appToken;
-    print("AAAAAAAAAAAAA"+ _appTokenTest!);
     //test player config
     widget.ziggeo.playerConfig = PlayerConfig(
       isMuted: isMuted,
@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
       syncInterval: syncInterval,
       shouldUseWifiOnly: shouldUseWifiOnly,
       shouldTurnOffUploader: shouldTurnOffUploader,
-        lostConnectionAction:lostConnectionAction,
+      lostConnectionAction: lostConnectionAction,
     );
     var _syncIntervalTest =
         (await widget.ziggeo.getUploadingConfig())?.syncInterval;
@@ -222,7 +222,8 @@ class _MyHomePageState extends State<MyHomePage> {
         (await widget.ziggeo.getRecorderConfig())?.shouldEnableCoverShot;
     var _shouldConfirmStopRecordingTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldConfirmStopRecording;
-    var _isPausedModeTest = (await widget.ziggeo.getRecorderConfig())?.isPausedMode;
+    var _isPausedModeTest =
+        (await widget.ziggeo.getRecorderConfig())?.isPausedMode;
 
     // test uploading config
     widget.ziggeo.stopRecordingConfirmationDialogConfig =
@@ -270,7 +271,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _appToken = _appTokenTest;
-      print("AAAAAAAAAAAAA!!!"+ _appToken!);
 
       _isMuted = _isMutedTest;
       _shouldShowSubtitles = _shouldShowSubtitlesTest;
@@ -318,8 +318,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("AAAAAAAAAAAAAbuild"+ 'appToken$_appToken');
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Ziggeo Tests'),
@@ -362,7 +360,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 'shouldTurnOffUploader$_shouldTurnOffUploader'),
             buildItemWidget('lostConnectionAction: ',
                 'lostConnectionAction$_lostConnectionAction'),
-
             const Text(
               'QrScannerConfig:',
             ),
@@ -399,8 +396,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 'shouldEnableCoverShot$_shouldEnableCoverShot'),
             buildItemWidget('shouldConfirmStopRecording: ',
                 'shouldConfirmStopRecording$_shouldConfirmStopRecording'),
-            buildItemWidget('isPausedMode: ',
-                'isPausedMode$_isPausedMode'),
+            buildItemWidget('isPausedMode: ', 'isPausedMode$_isPausedMode'),
             const Text(
               'RecorderDialogConfig:',
             ),
