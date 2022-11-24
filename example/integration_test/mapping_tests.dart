@@ -24,6 +24,8 @@ void main() {
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
 
+      await new Future.delayed(new Duration(seconds: 5));
+
       expect(find.text('appToken: '), findsOneWidget);
       expect(find.text('appToken$appToken'), findsOneWidget);
 
