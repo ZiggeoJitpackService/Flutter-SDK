@@ -318,6 +318,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("AAAAAAAAAAAAAbuild"+ 'appToken$_appToken');
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Ziggeo Tests'),
