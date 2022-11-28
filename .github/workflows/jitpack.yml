@@ -1,7 +1,7 @@
 name: Ziggeo Test and Publish Release
 on:
   push:
-    branches: [ 'feature_cicd' ]
+    branches: [ 'master' ]
 
 jobs:
   run_tests:
