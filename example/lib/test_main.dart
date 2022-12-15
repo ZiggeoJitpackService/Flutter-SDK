@@ -86,8 +86,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String? _appToken;
-  bool? _isMuted;
-  bool? _shouldShowSubtitles;
 
   int? _maxDuration;
   bool? _shouldAllowMultipleSelection;
@@ -118,6 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String? _mesText;
   String? _posBtnText;
   String? _negBtnText;
+
+  bool? _isMuted;
+  bool? _shouldShowSubtitles;
 
   int? _controllerStyle;
   int? _textColor;
