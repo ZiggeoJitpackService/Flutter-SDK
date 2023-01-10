@@ -24,7 +24,8 @@ class RecorderConfig extends BaseConfig {
   bool? shouldEnableCoverShot;
   bool? shouldConfirmStopRecording;
   bool? isPausedMode;
-  StopRecordingConfirmationDialogConfig? stopRecordingConfirmationDialogConfig;
+  StopRecordingConfirmationDialogConfig? stopRecordingConfirmationDialogConfig
+  = StopRecordingConfirmationDialogConfig();
   RecorderEventsListener? eventsListener;
 
   RecorderConfig({

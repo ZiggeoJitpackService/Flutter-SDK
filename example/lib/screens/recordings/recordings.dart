@@ -327,7 +327,9 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initFileSelectorCallback() {
-    ziggeo.fileSelectorConfig = FileSelectorConfig();
+    if(ziggeo.fileSelectorConfig == null){
+      ziggeo.fileSelectorConfig = FileSelectorConfig();
+    }
     ziggeo.fileSelectorConfig?.eventsListener = FileSelectorEventsListener(
       onUploadSelected: (pathsList) =>
           addLogEvent('ev_fs_uploadSelected', details: pathsList.toString()),
@@ -342,7 +344,9 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initPlayerCallback() {
-    ziggeo.playerConfig = PlayerConfig();
+    if(ziggeo.playerConfig == null){
+      ziggeo.playerConfig = PlayerConfig();
+    }
     ziggeo.playerConfig?.eventsListener = PlayerEventsListener(
       onLoaded: () => addLogEvent('ev_pl_loaded'),
       onCanceledByUser: () => addLogEvent('ev_pl_canceledByUser'),
@@ -361,7 +365,9 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initRecorderCallback() {
-    if (ziggeo.recorderConfig == null) ziggeo.recorderConfig = RecorderConfig();
+    if (ziggeo.recorderConfig == null) {
+      ziggeo.recorderConfig = RecorderConfig();
+    }
     ziggeo.recorderConfig?.eventsListener = RecorderEventsListener(
       onError: (exception) =>
           addLogEvent('ev_rec_error', details: exception.toString()),
@@ -391,7 +397,9 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initUploaderCallback() {
-    ziggeo.uploadingConfig = UploadingConfig();
+    if(ziggeo.uploadingConfig == null){
+      ziggeo.uploadingConfig = UploadingConfig();
+    }
     ziggeo.uploadingConfig?.eventsListener = UploadingEventsListener(
       onError: (exception) =>
           addLogEvent('ev_upl_error', details: exception.toString()),

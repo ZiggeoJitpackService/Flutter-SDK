@@ -32,5 +32,7 @@ class PlayerConfig extends BaseConfig {
     this.shouldShowSubtitles = false,
     this.isMuted = false,
     this.playerStyle,
-  });
+  }) {
+    this.playerStyle = playerStyle ?? PlayerStyle();
+  }
 }

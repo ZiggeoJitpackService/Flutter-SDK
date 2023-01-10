@@ -6,8 +6,7 @@ class UploadingConfig extends BaseConfig {
   static const UPLOADING_ERROR_ACTION_DELETE_VIDEO = 554;
   static const UPLOADING_ERROR_ACTION_ERROR_NOTIFICATION = 553;
   static const UPLOADING_ERROR_ACTION_RELOAD_VIDEO = 552;
-  //todo new release
-//   static const CONNECTION_ACTION_CONTINUE_UPLOADING_VIDEO = 551;
+  static const CONNECTION_ACTION_CONTINUE_UPLOADING_VIDEO = 551;
 
   bool? shouldUseWifiOnly;
   int? syncInterval;
