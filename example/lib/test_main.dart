@@ -144,15 +144,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //test file selector config
     widget.ziggeo.fileSelectorConfig = FileSelectorConfig(
-      maxDuration: maxDuration,
       shouldAllowMultipleSelection: shouldAllowMultipleSelection,
       mediaType: mediaType,
     );
     var _shouldAllowMultipleSelectionTest =
         (await widget.ziggeo.getFileSelectorConfig())
             ?.shouldAllowMultipleSelection;
-    var _maxDurationTest =
-        (await widget.ziggeo.getFileSelectorConfig())?.maxDuration;
     var _mediaTypeTest =
         (await widget.ziggeo.getFileSelectorConfig())?.mediaType;
 
@@ -276,7 +273,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _isMuted = _isMutedTest;
       _shouldShowSubtitles = _shouldShowSubtitlesTest;
 
-      _maxDuration = _maxDurationTest;
       _shouldAllowMultipleSelection = _shouldAllowMultipleSelectionTest;
       _mediaType = _mediaTypeTest;
 

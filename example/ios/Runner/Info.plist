@@ -41,5 +41,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>Privacy - Photo Library Usage Description</key>
+        <string>$(PRODUCT_NAME) photo use</string>
+    <key>Privacy - Camera Usage Description</key>
+        <string>$(PRODUCT_NAME) camera use</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app requires access to the photo library.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app does not require access to the microphone.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>This app requires access to the camera.</string>
 </dict>
 </plist>

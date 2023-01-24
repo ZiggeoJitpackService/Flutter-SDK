@@ -5,6 +5,7 @@ import android.os.Handler
 import com.ziggeo.androidsdk.IZiggeo
 import com.ziggeo.androidsdk.SensorManager
 import com.ziggeo.androidsdk.StopRecordingConfirmationDialogConfig
+import com.ziggeo.androidsdk.ui.theming.PlayerStyle
 import com.ziggeo.androidsdk.callbacks.FileSelectorCallback
 import com.ziggeo.androidsdk.callbacks.PlayerCallback
 import com.ziggeo.androidsdk.callbacks.RecorderCallback
@@ -237,31 +238,32 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
             }
             "setPlayerStyle" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
-                    val style = ziggeo.playerConfig.style
+                    val styleBuilder = PlayerStyle.Builder()
                     (it["controllerStyle"] as? Int)?.let { value ->
-                        style.controllerStyle = value
+                        styleBuilder.controllerStyle(value)
                     }
                     (it["textColor"] as? Int)?.let { value ->
-                        style.textColor = value
+                        styleBuilder.textColor(value)
                     }
                     (it["playedColor"] as? Int)?.let { value ->
-                        style.playedColor = value
+                        styleBuilder.playedColor(value)
                     }
                     (it["unplayedColor"] as? Int)?.let { value ->
-                        style.unplayedColor = value
+                        styleBuilder.unplayedColor(value)
                     }
                     (it["bufferedColor"] as? Int)?.let { value ->
-                        style.bufferedColor = value
+                        styleBuilder.bufferedColor(value)
                     }
                     (it["tintColor"] as? Int)?.let { value ->
-                        style.tintColor = value
+                        styleBuilder.tintColor(value)
                     }
                     (it["muteOffImageDrawable"] as? Int)?.let { value ->
-                        style.muteOffImageDrawable = value
+                        styleBuilder.muteOffImageDrawable(value)
                     }
                     (it["muteOnImageDrawable"] as? Int)?.let { value ->
-                        style.muteOnImageDrawable = value
+                        styleBuilder.controllerStyle(value)
                     }
+                    ziggeo.playerConfig.style = styleBuilder.build()
                 }
             }
             "getPlayerStyle" -> {

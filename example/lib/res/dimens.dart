@@ -7,6 +7,7 @@ const item_elevation = 4.0;
 const item_corner_radius = 4.0;
 const subtitle_text_size = 20.0;
 const message_text_size = 18.0;
+const settings_text_size = 12.0;
 
 /// Auth screen
 const logo_width = 250.0;

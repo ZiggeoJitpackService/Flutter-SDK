@@ -24,9 +24,27 @@ class RecorderConfig extends BaseConfig {
   bool? shouldEnableCoverShot;
   bool? shouldConfirmStopRecording;
   bool? isPausedMode;
-  StopRecordingConfirmationDialogConfig? stopRecordingConfirmationDialogConfig
-  = StopRecordingConfirmationDialogConfig();
+  StopRecordingConfirmationDialogConfig? stopRecordingConfirmationDialogConfig;
   RecorderEventsListener? eventsListener;
+
+  static RecorderConfig defaultRecorderConfig() {
+    return RecorderConfig(
+      shouldShowFaceOutline : false,
+      isLiveStreaming : false,
+      shouldAutoStartRecording : false,
+      startDelay : defaultStartDelay,
+      blurMode : false,
+      shouldSendImmediately : true,
+      shouldDisableCameraSwitch : false,
+      videoQuality : 0,
+      facing : 0,
+      maxDuration : 0,
+      shouldEnableCoverShot : true,
+      shouldConfirmStopRecording : true,
+      isPausedMode : true,
+      stopRecordingConfirmationDialogConfig : StopRecordingConfirmationDialogConfig(),
+    );
+  }
 
   RecorderConfig({
     this.shouldShowFaceOutline = false,

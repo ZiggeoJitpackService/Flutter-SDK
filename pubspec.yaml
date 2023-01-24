@@ -24,3 +24,5 @@ flutter:
       android:
         package: com.ziggeo.flutterplugin
         pluginClass: ZiggeoPlugin
+      ios:
+        pluginClass: SwiftZiggeoPlugin

@@ -136,9 +136,11 @@ class Ziggeo {
         recorderConfig?.stopRecordingConfirmationDialogConfig?.convertToMap());
   }
 
-  set stopRecordingConfirmationDialogConfig(StopRecordingConfirmationDialogConfig? value) {
+  set stopRecordingConfirmationDialogConfig(
+      StopRecordingConfirmationDialogConfig? value) {
     _recorderConfig?.stopRecordingConfirmationDialogConfig = value;
-    _ziggeoChannel.invokeMethod('setRecordingConfirmationDialogConfig', value?.convertToMap());
+    _ziggeoChannel.invokeMethod(
+        'setRecordingConfirmationDialogConfig', value?.convertToMap());
   }
 
   Future<RecorderConfig?> getRecorderConfig() async {
@@ -245,8 +247,9 @@ class Ziggeo {
         .invokeMethod('startPlayer', {"paths": videoPaths});
   }
 
-  Future<void> startQrScanner() async {
-    return await _ziggeoChannel.invokeMethod('startQrScanner');
+  Future<void> startQrScanner(bool? shouldCloseAfterSuccessfulScan) async {
+    return await _ziggeoChannel.invokeMethod('startQrScanner',
+        {"closeAfterSuccessfulScan": shouldCloseAfterSuccessfulScan});
   }
 
   Future<void> startScreenRecorder() async {

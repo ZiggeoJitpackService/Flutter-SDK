@@ -1,7 +1,6 @@
 import 'package:ziggeo/common/base_style.dart';
 
 class PlayerStyle extends BaseStyle {
-
   static const DEFAULT = 0;
   static const MODERN = 1;
   static const CUBE = 2;
@@ -18,6 +17,10 @@ class PlayerStyle extends BaseStyle {
   int? tintColor;
   int? muteOffImageDrawable;
   int? muteOnImageDrawable;
+
+  static PlayerStyle defaultPlayerStyle() {
+    return PlayerStyle(controllerStyle: DEFAULT);
+  }
 
   PlayerStyle({
     this.controllerStyle = DEFAULT,

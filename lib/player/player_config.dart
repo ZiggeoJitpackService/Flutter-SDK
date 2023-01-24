@@ -28,11 +28,17 @@ class PlayerConfig extends BaseConfig {
     );
   }
 
+  static PlayerConfig defaultPlayerConfig() {
+    return PlayerConfig(
+      shouldShowSubtitles: false,
+      isMuted: false,
+      // playerStyle: PlayerStyle.defaultPlayerStyle(),
+    );
+  }
+
   PlayerConfig({
     this.shouldShowSubtitles = false,
     this.isMuted = false,
     this.playerStyle,
-  }) {
-    this.playerStyle = playerStyle ?? PlayerStyle();
-  }
+  });
 }

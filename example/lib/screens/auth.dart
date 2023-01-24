@@ -35,7 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
         saveTokenAndNavigateToMainScreen(_inputToken ?? '');
       }
     } else {
-      _ziggeo?.startQrScanner();
+      _ziggeo?.startQrScanner(_ziggeo?.qrScannerConfig?.shouldCloseAfterSuccessfulScan);
     }
   }
 

@@ -345,7 +345,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   initPlayerCallback() {
     if(ziggeo.playerConfig == null){
-      ziggeo.playerConfig = PlayerConfig();
+      ziggeo.playerConfig = PlayerConfig.defaultPlayerConfig();
     }
     ziggeo.playerConfig?.eventsListener = PlayerEventsListener(
       onLoaded: () => addLogEvent('ev_pl_loaded'),
@@ -366,7 +366,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   initRecorderCallback() {
     if (ziggeo.recorderConfig == null) {
-      ziggeo.recorderConfig = RecorderConfig();
+      ziggeo.recorderConfig = RecorderConfig.defaultRecorderConfig();
     }
     ziggeo.recorderConfig?.eventsListener = RecorderEventsListener(
       onError: (exception) =>

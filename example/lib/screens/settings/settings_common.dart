@@ -65,7 +65,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'tv_custom_video_mode',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -89,7 +89,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'tv_custom_camera_mode',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -113,7 +113,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_allow_multiple_selection',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -157,7 +157,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_use_wifi_only',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -181,7 +181,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_turn_off_uploader',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -216,7 +216,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_close_after_successful_scan',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,

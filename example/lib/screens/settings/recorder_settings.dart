@@ -73,7 +73,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_show_face_outline',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -96,7 +96,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_is_live_streaming',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -120,7 +120,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_auto_start_recording',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -154,7 +154,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'tv_blur_mode',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -178,7 +178,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_send_immediately',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -202,7 +202,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_disable_camera_switch',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -256,7 +256,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_enable_cover_shot',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -280,7 +280,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_confirm_stop_recording',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -304,7 +304,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_is_paused_mode',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -326,7 +326,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           onChanged: (value) => _titleText = value,
                           enabled: true,
                           initialValue: _titleText,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_title_text'),
@@ -336,7 +336,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           onChanged: (value) => _mesText = value,
                           enabled: true,
                           initialValue: _mesText,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_mes_text'),
@@ -346,7 +346,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           onChanged: (value) => _posBtnText = value,
                           enabled: true,
                           initialValue: _posBtnText,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_pos_btn_text'),
@@ -356,7 +356,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
                           onChanged: (value) => _negBtnText = value,
                           enabled: true,
                           initialValue: _negBtnText,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_neg_btn_text'),
@@ -418,50 +418,41 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
   }
 
   init() async {
-    await SharedPreferences.getInstance().then(
-      (value) {
-        setState(
-          () {
-            _shouldShowFaceOutline =
-                (widget.ziggeo.recorderConfig)?.shouldShowFaceOutline ?? false;
-            _isLiveStreaming =
-                (widget.ziggeo.recorderConfig)?.isLiveStreaming ?? false;
-            _shouldAutoStartRecording =
-                (widget.ziggeo.recorderConfig)?.shouldAutoStartRecording ??
-                    false;
-            _startDelay = (widget.ziggeo.recorderConfig)?.startDelay.toString();
-            _blurMode = (widget.ziggeo.recorderConfig)?.blurMode ?? false;
-            _shouldSendImmediately =
-                (widget.ziggeo.recorderConfig)?.shouldSendImmediately ?? false;
-            _shouldDisableCameraSwitch =
-                (widget.ziggeo.recorderConfig)?.shouldDisableCameraSwitch ??
-                    false;
-            _videoQuality =
-                (widget.ziggeo.recorderConfig)?.videoQuality.toString();
-            _facing = (widget.ziggeo.recorderConfig)?.facing.toString();
-            _maxDurationRec =
-                (widget.ziggeo.recorderConfig)?.maxDuration.toString();
-            _shouldEnableCoverShot =
-                (widget.ziggeo.recorderConfig)?.shouldEnableCoverShot ?? false;
-            _shouldConfirmStopRecording =
-                (widget.ziggeo.recorderConfig)?.shouldConfirmStopRecording ??
-                    false;
-            _isPausedMode =
-                (widget.ziggeo.recorderConfig)?.isPausedMode ?? false;
-            _titleText = (widget.ziggeo.recorderConfig
-                    ?.stopRecordingConfirmationDialogConfig)
-                ?.titleText;
-            _mesText = (widget.ziggeo.recorderConfig
-                    ?.stopRecordingConfirmationDialogConfig)
-                ?.mesText;
-            _posBtnText = (widget.ziggeo.recorderConfig
-                    ?.stopRecordingConfirmationDialogConfig)
-                ?.posBtnText;
-            _negBtnText = (widget.ziggeo.recorderConfig
-                    ?.stopRecordingConfirmationDialogConfig)
-                ?.negBtnText;
-          },
-        );
+    setState(
+      () {
+        _shouldShowFaceOutline =
+            (widget.ziggeo.recorderConfig)?.shouldShowFaceOutline ?? false;
+        _isLiveStreaming =
+            (widget.ziggeo.recorderConfig)?.isLiveStreaming ?? false;
+        _shouldAutoStartRecording =
+            (widget.ziggeo.recorderConfig)?.shouldAutoStartRecording ?? false;
+        _startDelay = (widget.ziggeo.recorderConfig)?.startDelay.toString();
+        _blurMode = (widget.ziggeo.recorderConfig)?.blurMode ?? false;
+        _shouldSendImmediately =
+            (widget.ziggeo.recorderConfig)?.shouldSendImmediately ?? false;
+        _shouldDisableCameraSwitch =
+            (widget.ziggeo.recorderConfig)?.shouldDisableCameraSwitch ?? false;
+        _videoQuality = (widget.ziggeo.recorderConfig)?.videoQuality.toString();
+        _facing = (widget.ziggeo.recorderConfig)?.facing.toString();
+        _maxDurationRec =
+            (widget.ziggeo.recorderConfig)?.maxDuration.toString();
+        _shouldEnableCoverShot =
+            (widget.ziggeo.recorderConfig)?.shouldEnableCoverShot ?? false;
+        _shouldConfirmStopRecording =
+            (widget.ziggeo.recorderConfig)?.shouldConfirmStopRecording ?? false;
+        _isPausedMode = (widget.ziggeo.recorderConfig)?.isPausedMode ?? false;
+        _titleText = (widget
+                .ziggeo.recorderConfig?.stopRecordingConfirmationDialogConfig)
+            ?.titleText;
+        _mesText = (widget
+                .ziggeo.recorderConfig?.stopRecordingConfirmationDialogConfig)
+            ?.mesText;
+        _posBtnText = (widget
+                .ziggeo.recorderConfig?.stopRecordingConfirmationDialogConfig)
+            ?.posBtnText;
+        _negBtnText = (widget
+                .ziggeo.recorderConfig?.stopRecordingConfirmationDialogConfig)
+            ?.negBtnText;
       },
     );
   }

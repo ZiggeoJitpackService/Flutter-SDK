@@ -63,7 +63,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_should_show_subtitles',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -87,7 +87,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           children: <Widget>[
                             TextLocalized(
                               'hint_is_mute',
-                              style: TextStyle(fontSize: message_text_size),
+                              style: TextStyle(fontSize: settings_text_size),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
@@ -109,7 +109,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           onChanged: (value) => _controllerStyle = value,
                           enabled: true,
                           initialValue: _controllerStyle,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_controller_style'),
@@ -119,7 +119,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           onChanged: (value) => _textColor = value,
                           enabled: true,
                           initialValue: _textColor,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_text_color'),
@@ -129,7 +129,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           onChanged: (value) => _playedColor = value,
                           enabled: true,
                           initialValue: _playedColor,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_played_color'),
@@ -139,7 +139,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           onChanged: (value) => _unplayedColor = value,
                           enabled: true,
                           initialValue: _unplayedColor,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_unplayed_color'),
@@ -149,7 +149,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           onChanged: (value) => _bufferedColor = value,
                           enabled: true,
                           initialValue: _bufferedColor,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_buffered_color'),
@@ -159,7 +159,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                           onChanged: (value) => _tintColor = value,
                           enabled: true,
                           initialValue: _tintColor,
-                          style: null,
+                          style: TextStyle(fontSize: settings_text_size),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: localize.text('hint_tint_color'),
@@ -234,7 +234,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
         shouldShowSubtitles =
             (widget.ziggeo.playerConfig)?.shouldShowSubtitles ?? false;
         isMuted = (widget.ziggeo.playerConfig)?.isMuted ?? false;
-        _controllerStyle = (value)?.controllerStyle.toString();
+        _controllerStyle = (value)?.controllerStyle.toString() ?? PlayerStyle.DEFAULT.toString();
         _textColor = (value)?.textColor.toString();
         _unplayedColor = (value)?.unplayedColor.toString();
         _playedColor = (value)?.playedColor.toString();
