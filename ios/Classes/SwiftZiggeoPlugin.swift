@@ -165,8 +165,8 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
              m_ziggeo?.startImageRecorder();
         } else if (call.method == "startPlayer") {
              if let args = call.arguments as? Dictionary<String, Any>,
-                 let tokens = args["tokens"] as? String{
-                 m_ziggeo?.playVideo( [tokens]);
+                 let tokens = args["tokens"] as? [String]{
+                 m_ziggeo?.playVideo(tokens);
              }
         }  else if (call.method == "startPlayer") {
              if let args = call.arguments as? Dictionary<String, Any>,
