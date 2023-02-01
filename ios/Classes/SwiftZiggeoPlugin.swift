@@ -21,10 +21,15 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
     public let KEY_HIDE_PLAYER_CONTROLS = "hidePlayerControls"
 
     var m_ziggeo: Ziggeo? = nil;
+    var m_flutterPluginRegistrar: FlutterPluginRegistrar? = nil;
+
+    init(registrar: FlutterPluginRegistrar){
+       self.m_flutterPluginRegistrar = registrar;
+    }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "ziggeo", binaryMessenger: registrar.messenger())
-        let instance = SwiftZiggeoPlugin()
+        let instance = SwiftZiggeoPlugin(registrar: registrar);
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -32,11 +37,11 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
         let viewController = UIApplication.shared.windows.filter({ (w) -> Bool in
                     return w.isHidden == false
          }).first?.rootViewController;
-
        if (call.method == "setAppToken") {
           if let args = call.arguments as? Dictionary<String, Any>,
             let appToken = args["appToken"] as? String{
             m_ziggeo = Ziggeo(token: appToken,delegate: viewController! as! ZiggeoDelegate);
+            registerAllTheChannels();
           }
         } else if (call.method == "startQrScanner") {
             m_ziggeo = Ziggeo(qrCodeReaderDelegate: viewController! as! ZiggeoQRCodeReaderDelegate)
@@ -182,15 +187,20 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
                  m_ziggeo?.sendReport( logs );
              }
         } else {
-            result("Not implemented")
+            result(FlutterError(code:"Not implemented", message:"Not implemented",details: ""))
         }
+    }
+
+    private func registerAllTheChannels(){
+        SwiftVideoApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
+//         SwiftAudioApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
+//         SwiftImageApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
     }
 
 }
 
 extension UIViewController: ZiggeoQRCodeReaderDelegate {
     public func ziggeoQRCodeScaned(_ qrCode: String) {
-//         self.login(qrCode)
     }
 }
 
