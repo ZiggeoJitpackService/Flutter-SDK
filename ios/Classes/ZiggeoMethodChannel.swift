@@ -99,11 +99,11 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
-                  let argsss = args as? Dictionary<String, Any>{
-                      m_ziggeo?.videos.create(
-                      //todo strUrl, data
-                          "strUrl",
-                          data: argsss,
+                  let params = args["data"] as? Dictionary<String, Any>
+                  let path = args["path"] as? Dictionary<String, Any>{
+                         m_ziggeo?.videos.create(
+                          path,
+                          data: params,
                           callback: { content, response, error in
                               let resultString = String(describing: content);
                               result(resultString);
@@ -252,11 +252,11 @@ public class SwiftAudioApiPlugin: NSObject, FlutterPlugin {
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
-                  let argsss = args as? Dictionary<String, Any>{
+                  let params = args["data"] as? Dictionary<String, Any>
+                  let path = args["path"] as? Dictionary<String, Any>{
                       m_ziggeo?.audios.create(
-                      //todo strUrl, data
-                          "strUrl",
-                          data: argsss,
+                          path,
+                          data: params,
                           callback: { content, response, error in
                               let resultString = String(describing: content);
                               result(resultString);
@@ -360,11 +360,11 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
-                  let argsss = args as? Dictionary<String, Any>{
-                      m_ziggeo?.images.create(
-                      //todo strUrl, data
-                          "strUrl",
-                          data: argsss,
+                  let params = args["data"] as? Dictionary<String, Any>
+                  let path = args["path"] as? Dictionary<String, Any>{
+                         m_ziggeo?.images.create(
+                          path,
+                          data: params,
                           callback: { content, response, error in
                               let resultString = String(describing: content);
                               result(resultString);
