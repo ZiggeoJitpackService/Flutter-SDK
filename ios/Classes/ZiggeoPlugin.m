@@ -12,7 +12,8 @@
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   [SwiftZiggeoPlugin registerWithRegistrar:registrar];
   [SwiftVideoApiPlugin registerWithRegistrar:registrar];
-//   [SwiftAudioApiPlugin registerWithRegistrar:registrar];
-//   [SwiftImageApiPlugin registerWithRegistrar:registrar];
+  [SwiftAudioApiPlugin registerWithRegistrar:registrar];
+  [SwiftImageApiPlugin registerWithRegistrar:registrar];
+  [SwiftStreamApiPlugin registerWithRegistrar:registrar];
 }
 @end

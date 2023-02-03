@@ -73,7 +73,9 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
     });
 
     if (recordingModel.type == RecordingModel.video_type) {
-      ziggeo.videos.update(recordingModel.toJson()).then((value) {
+      ziggeo.videos
+          .updateVideo(recordingModel.toJson(), recordingModel.toMap())
+          .then((value) {
         setState(() {
           isLoading = false;
           recordingModel = RecordingModel.fromJson(
@@ -82,8 +84,9 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
         });
       }, onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.audio_type) {
-      var model = ImageRecordingModel.create(recordingModel);
-      ziggeo.audios.update(model.toJson()).then((value) {
+      var model = AudioRecordingModel.create(recordingModel);
+      ziggeo.audios.updateAudio(model.toJson(), recordingModel.toMap()).then(
+          (value) {
         setState(() {
           isLoading = false;
           recordingModel =
@@ -92,8 +95,9 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
         });
       }, onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.image_type) {
-      var model = AudioRecordingModel.create(recordingModel);
-      ziggeo.images.update(model.toJson()).then((value) {
+      var model = ImageRecordingModel.create(recordingModel);
+      ziggeo.images.updateImage(model.toJson(), recordingModel.toMap()).then(
+          (value) {
         setState(() {
           isLoading = false;
           recordingModel =
@@ -225,8 +229,10 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                             ),
                       TextFormField(
                         enabled: isInEditMode,
-                        initialValue:
-                            recordingModel.key ?? recordingModel.token,
+                        initialValue: (recordingModel.key == null ||
+                                recordingModel.key!.isEmpty)
+                            ? recordingModel.token
+                            : recordingModel.key,
                         style: !isInEditMode
                             ? TextStyle(color: Colors.grey)
                             : null,

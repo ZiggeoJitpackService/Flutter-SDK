@@ -54,4 +54,16 @@ class RecordingModel {
     map['created'] = created;
     return jsonEncode(map);
   }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = Map();
+    map['token'] = token;
+    map['key'] = key;
+    map['state_string'] = state;
+    map['title'] = title;
+    map['description'] = description;
+    map['tags'] = (tags != null) ? tags!.cast<String>() : '';
+    map['created'] = (created != null) ? created!.toString() : '';
+    return map;
+  }
 }

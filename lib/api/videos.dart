@@ -26,6 +26,11 @@ class VideosApi {
         .invokeMethod('getImageUrl', {'videoToken': videoTokenOrKey});
   }
 
+  Future<String?> updateVideo(String json, Map<String, dynamic>? map) async {
+    return await _videosChannel.invokeMethod('update', {'data': json, 'mapData': map});
+  }
+
+  @deprecated
   Future<String?> update(String json) async {
     return await _videosChannel.invokeMethod('update', {'data': json});
   }

@@ -14,6 +14,11 @@ class ImagesApi {
         .invokeMethod('get', {'tokenOrKey': videoTokenOrKey});
   }
 
+  Future<String> updateImage(String json, Map<String, dynamic> args) async {
+    return await _imagesChannel.invokeMethod('update', {'data': json, 'mapData': args});
+  }
+
+  @deprecated
   Future<String> update(String json) async {
     return await _imagesChannel.invokeMethod('update', {'data': json});
   }

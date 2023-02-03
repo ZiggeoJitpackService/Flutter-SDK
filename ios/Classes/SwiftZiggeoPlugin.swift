@@ -149,14 +149,14 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
              m_ziggeo?.startAudioRecorder();
         } else if (call.method == "startAudioPlayerByToken") {
              if let args = call.arguments as? Dictionary<String, Any>,
-                 let tokens = args["tokens"] as? String{
+                 let tokens = args["token"] as? String{
                  m_ziggeo?.startAudioPlayer( [tokens]);
              }
         } else if (call.method == "startAudioPlayerByPath") {
 //              no method
         } else if (call.method == "showImageByToken") {
              if let args = call.arguments as? Dictionary<String, Any>,
-                 let tokens = args["tokens"] as? String{
+                 let tokens = args["token"] as? String{
                  m_ziggeo?.showImage( [tokens]);
              }
         } else if (call.method == "showImageByPath") {
@@ -193,8 +193,9 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
 
     private func registerAllTheChannels(){
         SwiftVideoApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
-//         SwiftAudioApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
-//         SwiftImageApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
+        SwiftAudioApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
+        SwiftImageApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
+        SwiftStreamApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
     }
 
 }
