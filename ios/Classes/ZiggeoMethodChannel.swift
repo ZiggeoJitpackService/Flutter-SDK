@@ -1,7 +1,7 @@
-import ZiggeoMediaSwiftSDK
 import Flutter
 import Combine
 import UIKit
+import ZiggeoMediaSwiftSDK
 
 public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
 
@@ -99,8 +99,8 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
-                  let params = args["data"] as? Dictionary<String, Any>
-                  let path = args["path"] as? Dictionary<String, Any>{
+                  let params = args["data"] as? Dictionary<String, Any>,
+                  let path = args["path"] as? String{
                          m_ziggeo?.videos.create(
                           path,
                           data: params,
@@ -252,8 +252,8 @@ public class SwiftAudioApiPlugin: NSObject, FlutterPlugin {
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
-                  let params = args["data"] as? Dictionary<String, Any>
-                  let path = args["path"] as? Dictionary<String, Any>{
+                  let params = args["data"] as? Dictionary<String, Any>,
+                  let path = args["path"] as? String{
                       m_ziggeo?.audios.create(
                           path,
                           data: params,
@@ -360,8 +360,8 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
-                  let params = args["data"] as? Dictionary<String, Any>
-                  let path = args["path"] as? Dictionary<String, Any>{
+                  let params = args["data"] as? Dictionary<String, Any>,
+                  let path = args["path"] as? String{
                          m_ziggeo?.images.create(
                           path,
                           data: params,
