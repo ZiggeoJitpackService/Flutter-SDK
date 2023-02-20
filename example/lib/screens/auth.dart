@@ -24,8 +24,11 @@ class _AuthScreenState extends State<AuthScreen> {
   _AuthScreenState() {
     _ziggeo = Ziggeo(null);
     _ziggeo?.qrScannerConfig = QrScannerConfig();
+    //need for android
     _ziggeo?.qrScannerConfig?.eventsListener = QrScannerEventListener(
-      onDecoded: (value) => {this.saveTokenAndNavigateToMainScreen(value)},
+      onDecoded: (value) => {
+        this.saveTokenAndNavigateToMainScreen(value),
+      },
     );
   }
 
@@ -35,85 +38,108 @@ class _AuthScreenState extends State<AuthScreen> {
         saveTokenAndNavigateToMainScreen(_inputToken ?? '');
       }
     } else {
-      _ziggeo?.startQrScanner(_ziggeo?.qrScannerConfig?.shouldCloseAfterSuccessfulScan);
+      _ziggeo
+          ?.startQrScanner(
+              _ziggeo?.qrScannerConfig?.shouldCloseAfterSuccessfulScan)
+          .then(
+        (value) {
+          //need for ios
+          this.saveTokenAndNavigateToMainScreen(value);
+        },
+      );
     }
   }
 
   switchQrScannerMode() {
-    this.setState(() {
-      _enterQrManuallyMode = !_enterQrManuallyMode;
-    });
+    this.setState(
+      () {
+        _enterQrManuallyMode = !_enterQrManuallyMode;
+      },
+    );
   }
 
   saveTokenAndNavigateToMainScreen(String token) {
-    SharedPreferences.getInstance().then((prefs) => prefs
-        .setString(Utils.keyAppToken, token)
-        .then((success) => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (context) => MainScreen(token, Ziggeo(token))))));
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setString(Utils.keyAppToken, token).then(
+            (success) => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => MainScreen(token, Ziggeo(token)),
+              ),
+            ),
+          ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: EdgeInsets.all(common_margin),
-          child: Form(
-              key: _formKey,
-              child: Center(
-                  child: Column(
-                children: <Widget>[
-                  SizedBox(height: logo_margin_top),
-                  Image.asset(
-                    'assets/img/logo.png',
-                    width: logo_width,
-                  ),
-                  SizedBox(height: logo_margin_bottom),
-                  TextLocalized(
-                    'auth_message',
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: auth_controls_margin_top),
-                  SizedBox(
-                    height: qr_input_height,
-                    child: _enterQrManuallyMode
-                        ? TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return AppLocalizations.instance
-                                    .text('err_not_empty');
-                              }
-                              return null;
-                            },
-                            onChanged: (value) => this.setState(() {
+      resizeToAvoidBottomInset: false,
+      body: Padding(
+        padding: EdgeInsets.all(common_margin),
+        child: Form(
+          key: _formKey,
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: logo_margin_top),
+                Image.asset(
+                  'assets/img/logo.png',
+                  width: logo_width,
+                ),
+                SizedBox(height: logo_margin_bottom),
+                TextLocalized(
+                  'auth_message',
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: auth_controls_margin_top),
+                SizedBox(
+                  height: qr_input_height,
+                  child: _enterQrManuallyMode
+                      ? TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AppLocalizations.instance
+                                  .text('err_not_empty');
+                            }
+                            return null;
+                          },
+                          onChanged: (value) => this.setState(
+                            () {
                               _inputToken = value;
-                            }),
-                            decoration: InputDecoration(
-                                labelText: AppLocalizations.instance
-                                    .text('enter_manually_hint')),
-                          )
-                        : null,
+                            },
+                          ),
+                          decoration: InputDecoration(
+                            labelText: AppLocalizations.instance
+                                .text('enter_manually_hint'),
+                          ),
+                        )
+                      : null,
+                ),
+                SizedBox(
+                  width: btn_qr_width,
+                  height: btn_qr_height,
+                  child: RaisedButton(
+                    onPressed: () => this.onQrActionPressed(),
+                    child: TextLocalized(
+                      _enterQrManuallyMode
+                          ? 'btn_use_entered_text'
+                          : 'btn_scan_qr_text',
+                    ),
                   ),
-                  SizedBox(
-                      width: btn_qr_width,
-                      height: btn_qr_height,
-                      child: RaisedButton(
-                          onPressed: () => this.onQrActionPressed(),
-                          child: TextLocalized(
-                            _enterQrManuallyMode
-                                ? 'btn_use_entered_text'
-                                : 'btn_scan_qr_text',
-                          ))),
-                  FlatButton(
-                      onPressed: () => this.switchQrScannerMode(),
-                      child: TextLocalized(
-                        _enterQrManuallyMode
-                            ? 'use_scanner_text'
-                            : 'enter_qr_manually_text',
-                      )),
-                ],
-              ))),
-        ));
+                ),
+                FlatButton(
+                  onPressed: () => this.switchQrScannerMode(),
+                  child: TextLocalized(
+                    _enterQrManuallyMode
+                        ? 'use_scanner_text'
+                        : 'enter_qr_manually_text',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

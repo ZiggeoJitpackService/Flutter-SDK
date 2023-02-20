@@ -11,6 +11,16 @@ class RecorderConfig extends BaseConfig {
   static const facingBack = 0;
   static const facingFront = 1;
 
+  //IOS screen recorder button settings
+  static const SCREEN_RECORDER_BACKGROUND_COLOR = "background_color";
+  static const SCREEN_RECORDER_TEXT_COLOR = "title_color";
+  static const SCREEN_RECORDER_TITLE = "title";
+  static const SCREEN_RECORDER_FRAME = "frame";
+  static const SCREEN_RECORDER_FRAME_X_START = "frame_x_start";
+  static const SCREEN_RECORDER_FRAME_Y_START = "frame_y_start";
+  static const SCREEN_RECORDER_FRAME_X_END = "frame_x_end";
+  static const SCREEN_RECORDER_FRAME_Y_END = "frame_y_end";
+
   bool? shouldShowFaceOutline;
   bool? isLiveStreaming;
   bool? shouldAutoStartRecording;

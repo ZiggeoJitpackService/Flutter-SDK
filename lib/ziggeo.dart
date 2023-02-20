@@ -247,13 +247,14 @@ class Ziggeo {
         .invokeMethod('startPlayer', {"paths": videoPaths});
   }
 
-  Future<void> startQrScanner(bool? shouldCloseAfterSuccessfulScan) async {
+  Future<String> startQrScanner(bool? shouldCloseAfterSuccessfulScan) async {
     return await _ziggeoChannel.invokeMethod('startQrScanner',
-        {"closeAfterSuccessfulScan": shouldCloseAfterSuccessfulScan});
+        {"closeAfterSuccessfulScan": shouldCloseAfterSuccessfulScan ?? true});
   }
 
-  Future<void> startScreenRecorder() async {
-    return await _ziggeoChannel.invokeMethod('startScreenRecorder');
+  Future<void> startScreenRecorder(Map<String, dynamic>? args) async {
+    return await _ziggeoChannel
+        .invokeMethod('startScreenRecorder', {"args": args});
   }
 
   Future<void> uploadFromFileSelector(Map<String, String>? args) async {

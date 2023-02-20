@@ -1,4 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,15 +9,18 @@ import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/screens/drawer.dart';
 import 'package:ziggeo_example/screens/splash.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // uncomment for release
-  // await Firebase.initializeApp();
-  // if (kDebugMode) {
-    // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  // if(Platform.isAndroid){
+  //   await Firebase.initializeApp();
+  //   if (kDebugMode) {
+  //     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  //   }
   // }
   runApp(ZiggeoDemoApp());
 }

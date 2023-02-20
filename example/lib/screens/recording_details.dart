@@ -197,6 +197,19 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                                   height: preview_height,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null)
+                                      return child;
+                                    return Container(
+                                      height: preview_height,
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  },
                                 ),
                                 Visibility(
                                     visible: recordingModel.type ==
@@ -272,7 +285,8 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                 ),
             ],
           ),
-        ));
+        ),
+    );
   }
 
   onPlayButtonPressed() async {

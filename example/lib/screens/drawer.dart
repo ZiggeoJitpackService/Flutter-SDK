@@ -77,41 +77,47 @@ class _AppDrawerState extends State<AppDrawer> {
 
   Widget _createHeader() {
     return Container(
-        height: drawer_height,
-        child: DrawerHeader(
-            margin: EdgeInsets.zero,
-            padding: EdgeInsets.zero,
-            decoration: BoxDecoration(
-              color: Color(primary),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(common_margin),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        TextLocalized("title_app_token",
-                            style: TextStyle(color: Colors.white)),
-                        IconButton(
-                            onPressed: () => showLogoutPopup(),
-                            icon: Icon(
-                              Icons.exit_to_app,
-                              color: Colors.white,
-                            )),
-                      ],
+      height: drawer_height,
+      child: DrawerHeader(
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        decoration: BoxDecoration(
+          color: Color(primary),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: common_half_margin),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  TextLocalized(
+                    "title_app_token",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  IconButton(
+                    onPressed: () => showLogoutPopup(),
+                    icon: Icon(
+                      Icons.exit_to_app,
+                      color: Colors.white,
                     ),
-                    Container(
-                      width: double.infinity,
-                      child: Text(
-                        appToken,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ]),
-            )));
+                  ),
+                ],
+              ),
+              Container(
+                width: double.infinity,
+                child: Text(
+                  appToken,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _createDrawerItem({
@@ -176,7 +182,7 @@ class DrawerState with ChangeNotifier {
     selectRoute(selectedRouteName);
   }
 
-  Ziggeo? get ziggeo => _ziggeo ;
+  Ziggeo? get ziggeo => _ziggeo;
 
   DrawerState() {
     selectRoute(Routes.recordings);

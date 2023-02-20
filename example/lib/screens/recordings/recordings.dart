@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -94,10 +95,11 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
                         height: list_empty_message_margin_top,
                       ),
                       Center(
-                          child: TextLocalized(
-                        'message_recordings_list_empty',
-                        textAlign: TextAlign.center,
-                      ))
+                        child: TextLocalized(
+                          'message_recordings_list_empty',
+                          textAlign: TextAlign.center,
+                        )
+                      )
                     ],
                   ),
       ),
@@ -146,7 +148,24 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   onStartScreenRecorderPressed() {
-    ziggeo.startScreenRecorder();
+    if (Platform.isIOS) {
+      var argsForIosButton = Map<String, dynamic>();
+      argsForIosButton[RecorderConfig.SCREEN_RECORDER_BACKGROUND_COLOR] =
+          "#FF5A5A5A";
+      argsForIosButton[RecorderConfig.SCREEN_RECORDER_TEXT_COLOR] = "FFF0596C";
+      argsForIosButton[RecorderConfig.SCREEN_RECORDER_TITLE] = "TITLE";
+      //frame setting example
+      // var frameArgs = Map<String, int>();
+      // frameArgs[RecorderConfig.SCREEN_RECORDER_FRAME_X_START] = 16;
+      // frameArgs[RecorderConfig.SCREEN_RECORDER_FRAME_Y_START] = 300;
+      // frameArgs[RecorderConfig.SCREEN_RECORDER_FRAME_X_END] = 50;
+      // frameArgs[RecorderConfig.SCREEN_RECORDER_FRAME_Y_END] = 50;
+      // argsForIosButton[RecorderConfig.SCREEN_RECORDER_FRAME] = frameArgs;
+
+      ziggeo.startScreenRecorder(argsForIosButton);
+    } else {
+      ziggeo.startScreenRecorder(null);
+    }
   }
 
   onStartAudioRecorderPressed() {

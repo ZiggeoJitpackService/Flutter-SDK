@@ -3,7 +3,16 @@ import Flutter
 import Combine
 import UIKit
 
-public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
+public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDelegate {
+    // for screen recorder
+    public let SCREEN_RECORDER_BACKGROUND_COLOR = "background_color"
+    public let SCREEN_RECORDER_TEXT_COLOR = "title_color"
+    public let SCREEN_RECORDER_TITLE = "title"
+    public let SCREEN_RECORDER_FRAME = "frame"
+    public let SCREEN_RECORDER_FRAME_X_START = "frame_x_start"
+    public let SCREEN_RECORDER_FRAME_Y_START = "frame_y_start"
+    public let SCREEN_RECORDER_FRAME_X_END = "frame_x_end"
+    public let SCREEN_RECORDER_FRAME_Y_END = "frame_y_end"
 
     public let REAR_CAMERA = "rearCamera"
     public let FRONT_CAMERA = "frontCamera"
@@ -22,6 +31,11 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
 
     var m_ziggeo: Ziggeo? = nil;
     var m_flutterPluginRegistrar: FlutterPluginRegistrar? = nil;
+    var result: ((String) -> ())? = nil ;
+
+    public func ziggeoQRCodeScaned(_ qrCode: String) {
+       self.result?(qrCode);
+    }
 
     init(registrar: FlutterPluginRegistrar){
        self.m_flutterPluginRegistrar = registrar;
@@ -44,11 +58,11 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
             registerAllTheChannels();
           }
         } else if (call.method == "startQrScanner") {
-            m_ziggeo = Ziggeo(qrCodeReaderDelegate: viewController! as! ZiggeoQRCodeReaderDelegate)
-            if let args = call.arguments as? Dictionary<String, Any>,
-               let shouldCloseAfterSuccessfulScan = args["shouldCloseAfterSuccessfulScan"] as? Bool{
-               m_ziggeo?.startQrScanner([CLOSE_AFTER_SUCCESS_FUL_SCAN:shouldCloseAfterSuccessfulScan]);
-            }
+            self.result = { res in result(res);};
+            m_ziggeo = Ziggeo(qrCodeReaderDelegate: self as! ZiggeoQRCodeReaderDelegate);
+//             if let args = call.arguments as? Dictionary<String, Any>,
+//                let shouldCloseAfterSuccessfulScan = args["shouldCloseAfterSuccessfulScan"] as? Bool{
+            m_ziggeo?.startQrScanner();
         } else if (call.method == "getPlayerConfig") {
 //              no getters
         } else if (call.method == "getPlayerStyle") {
@@ -175,12 +189,64 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
              }
         } else if (call.method == "startScreenRecorder") {
         //todo
-             m_ziggeo?.startScreenRecorder();
+          let button = UIButton(type: .system)
+          button.addTarget(self, action: "Action:", for: UIControl.Event.touchUpInside)
+            if let data = call.arguments as? Dictionary<String, Any>,
+               let args = data["args"] as? Dictionary<String, Any>{
+               if let background_color = args[SCREEN_RECORDER_BACKGROUND_COLOR] as? String{
+                     button.backgroundColor = UIColor(hex: background_color)
+                 } else {
+                     button.backgroundColor = .white
+               }
+               if let title = args[SCREEN_RECORDER_TITLE] as? String{
+                     button.setTitle(title, for: UIControl.State.normal)
+                 } else {
+                     button.setTitle("Record", for: UIControl.State.normal)
+               }
+               if let title_color = args[SCREEN_RECORDER_TEXT_COLOR] as? String{
+                     button.setTitleColor(UIColor(hex: title_color), for: .normal)
+                 } else {
+                     button.setTitleColor(.black, for: .normal)
+               }
+               if let frame = args[SCREEN_RECORDER_FRAME] as? Dictionary<String, Int>,
+                  let frame_x_start = frame[SCREEN_RECORDER_FRAME_X_START] as? Int,
+                  let frame_y_start = frame[SCREEN_RECORDER_FRAME_Y_START] as? Int,
+                  let frame_x_end = frame[SCREEN_RECORDER_FRAME_X_END] as? Int,
+                  let frame_y_end = frame[SCREEN_RECORDER_FRAME_Y_END] as? Int{
+                     button.frame = CGRectMake(
+                        CGFloat(frame_x_start),
+                        CGFloat(frame_y_start),
+                        CGFloat(frame_x_end),
+                        CGFloat(frame_y_end))
+                 } else {
+                     button.frame = CGRectMake(16, viewController!.view.bounds.height - 96, 50, 50)
+               }
+               viewController!.view.addSubview(button)
+            } else {
+                     button.backgroundColor = .white
+                     button.frame = CGRectMake(16, viewController!.view.bounds.height - 96, 50, 50)
+                     button.setTitle("Record", for: UIControl.State.normal)
+                     button.setTitleColor(.black, for: .normal)
+                     viewController!.view.addSubview(button)
+                 }
+
+          m_ziggeo?.startScreenRecorder(
+                    addRecordingButtonToView: button as! UIView,
+                    frame: CGRect(
+                         x: 0, y: 0,
+                         width: viewController!.view.bounds.width,
+                         height: viewController!.view.bounds.height),
+                    appGroup: "com.ziggeo.sdk"
+          );
         } else if (call.method == "uploadFromFileSelector") {
-             if let args = call.arguments as? Dictionary<String, Any>,
-                 let data = args["data"] as? [String : Any]{
-                 m_ziggeo?.uploadFromFileSelector( data );
-             }
+//              if let args = call.arguments as? Dictionary<String, Any>,
+//                  let data = args["args"] as? Dictionary<String, Any>{
+                    m_ziggeo?.uploadFromFileSelector(
+                       [Ziggeo_Key_Type.MEDIA_TYPES.rawValue:[Media_Type.Video.rawValue,
+                       Media_Type.Audio.rawValue,
+                       Media_Type.Image.rawValue]]
+                    );
+//              }
         } else if (call.method == "sendReport") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let logs = args["logs"] as? [String]{
@@ -200,10 +266,63 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin {
 
 }
 
-extension UIViewController: ZiggeoQRCodeReaderDelegate {
-    public func ziggeoQRCodeScaned(_ qrCode: String) {
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+
+        return nil
     }
 }
+
+    public enum Media_Type: String {
+        case Video = "video"
+        case Audio = "audio"
+        case Image = "image"
+    }
+
+    public enum Ziggeo_Key_Type : String {
+        case BYTES_SENT = "bytesSent"
+        case BYTES_TOTAL = "totalBytes"
+        case FILE_NAME = "fileName"
+        case PATH = "path"
+        case QR = "qr"
+        case TOKEN = "token"
+    //    case ERROR = "error"
+        case PERMISSIONS = "permissions"
+        case SOUND_LEVEL = "sound_level"
+        case SECONDS_LEFT = "seconds_left"
+        case MILLIS_PASSED = "millis_passed"
+        case MILLIS = "millis"
+        case FILES = "files"
+        case VALUE = "value"
+        case MEDIA_TYPES = "media_types"
+        case BLUR_EFFECT = "blur_effect"
+        case CLIENT_AUTH = "client_auth"
+        case SERVER_AUTH = "server_auth"
+        case TAGS = "tags"
+
+        static let allValues = [BYTES_SENT, BYTES_TOTAL, FILE_NAME, PATH, QR, TOKEN, /*ERROR,*/ PERMISSIONS, SOUND_LEVEL, SECONDS_LEFT, MILLIS_PASSED, MILLIS, FILES, VALUE, MEDIA_TYPES, BLUR_EFFECT, CLIENT_AUTH, SERVER_AUTH, TAGS]
+    }
 
 extension UIViewController: ZiggeoDelegate {
     // ZiggeoRecorderDelegate
