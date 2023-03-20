@@ -43,7 +43,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         flex: 1,
                         child: Padding(
                             padding: EdgeInsets.only(right: common_half_margin),
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () => this.onContactUsPressed(),
                               child: TextLocalized('btn_contact_us'),
                             ))),
@@ -51,7 +51,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         flex: 1,
                         child: Padding(
                             padding: EdgeInsets.only(left: common_half_margin),
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () => this.onVisitSupportPressed(),
                               child: TextLocalized('btn_visit_support'),
                             )))

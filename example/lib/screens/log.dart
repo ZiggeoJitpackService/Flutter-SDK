@@ -52,7 +52,7 @@ class _LogScreenState extends State<LogScreen> {
                     ))),
           Align(
             alignment: Alignment.bottomCenter,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () => this.onSendReportBtnPressed(),
               child: TextLocalized('btn_send_report'),
             ),

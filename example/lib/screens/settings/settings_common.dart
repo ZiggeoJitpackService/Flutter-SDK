@@ -242,7 +242,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
                     child: SizedBox(
                       width: btn_qr_width,
                       height: btn_qr_height,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           onSavedBtnPressed();
                         },

@@ -146,13 +146,13 @@ class _AppDrawerState extends State<AppDrawer> {
           return AlertDialog(
             content: TextLocalized('logout_message'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: TextLocalized('common_no'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: TextLocalized('common_yes'),
                 onPressed: () {
                   logout();
