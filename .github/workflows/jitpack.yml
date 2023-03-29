@@ -50,8 +50,8 @@ jobs:
           channel: beta
       - name: Add ios depends
         run: |
-          cd ios
           pub get
+          cd ios
           pod update
       - uses: futureware-tech/simulator-action@v2
         with:
