@@ -4,7 +4,7 @@ on:
     branches: [ 'ios_cicd_test' ]
 
 jobs:
-#  run_tests_android:
+#  `run_tests_android:
 #    runs-on: macos-latest
 #    defaults:
 #      run:
@@ -34,7 +34,7 @@ jobs:
 #          target: ${{ matrix.target }}
 #          working-directory: ./example
 #          profile: Nexus 5
-#          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
+#          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"`
 
 
   run_tests_ios:
@@ -54,12 +54,18 @@ jobs:
         env:
           DATA: ${{ secrets.PLAY_CONFIG_JSON }}
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
-      - name: "Run Flutter Driver tests"
-        uses: futureware-tech/simulator-action@v2
+#      - name: "Run Flutter Driver tests"
+#        uses: futureware-tech/simulator-action@v2
+#        with:
+#          model: 'iPhone 8'
+#          os_version: 11.0
+#          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
+
+      - uses: futureware-tech/simulator-action@v2
         with:
           model: 'iPhone 8'
           os_version: 11.0
-          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
+      - run: flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart
 
 #  publishing_sdk:
 #    runs-on: ubuntu-latest
