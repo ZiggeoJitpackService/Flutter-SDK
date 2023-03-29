@@ -51,6 +51,7 @@ jobs:
       - name: Add ios depends
         run: |
           cd ios
+          pub get
           pod update
       - uses: futureware-tech/simulator-action@v2
         with:
