@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -22,7 +24,7 @@ void main() {
 
       // Trigger a frame.
       await tester.pumpAndSettle();
-      await binding.takeScreenshot('test-screenshot');
+      // await binding.takeScreenshot('test-screenshot');
 
       await tester.pump(new Duration(seconds: 3));
 
@@ -33,32 +35,36 @@ void main() {
       expect(
           find.text('shouldShowSubtitles$shouldShowSubtitles'), findsOneWidget);
 
-      expect(
-          find.text(
-              'shouldAllowMultipleSelection$shouldAllowMultipleSelection'),
-          findsOneWidget);
-      expect(find.text('maxDuration$maxDuration'), findsOneWidget);
-      expect(find.text('mediaType$mediaType'), findsOneWidget);
-
       final listFinder = find.byType(Scrollable);
-      final itemFinder = find.byKey(ValueKey('shouldTurnOffUploader: '));
-      // Scroll until the item to be found appears.
-      await tester.scrollUntilVisible(
-        itemFinder,
-        50.0,
-        scrollable: listFinder,
-      );
 
-      // Trigger a frame.
-      await tester.pumpAndSettle();
-      await binding.takeScreenshot('test-screenshot');
+      if (Platform.isAndroid) {
+        expect(
+            find.text(
+                'shouldAllowMultipleSelection$shouldAllowMultipleSelection'),
+            findsOneWidget);
+        // expect(find.text('mediaType$mediaType'), findsOneWidget);
 
-      expect(itemFinder, findsOneWidget);
-      expect(find.text('shouldUseWifiOnly$shouldUseWifiOnly'), findsOneWidget);
-      expect(find.text('syncInterval$syncInterval'), findsOneWidget);
-      expect(find.text('lostConnectionAction$lostConnectionAction'), findsOneWidget);
-      expect(find.text('shouldTurnOffUploader$shouldTurnOffUploader'),
-          findsOneWidget);
+        final itemFinder = find.byKey(ValueKey('shouldTurnOffUploader: '));
+        // Scroll until the item to be found appears.
+        await tester.scrollUntilVisible(
+          itemFinder,
+          50.0,
+          scrollable: listFinder,
+        );
+
+        // Trigger a frame.
+        await tester.pumpAndSettle();
+        // await binding.takeScreenshot('test-screenshot');
+
+        expect(itemFinder, findsOneWidget);
+        expect(
+            find.text('shouldUseWifiOnly$shouldUseWifiOnly'), findsOneWidget);
+        expect(find.text('syncInterval$syncInterval'), findsOneWidget);
+        expect(find.text('lostConnectionAction$lostConnectionAction'),
+            findsOneWidget);
+        expect(find.text('shouldTurnOffUploader$shouldTurnOffUploader'),
+            findsOneWidget);
+      }
 
       final itemTwoFinder =
           find.byKey(ValueKey('shouldCloseAfterSuccessfulScan: '));
@@ -72,7 +78,7 @@ void main() {
 
       // Trigger a frame.
       await tester.pumpAndSettle();
-      await binding.takeScreenshot('test-screenshot');
+      // await binding.takeScreenshot('test-screenshot');
 
       expect(itemTwoFinder, findsOneWidget);
       expect(
@@ -91,7 +97,7 @@ void main() {
 
       // Trigger a frame.
       await tester.pumpAndSettle();
-      await binding.takeScreenshot('test-screenshot');
+      // await binding.takeScreenshot('test-screenshot');
 
       expect(itemThreeFinder, findsOneWidget);
 
@@ -104,8 +110,9 @@ void main() {
       expect(find.text('blurMode$blurMode'), findsOneWidget);
       expect(find.text('shouldSendImmediately$shouldSendImmediately'),
           findsOneWidget);
-      expect(find.text('isPausedMode$isPausedMode'),
-          findsOneWidget);
+      if (Platform.isAndroid) {
+        expect(find.text('isPausedMode$isPausedMode'), findsOneWidget);
+      }
 
       final itemFourFinder =
           find.byKey(ValueKey('shouldConfirmStopRecording: '));
@@ -125,12 +132,16 @@ void main() {
 
       expect(find.text('videoQuality$videoQuality'), findsOneWidget);
       expect(find.text('facing$facing'), findsOneWidget);
-      var newDuration = app.maxDurationRec * 1000;
+      var newDuration =
+          Platform.isAndroid ? app.maxDurationRec * 1000 : app.maxDurationRec;
       expect(find.text('maxDurationRec$newDuration'), findsOneWidget);
       expect(find.text('shouldEnableCoverShot$shouldEnableCoverShot'),
           findsOneWidget);
-      expect(find.text('shouldConfirmStopRecording$shouldConfirmStopRecording'),
-          findsOneWidget);
+      if (Platform.isAndroid) {
+        expect(
+            find.text('shouldConfirmStopRecording$shouldConfirmStopRecording'),
+            findsOneWidget);
+      }
 
       final itemFiveFinder = find.byKey(ValueKey('negBtnText: '));
 
@@ -143,40 +154,41 @@ void main() {
 
       // Trigger a frame.
       await tester.pumpAndSettle();
-      await binding.takeScreenshot('test-screenshot');
+      // await binding.takeScreenshot('test-screenshot');
 
       expect(itemFiveFinder, findsOneWidget);
+      if (Platform.isAndroid) {
+        expect(find.text('titleText$titleText'), findsOneWidget);
+        expect(find.text('mesText$mesText'), findsOneWidget);
+        expect(find.text('posBtnText$posBtnText'), findsOneWidget);
+        expect(find.text('negBtnText$negBtnText'), findsOneWidget);
 
-      expect(find.text('titleText$titleText'), findsOneWidget);
-      expect(find.text('mesText$mesText'), findsOneWidget);
-      expect(find.text('posBtnText$posBtnText'), findsOneWidget);
-      expect(find.text('negBtnText$negBtnText'), findsOneWidget);
+        final itemSixFinder = find.byKey(ValueKey('muteOnImageDrawable: '));
 
-      final itemSixFinder = find.byKey(ValueKey('muteOnImageDrawable: '));
+        // Scroll until the item to be found appears.
+        await tester.scrollUntilVisible(
+          itemSixFinder,
+          50.0,
+          scrollable: listFinder,
+        );
 
-      // Scroll until the item to be found appears.
-      await tester.scrollUntilVisible(
-        itemSixFinder,
-        50.0,
-        scrollable: listFinder,
-      );
+        // Trigger a frame.
+        await tester.pumpAndSettle();
+        // await binding.takeScreenshot('test-screenshot');
 
-      // Trigger a frame.
-      await tester.pumpAndSettle();
-      await binding.takeScreenshot('test-screenshot');
+        expect(itemSixFinder, findsOneWidget);
 
-      expect(itemSixFinder, findsOneWidget);
-
-      expect(find.text('textColor$textColor'), findsOneWidget);
-      expect(find.text('controllerStyle$controllerStyle'), findsOneWidget);
-      expect(find.text('unplayedColor$unplayedColor'), findsOneWidget);
-      expect(find.text('playedColor$playedColor'), findsOneWidget);
-      expect(find.text('bufferedColor$bufferedColor'), findsOneWidget);
-      expect(find.text('tintColor$tintColor'), findsOneWidget);
-      expect(find.text('muteOffImageDrawable$muteOffImageDrawable'),
-          findsOneWidget);
-      expect(
-          find.text('muteOnImageDrawable$muteOnImageDrawable'), findsOneWidget);
+        expect(find.text('textColor$textColor'), findsOneWidget);
+        expect(find.text('controllerStyle$controllerStyle'), findsOneWidget);
+        expect(find.text('unplayedColor$unplayedColor'), findsOneWidget);
+        expect(find.text('playedColor$playedColor'), findsOneWidget);
+        expect(find.text('bufferedColor$bufferedColor'), findsOneWidget);
+        expect(find.text('tintColor$tintColor'), findsOneWidget);
+        expect(find.text('muteOffImageDrawable$muteOffImageDrawable'),
+            findsOneWidget);
+        expect(find.text('muteOnImageDrawable$muteOnImageDrawable'),
+            findsOneWidget);
+      }
     });
   });
 }

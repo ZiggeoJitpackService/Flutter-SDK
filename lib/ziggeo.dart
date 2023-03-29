@@ -60,7 +60,7 @@ class Ziggeo {
   PlayerConfig? get playerConfig => _playerConfig;
 
   Future<PlayerConfig?> getPlayerConfig() async {
-    return _playerConfig?.convertFromMap(
+    return PlayerConfig.convertFromMap(
         json.decode((await _ziggeoChannel.invokeMethod('getPlayerConfig')))
             as Map<String, dynamic>);
   }
@@ -87,7 +87,7 @@ class Ziggeo {
   FileSelectorConfig? get fileSelectorConfig => _fileSelectorConfig;
 
   Future<FileSelectorConfig?> getFileSelectorConfig() async {
-    return _fileSelectorConfig?.convertFromMap(json.decode(
+    return FileSelectorConfig.convertFromMap(json.decode(
             (await _ziggeoChannel.invokeMethod('getFileSelectorConfig')))
         as Map<String, dynamic>);
   }
@@ -107,7 +107,7 @@ class Ziggeo {
   }
 
   Future<QrScannerConfig?> getQrScannerConfig() async {
-    return _qrScannerConfig?.convertFromMap(
+    return QrScannerConfig.convertFromMap(
         json.decode((await _ziggeoChannel.invokeMethod('getQrScannerConfig')))
             as Map<String, dynamic>);
   }
@@ -144,7 +144,7 @@ class Ziggeo {
   }
 
   Future<RecorderConfig?> getRecorderConfig() async {
-    return _recorderConfig?.convertFromMap(
+    return RecorderConfig.convertFromMap(
         json.decode((await _ziggeoChannel.invokeMethod('getRecorderConfig')))
             as Map<String, dynamic>);
   }

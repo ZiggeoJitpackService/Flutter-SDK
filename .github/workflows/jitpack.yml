@@ -1,19 +1,47 @@
 name: Ziggeo Test and Publish Release
 on:
   push:
-    branches: [ 'master' ]
+    branches: [ 'ios_cicd_test' ]
 
 jobs:
-  run_tests:
+#  run_tests_android:
+#    runs-on: macos-latest
+#    defaults:
+#      run:
+#        working-directory: ./example
+#    strategy:
+#      matrix:
+#        api-level: [ 28 ]
+#        target: [ default ]
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: subosito/flutter-action@v1
+#        with:
+#          flutter-version: '2.11.0-0.1.pre'
+#          channel: beta
+#      - name: Create google services file
+#        run: cat /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json | base64
+#      - name: Putting google services data
+#        env:
+#          DATA: ${{ secrets.PLAY_CONFIG_JSON }}
+#        run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
+#      - name: Doctor
+#        run: flutter doctor -v
+#      - name: "Run Flutter Driver tests"
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: ${{ matrix.api-level }}
+#          target: ${{ matrix.target }}
+#          working-directory: ./example
+#          profile: Nexus 5
+#          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
+
+
+  run_tests_ios:
     runs-on: macos-latest
-    needs: publishing_sdk
     defaults:
       run:
         working-directory: ./example
-    strategy:
-      matrix:
-        api-level: [ 28 ]
-        target: [ default ]
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
@@ -26,81 +54,77 @@ jobs:
         env:
           DATA: ${{ secrets.PLAY_CONFIG_JSON }}
         run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
-      - name: Doctor
-        run: flutter doctor -v
       - name: "Run Flutter Driver tests"
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: futureware-tech/simulator-action@v2
         with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          working-directory: ./example
-          profile: Nexus 5
+          model: 'iPhone 8'
+          os_version: 11.0
           script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
-  publishing_sdk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v2
-
-      - name: '>> Dart package <<'
-        uses: k-paxian/dart-package-publisher@master
-        with:
-          accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
-          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
-
-  publishing_demo:
-    runs-on: macos-latest
-    needs: run_tests
-    defaults:
-      run:
-        working-directory: ./example
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: '11'
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '2.11.0-0.1.pre'
-          channel: beta
-      - name: Create google services file
-        run: cat /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json | base64
-      - name: Putting google services data
-        env:
-          DATA: ${{ secrets.PLAY_CONFIG_JSON }}
-        run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
-
-      - name: Download Android keystore
-        id: android_keystore
-        uses: timheuer/base64-to-file@v1.0.3
-        with:
-          fileName: z_release_keystore.jks
-          encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-
-      - name: Create key.properties
-        run: |
-          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
-          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
-          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
-
-      - run: flutter pub get
-      - run: flutter build apk --release
-      - uses: actions/upload-artifact@v1
-        with:
-          name: androidFlutter-v1.0.6-release-signed.apk
-          path: example/build/app/outputs/flutter-apk/app-release.apk
-          token: ${{ secrets.UPLOAD_TOKEN }}
-
-      - name: Publish APK test
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-          packageName: com.ziggeo.flutter.demo
-          releaseFiles: example/build/app/outputs/flutter-apk/app-release.apk
-          track: internal
-          status: inProgress
-          inAppUpdatePriority: 2
-          userFraction: 0.33
+#  publishing_sdk:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: 'Checkout'
+#        uses: actions/checkout@v2
+#
+#      - name: '>> Dart package <<'
+#        uses: k-paxian/dart-package-publisher@master
+#        with:
+#          accessToken: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
+#          refreshToken: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
+#
+#  publishing_demo:
+#    runs-on: macos-latest
+#    needs: run_tests
+#    defaults:
+#      run:
+#        working-directory: ./example
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-java@v2
+#        with:
+#          distribution: 'zulu'
+#          java-version: '11'
+#      - uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '2.11.0-0.1.pre'
+#          channel: beta
+#      - name: Create google services file
+#        run: cat /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json | base64
+#      - name: Putting google services data
+#        env:
+#          DATA: ${{ secrets.PLAY_CONFIG_JSON }}
+#        run: echo $DATA > /Users/runner/work/Flutter-SDK/Flutter-SDK/example/android/app/google-services.json
+#
+#      - name: Download Android keystore
+#        id: android_keystore
+#        uses: timheuer/base64-to-file@v1.0.3
+#        with:
+#          fileName: z_release_keystore.jks
+#          encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+#
+#      - name: Create key.properties
+#        run: |
+#          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+#          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+#          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+#          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+#
+#      - run: flutter pub get
+#      - run: flutter build apk --release
+#      - uses: actions/upload-artifact@v1
+#        with:
+#          name: androidFlutter-v1.0.6-release-signed.apk
+#          path: example/build/app/outputs/flutter-apk/app-release.apk
+#          token: ${{ secrets.UPLOAD_TOKEN }}
+#
+#      - name: Publish APK test
+#        uses: r0adkll/upload-google-play@v1
+#        with:
+#          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+#          packageName: com.ziggeo.flutter.demo
+#          releaseFiles: example/build/app/outputs/flutter-apk/app-release.apk
+#          track: internal
+#          status: inProgress
+#          inAppUpdatePriority: 2
+#          userFraction: 0.33

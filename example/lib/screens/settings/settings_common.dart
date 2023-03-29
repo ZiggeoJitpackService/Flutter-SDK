@@ -260,9 +260,9 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
     ziggeo.fileSelectorConfig = FileSelectorConfig(
       shouldAllowMultipleSelection: _shouldAllowMultipleSelection,
       mediaType: (_mediaType != null)
-          ? int.parse(_mediaType!)
-          : (ziggeo.fileSelectorConfig?.mediaType ??
-              FileSelectorConfig.videoMediaType),
+          ? [int.parse(_mediaType![0])]
+          : ([ziggeo.fileSelectorConfig?.mediaType[0] ??
+              FileSelectorConfig.videoMediaType]),
     );
     ziggeo.qrScannerConfig = QrScannerConfig(
       shouldCloseAfterSuccessfulScan: _shouldCloseAfterSuccessfulScan,

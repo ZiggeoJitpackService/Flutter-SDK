@@ -75,22 +75,22 @@ class RecorderConfig extends BaseConfig {
     RecorderEventsListener? eventsListener,
   });
 
-  RecorderConfig convertFromMap(Map<String, dynamic> map) {
-    shouldShowFaceOutline = map["shouldShowFaceOutline"];
-    isLiveStreaming = map["isLiveStreaming"];
-    shouldAutoStartRecording = map["shouldAutoStartRecording"];
-    startDelay = map["startDelay"];
-    blurMode = map["blurMode"];
-    shouldSendImmediately = map["shouldSendImmediately"];
-    shouldDisableCameraSwitch = map["shouldDisableCameraSwitch"];
-    videoQuality = map["videoQuality"];
-    facing = map["facing"];
-    maxDuration = map["maxDuration"];
-    shouldEnableCoverShot = map["shouldEnableCoverShot"];
-    shouldConfirmStopRecording = map["shouldConfirmStopRecording"];
-    stopRecordingConfirmationDialogConfig =
+  static RecorderConfig convertFromMap(Map<String, dynamic> map) {
+    var shouldShowFaceOutline = map["shouldShowFaceOutline"];
+    var isLiveStreaming = map["isLiveStreaming"];
+    var shouldAutoStartRecording = map["shouldAutoStartRecording"];
+    var startDelay = map["startDelay"];
+    var blurMode = map["blurMode"];
+    var shouldSendImmediately = map["shouldSendImmediately"];
+    var shouldDisableCameraSwitch = map["shouldDisableCameraSwitch"];
+    var videoQuality = map["videoQuality"];
+    var facing = map["facing"];
+    var maxDuration = map["maxDuration"];
+    var shouldEnableCoverShot = map["shouldEnableCoverShot"];
+    var shouldConfirmStopRecording = map["shouldConfirmStopRecording"];
+    var stopRecordingConfirmationDialogConfig =
         map["stopRecordingConfirmationDialogConfig"];
-    isPausedMode = map["isPausedMode"];
+    var isPausedMode = map["isPausedMode"];
     return RecorderConfig(
       shouldShowFaceOutline: shouldShowFaceOutline,
       isLiveStreaming: isLiveStreaming,
@@ -105,8 +105,8 @@ class RecorderConfig extends BaseConfig {
       shouldEnableCoverShot: shouldEnableCoverShot,
       shouldConfirmStopRecording: shouldConfirmStopRecording,
       stopRecordingConfirmationDialogConfig:
-          stopRecordingConfirmationDialogConfig,
-      isPausedMode: isPausedMode,
+          stopRecordingConfirmationDialogConfig ?? StopRecordingConfirmationDialogConfig(),
+      isPausedMode: isPausedMode ?? true,
     );
   }
 

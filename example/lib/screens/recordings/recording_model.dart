@@ -38,7 +38,9 @@ class RecordingModel {
       state: json['state_string'],
       title: json['title'],
       description: json['description'],
-      tags: json['tags']?.cast<String>(),
+      tags: (json['tags'] != null && json['tags'] is List)
+          ? json['tags']?.cast<String>()
+          : null,
       created: json['created'],
     );
   }
@@ -62,7 +64,11 @@ class RecordingModel {
     map['state_string'] = state;
     map['title'] = title;
     map['description'] = description;
-    map['tags'] = (tags != null) ? tags!.cast<String>() : '';
+    map['tags'] = (tags != null &&
+            tags?.cast<String>() != null &&
+            tags!.cast<String>().isNotEmpty)
+        ? tags!.cast<String>()
+        : '';
     map['created'] = (created != null) ? created!.toString() : '';
     return map;
   }

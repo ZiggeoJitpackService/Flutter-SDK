@@ -201,8 +201,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
               (value) => json
                   .decode(value!)
                   .cast<Map<String, dynamic>>()
-                  .map<RecordingModel>((json) =>
-                      RecordingModel.fromJson(json, RecordingModel.video_type))
+                  .map<RecordingModel>((json) => RecordingModel.fromJson(json, RecordingModel.video_type))
                   .toList()))()
           .then((value) {}, onError: (error) => isLoading = false),
       (() async => recordingsAudio = await ziggeo.audios.index(null).then(

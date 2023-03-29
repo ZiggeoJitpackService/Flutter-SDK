@@ -60,25 +60,69 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
         } else if (call.method == "startQrScanner") {
             self.result = { res in result(res);};
             m_ziggeo = Ziggeo(qrCodeReaderDelegate: self as! ZiggeoQRCodeReaderDelegate);
-//             if let args = call.arguments as? Dictionary<String, Any>,
-//                let shouldCloseAfterSuccessfulScan = args["shouldCloseAfterSuccessfulScan"] as? Bool{
             m_ziggeo?.startQrScanner();
         } else if (call.method == "getPlayerConfig") {
-//              no getters
+                  var res = m_ziggeo?.getVideoPlayerConfig()
+                  let encoder = JSONEncoder()
+                  do {
+                      let modelData = try encoder.encode(res)
+                      let jsonString = String(data: modelData, encoding: .utf8)
+                      result(jsonString)
+                  } catch {
+                      print(error)
+                  }
         } else if (call.method == "getPlayerStyle") {
 //              no getters
         } else if (call.method == "setPlayerConfig") {
-//              todo  add PlayerConfig params
+          var shouldShowSubtitlesParam = false;
+          var isMutedParam = false;
+          if let args = call.arguments as? Dictionary<String, Any>{
+             if let shouldShowSubtitles = args["shouldShowSubtitles"] as? Bool{
+                 shouldShowSubtitlesParam = shouldShowSubtitles;
+                 }
+             if let isMuted = args["isMuted"] as? Bool{
+                 isMutedParam = isMuted;
+                }
+             }
+          m_ziggeo?.setVideoPlayerConfig(["shouldShowSubtitles": shouldShowSubtitlesParam,
+                                     "isMuted": isMutedParam
+                                    ]);
         } else if (call.method == "setPlayerStyle") {
-//              no style
+//              todo  add PlayerStyle params
         } else if (call.method == "getFileSelectorConfig") {
-//              no getters
+                  var res = m_ziggeo?.getFileSelectorConfig()
+                  let encoder = JSONEncoder()
+                  do {
+                      let modelData = try encoder.encode(res)
+                      let jsonString = String(data: modelData, encoding: .utf8)
+                      result(jsonString)
+                  } catch {
+                      print(error)
+                  }
         } else if (call.method == "setFileSelectorConfig") {
-//              no config
+          var mediaTypeParam = 0x01;
+          if let args = call.arguments as? Dictionary<String, Any>,
+             let mediaType = args["mediaType"] as? Int{
+                 mediaTypeParam = mediaType;
+             }
+          m_ziggeo?.setFileSelectorConfig(["mediaType": mediaTypeParam]);
         } else if (call.method == "setQrScannerConfig") {
-//              no config
+          var shouldCloseParam = true;
+          if let args = call.arguments as? Dictionary<String, Any>,
+             let shouldCloseAfterSuccessfulScan = args["shouldCloseAfterSuccessfulScan"] as? Bool{
+                 shouldCloseParam = shouldCloseAfterSuccessfulScan;
+             }
+          m_ziggeo?.setQrScannerConfig([CLOSE_AFTER_SUCCESS_FUL_SCAN: shouldCloseParam]);
         } else if (call.method == "getQrScannerConfig") {
-//              no config
+                  var res = m_ziggeo?.getQrScannerConfig()
+                  let encoder = JSONEncoder()
+                  do {
+                      let modelData = try encoder.encode(res)
+                      let jsonString = String(data: modelData, encoding: .utf8)
+                      result(jsonString)
+                  } catch {
+                      print(error)
+                  }
         } else if (call.method == "setUploadingConfig") {
 //              no config
         } else if (call.method == "getUploadingConfig") {
@@ -86,55 +130,94 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
         } else if (call.method == "setRecordingConfirmationDialogConfig") {
 //              no config
         } else if (call.method == "setRecorderConfig") {
-            var mapRecorderConfigParams = [String: Any]();
+                    var isLiveStreamingParam = false
+                    var blurModeParam = false
+                    var shouldSendImmediatelyParam = false
+                    var shouldDisableCameraSwitchParam = false
+                    var shouldEnableCoverShotParam = false
+                    var shouldAutoStartRecordingParam = false
+                    var shouldShowFaceOutlineParam = false
+                    var facingParam = 0
+                    var startDelayParam = 0
+                    var videoQualityParam = 1
+                    var maxDurationParam = 0
             if let args = call.arguments as? Dictionary<String, Any>,
               let coverSelectorEnabled = args["shouldEnableCoverShot"] as? Bool{
-              m_ziggeo?.setCoverSelectorEnabled(coverSelectorEnabled);
+              shouldEnableCoverShotParam = coverSelectorEnabled;
+//               m_ziggeo?.setCoverSelectorEnabled(coverSelectorEnabled);
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let isLiveStreaming = args["isLiveStreaming"] as? Bool{
-              m_ziggeo?.setLiveStreamingEnabled(isLiveStreaming);
+              isLiveStreamingParam = isLiveStreaming;
+//               m_ziggeo?.setLiveStreamingEnabled(isLiveStreaming);
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let startDelay = args["startDelay"] as? Int{
-              m_ziggeo?.setAutostartRecordingAfter(startDelay);
-              m_ziggeo?.setStartDelay(startDelay);
+              startDelayParam = startDelay;
+              shouldAutoStartRecordingParam = startDelayParam > 0;
+//               m_ziggeo?.setAutostartRecordingAfter(startDelay);
+//               m_ziggeo?.setStartDelay(startDelay);
+            }
+            if let args = call.arguments as? Dictionary<String, Any>,
+              let shouldShowFaceOutline = args["shouldShowFaceOutline"] as? Bool{
+              shouldShowFaceOutlineParam = shouldShowFaceOutline;
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let blurMode = args["blurMode"] as? Bool{
-              m_ziggeo?.setBlurMode(blurMode);
+              blurModeParam = blurMode;
+//               m_ziggeo?.setBlurMode(blurMode);
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let maxDuration = args["maxDuration"] as? Int{
-              m_ziggeo?.setMaxRecordingDuration(maxDuration);
+              maxDurationParam = maxDuration;
+//               m_ziggeo?.setMaxRecordingDuration(maxDuration);
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let shouldSendImmediately = args["shouldSendImmediately"] as? Bool{
-              m_ziggeo?.setSendImmediately(shouldSendImmediately);
+              shouldSendImmediatelyParam = shouldSendImmediately;
+//               m_ziggeo?.setSendImmediately(shouldSendImmediately);
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let shouldDisableCameraSwitch = args["shouldDisableCameraSwitch"] as? Bool{
-              m_ziggeo?.setCameraSwitchEnabled(!shouldDisableCameraSwitch);
+              shouldDisableCameraSwitchParam = shouldDisableCameraSwitch;
+//               m_ziggeo?.setCameraSwitchEnabled(!shouldDisableCameraSwitch);
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let videoQuality = args["videoQuality"] as? Int{
-                 m_ziggeo?.setQuality(videoQuality);
+              videoQualityParam = videoQuality;
+//                  m_ziggeo?.setQuality(videoQuality);
             }
             if let args = call.arguments as? Dictionary<String, Any>,
               let facing = args["facing"] as? Int{
-                 if(facing == 0){
-                    m_ziggeo?.setCamera(REAR_CAMERA);
-                 }
-                 if(facing == 1){
-                    m_ziggeo?.setCamera(FRONT_CAMERA);
-                 }
+              facingParam = facing;
             }
+            m_ziggeo?.setVideoRecorderConfig([
+                 "isLiveStreaming": isLiveStreamingParam,
+                 "blurMode": blurModeParam,
+                 "shouldSendImmediately": shouldSendImmediatelyParam,
+                 "shouldDisableCameraSwitch": shouldDisableCameraSwitchParam,
+                 "shouldEnableCoverShot": shouldEnableCoverShotParam,
+                 "shouldAutoStartRecording": shouldAutoStartRecordingParam,
+                 "shouldShowFaceOutline":shouldShowFaceOutlineParam,
+                 "facing":facingParam,
+                 "startDelay": startDelayParam,
+                 "videoQuality": videoQualityParam,
+                 "maxDuration": maxDurationParam
+            ]);
         } else if (call.method == "getRecorderConfig") {
-//              no config getters
+                  var res = m_ziggeo?.getVideoRecorderConfig()
+                  let encoder = JSONEncoder()
+                  do {
+                      let modelData = try encoder.encode(res)
+                      let jsonString = String(data: modelData, encoding: .utf8)
+                      result(jsonString)
+                  } catch {
+                      print(error)
+                  }
         } else if (call.method == "getStopRecordingConfirmationDialogConfig") {
 //              no config
         } else if (call.method == "getAppToken") {
-//              no getters
+                result(m_ziggeo?.getAppToken());
         } else if (call.method == "cancelUploadByPath") {
                if let args = call.arguments as? Dictionary<String, Any>,
                    let deleteFile = args["deleteFile"] as? Bool,
@@ -144,19 +227,19 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
         } else if (call.method == "cancelCurrentUpload") {
 //              m_ziggeo?.cancelUpload();
         } else if (call.method == "getClientAuthToken") {
-//              no getters
+                result(m_ziggeo?.getClientAuthToken());
         } else if (call.method == "setClientAuthToken") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let clientAuthToken = args["clientAuthToken"] as? String{
-//               no setters
+                 m_ziggeo?.setClientAuthToken(clientAuthToken)
              }
         } else if (call.method == "setServerAuthToken") {
              if let args = call.arguments as? Dictionary<String, Any>,
-                 let clientAuthToken = args["serverAuthToken"] as? String{
-//               no setters
+                 let serverAuthToken = args["serverAuthToken"] as? String{
+                 m_ziggeo?.setServerAuthToken(serverAuthToken)
              }
         } else if (call.method == "getServerAuthToken") {
-//               no getters
+                 result(m_ziggeo?.getServerAuthToken());
         } else if (call.method == "startCameraRecorder") {
              m_ziggeo?.record();
         } else if (call.method == "startAudioRecorder") {
@@ -167,14 +250,21 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
                  m_ziggeo?.startAudioPlayer( [tokens]);
              }
         } else if (call.method == "startAudioPlayerByPath") {
-//              no method
+             if let args = call.arguments as? Dictionary<String, Any>,
+                 let paths = args["path"] as? String{
+                 m_ziggeo?.startAudioPlayerByPaths( [paths]);
+             }
+          m_ziggeo?.startAudioPlayerByPaths( ["paths"]);
         } else if (call.method == "showImageByToken") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let tokens = args["token"] as? String{
                  m_ziggeo?.showImage( [tokens]);
              }
         } else if (call.method == "showImageByPath") {
-//              no method
+             if let args = call.arguments as? Dictionary<String, Any>,
+                 let paths = args["path"] as? String{
+                 m_ziggeo?.showImageByPath( [paths]);
+             }
         } else if (call.method == "startImageRecorder") {
              m_ziggeo?.startImageRecorder();
         } else if (call.method == "startPlayer") {

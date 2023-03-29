@@ -7,13 +7,13 @@ class FileSelectorConfig extends BaseConfig {
   static const imageMediaType = 0x04;
 
   var shouldAllowMultipleSelection = false;
-  var mediaType = videoMediaType;
+  var mediaType = [videoMediaType];
 
   FileSelectorEventsListener? eventsListener;
 
   FileSelectorConfig({
     this.shouldAllowMultipleSelection = false,
-    this.mediaType = videoMediaType,
+    this.mediaType = const [videoMediaType],
   });
 
   @override
@@ -24,12 +24,17 @@ class FileSelectorConfig extends BaseConfig {
     return map;
   }
 
-  FileSelectorConfig convertFromMap(Map<String, dynamic> map) {
-    shouldAllowMultipleSelection = map["shouldAllowMultipleSelection"];
-    mediaType = map["mediaType"];
+  static FileSelectorConfig convertFromMap(Map<String, dynamic> map) {
+    var shouldAllowMultipleSelection =
+        map["shouldAllowMultipleSelection"] ?? false;
+    var mediaType = map["mediaType"];
+
+    print("mediaType");
+    print(mediaType);
+
     return FileSelectorConfig(
       shouldAllowMultipleSelection: shouldAllowMultipleSelection,
-      mediaType: mediaType,
+      mediaType: [mediaType],
     );
   }
 }
