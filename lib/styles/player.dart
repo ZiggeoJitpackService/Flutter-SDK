@@ -19,7 +19,7 @@ class PlayerStyle extends BaseStyle {
   int? muteOnImageDrawable;
 
   static PlayerStyle defaultPlayerStyle() {
-    return PlayerStyle(controllerStyle: DEFAULT);
+    return PlayerStyle(controllerStyle: MODERN);
   }
 
   PlayerStyle({
@@ -33,15 +33,15 @@ class PlayerStyle extends BaseStyle {
     this.muteOnImageDrawable,
   });
 
-  PlayerStyle convertFromMap(Map<String, dynamic> map) {
-    controllerStyle = map["controllerStyle"];
-    textColor = map["textColor"];
-    unplayedColor = map["unplayedColor"];
-    playedColor = map["playedColor"];
-    bufferedColor = map["bufferedColor"];
-    tintColor = map["tintColor"];
-    muteOffImageDrawable = map["muteOffImageDrawable"];
-    muteOnImageDrawable = map["muteOnImageDrawable"];
+  static PlayerStyle convertFromMap(Map<String, dynamic> map) {
+    var controllerStyle = map["controllerStyle"];
+    var textColor = map["textColor"];
+    var unplayedColor = map["unplayedColor"];
+    var playedColor = map["playedColor"];
+    var bufferedColor = map["bufferedColor"];
+    var tintColor = map["tintColor"];
+    var muteOffImageDrawable = map["muteOffImageDrawable"];
+    var muteOnImageDrawable = map["muteOnImageDrawable"];
     return PlayerStyle(
       controllerStyle: controllerStyle,
       textColor: textColor,

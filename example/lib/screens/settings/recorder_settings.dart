@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
 import 'package:ziggeo/recorder/stop_recording_confirmation_dialog_config.dart';
 import 'package:ziggeo/ziggeo.dart';
@@ -7,8 +8,6 @@ import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
-
-import '../../localization.dart';
 
 class RecorderSettingsScreen extends StatefulWidget {
   Ziggeo ziggeo;
@@ -407,13 +406,15 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
     config.shouldEnableCoverShot = _shouldEnableCoverShot;
     config.shouldConfirmStopRecording = _shouldConfirmStopRecording;
     config.isPausedMode = _isPausedMode;
-    config.stopRecordingConfirmationDialogConfig =
-        StopRecordingConfirmationDialogConfig(
-      titleText: _titleText,
-      mesText: _mesText,
-      posBtnText: _posBtnText,
-      negBtnText: _negBtnText,
-    );
+    if (Platform.isAndroid) {
+      config.stopRecordingConfirmationDialogConfig =
+          StopRecordingConfirmationDialogConfig(
+        titleText: _titleText,
+        mesText: _mesText,
+        posBtnText: _posBtnText,
+        negBtnText: _negBtnText,
+      );
+    }
     ziggeo.recorderConfig = config;
   }
 

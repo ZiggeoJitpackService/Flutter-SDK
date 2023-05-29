@@ -19,6 +19,12 @@ Ziggeo Flutter Plugin
 
 
   s.frameworks = 'ZiggeoMediaSwiftSDK'
+#   , 'SelfieSegmentation'
+#   s.dependency       'GoogleAds-IMA-iOS-SDK', '3.14.5'
+# s.vendored_frameworks    = 'ZiggeoMediaSwiftSDK.framework'
+#   s.vendored_frameworks    = 'Frameworks/GoogleInteractiveMediaAds.framework'
+#   s.vendored_frameworks    = 'Frameworks/SelfieSegmentation.framework', 'Frameworks/ZiggeoMediaSwiftSDK.framework'
+#   s.frameworks = 'GoogleInteractiveMediaAds'
   s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '${PROJECT_DIR}/ios' }
 
   # Flutter.framework does not contain a i386 slice.
