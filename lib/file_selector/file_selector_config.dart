@@ -57,8 +57,9 @@ class FileSelectorConfig extends BaseConfig {
         }
     }
 
-    print("mediaType");
-    print(mediaType);
+    if (mediaType is List<dynamic>) {
+      mediaType = videoMediaType;
+    }
 
     return FileSelectorConfig(
       shouldAllowMultipleSelection: shouldAllowMultipleSelection,

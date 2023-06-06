@@ -76,15 +76,15 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
                       print(error)
                   }
         } else if (call.method == "getPlayerStyle") {
-//                 var res = m_ziggeo?.getVideoPlayerStyle()
-//                   let encoder = JSONEncoder()
-//                   do {
-//                       let modelData = try encoder.encode(res)
-//                       let jsonString = String(data: modelData, encoding: .utf8)
-//                       result(jsonString)
-//                   } catch {
-//                       print(error)
-//                   }
+                var res = m_ziggeo?.getVideoPlayerStyle()
+                  let encoder = JSONEncoder()
+                  do {
+                      let modelData = try encoder.encode(res)
+                      let jsonString = String(data: modelData, encoding: .utf8)
+                      result(jsonString)
+                  } catch {
+                      print(error)
+                  }
         } else if (call.method == "setPlayerConfig") {
           var shouldShowSubtitlesParam = false;
           var isMutedParam = false;
@@ -126,16 +126,16 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
                  }
              }
           }
-//           m_ziggeo?.setVideoPlayerConfig(["shouldShowSubtitles": shouldShowSubtitlesParam,
-//                                      "isMuted": isMutedParam,
-//                                      "playerStyle": ["controllerStyle": controllerStyleParam,
-//                                                      "textColor": textColorParam,
-//                                                      "unplayedColor": unplayedColorParam,
-//                                                      "playedColor": playedColorParam,
-//                                                      "tintColor": tintColorParam,
-//                                                      "muteOffImageDrawable": muteOffImageDrawableParam,
-//                                                      "muteOnImageDrawable": muteOnImageDrawableParam]
-//           ]);
+          m_ziggeo?.setVideoPlayerConfig(["shouldShowSubtitles": shouldShowSubtitlesParam,
+                                     "isMuted": isMutedParam,
+                                     "playerStyle": ["controllerStyle": controllerStyleParam,
+                                                     "textColor": textColorParam,
+                                                     "unplayedColor": unplayedColorParam,
+                                                     "playedColor": playedColorParam,
+                                                     "tintColor": tintColorParam,
+                                                     "muteOffImageDrawable": muteOffImageDrawableParam,
+                                                     "muteOnImageDrawable": muteOnImageDrawableParam]
+          ]);
         } else if (call.method == "setPlayerStyle") {
           var controllerStyleParam = 0
           var textColorParam: Int? = nil
@@ -167,14 +167,14 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
                  muteOnImageDrawableParam = muteOnImageDrawable;
                  }
              }
-//               m_ziggeo?.setVideoPlayerStyle(["controllerStyle": controllerStyleParam,
-//                                              "textColor": textColorParam,
-//                                              "unplayedColor": unplayedColorParam,
-//                                              "playedColor": playedColorParam,
-//                                              "tintColor": tintColorParam,
-//                                              "muteOffImageDrawable": muteOffImageDrawableParam,
-//                                              "muteOnImageDrawable": muteOnImageDrawableParam]
-//                        );
+              m_ziggeo?.setVideoPlayerStyle(["controllerStyle": controllerStyleParam,
+                                             "textColor": textColorParam,
+                                             "unplayedColor": unplayedColorParam,
+                                             "playedColor": playedColorParam,
+                                             "tintColor": tintColorParam,
+                                             "muteOffImageDrawable": muteOffImageDrawableParam,
+                                             "muteOnImageDrawable": muteOnImageDrawableParam]
+                       );
         } else if (call.method == "getFileSelectorConfig") {
                   var res = m_ziggeo?.getFileSelectorConfig()
                   let encoder = JSONEncoder()
@@ -498,8 +498,8 @@ class ZPlayerViewFactory: NSObject, FlutterPlatformViewFactory {
 }
 
 class ZPlayerView: NSObject, FlutterPlatformView {
-//     private var _view: CustomVideoPlayer
-    private var _view: UIView
+    private var _view: CustomVideoPlayer
+//     private var _view: UIView
     private var _methodChannel: FlutterMethodChannel
     private var _ziggeo: Ziggeo
 
@@ -511,8 +511,8 @@ class ZPlayerView: NSObject, FlutterPlatformView {
         binaryMessenger messenger: FlutterBinaryMessenger?
     ) {
         _ziggeo = ziggeo
-         _view = UIView()
-//         _view = CustomVideoPlayer(ziggeo: ziggeo)
+//          _view = UIView()
+        _view = CustomVideoPlayer(ziggeo: ziggeo)
         _methodChannel = FlutterMethodChannel(name: "z_video_view", binaryMessenger: messenger!)
         super.init()
         // iOS views can be created here
@@ -520,8 +520,8 @@ class ZPlayerView: NSObject, FlutterPlatformView {
     }
 
     func view() -> UIView {
-//         return _view.view
-        return _view
+        return _view.view
+//         return _view
     }
 
     func createNativeView(view _view: UIView){
@@ -542,21 +542,21 @@ class ZPlayerView: NSObject, FlutterPlatformView {
             setText(call:call, result:result)
             case "getCallback":
             setText(call:call, result:result)
-//             case "prepareQueueAndStartPlaying":
-//                 _view.play();
-//             case "setVideoToken":
-//                if let args = call.arguments as? Dictionary<String, Any>,
-//                   let videoToken = args["videoToken"] as? String{
-//                      _view.videoURL = URL( string: _ziggeo.videos.getVideoUrl(videoToken));
-//                   }
-//             case "setVideoPath":
-//                if let args = call.arguments as? Dictionary<String, Any>,
-//                   let videoPath = args["videoPath"] as? String{
-//                      _view.videoURL = URL( string: videoPath);
-//                   }
-//             case "loadConfigs":
-//                 _view.isRecordingPreview = true
-//                 _view.videoRecorder = CustomVideoRecorder(ziggeo: _ziggeo)
+            case "prepareQueueAndStartPlaying":
+                _view.play();
+            case "setVideoToken":
+               if let args = call.arguments as? Dictionary<String, Any>,
+                  let videoToken = args["videoToken"] as? String{
+                     _view.videoURL = URL( string: _ziggeo.videos.getVideoUrl(videoToken));
+                  }
+            case "setVideoPath":
+               if let args = call.arguments as? Dictionary<String, Any>,
+                  let videoPath = args["videoPath"] as? String{
+                     _view.videoURL = URL( string: videoPath);
+                  }
+            case "loadConfigs":
+                _view.isRecordingPreview = true
+                _view.videoRecorder = CustomVideoRecorder(ziggeo: _ziggeo)
             default:
                 result(FlutterMethodNotImplemented)
             }
@@ -567,8 +567,8 @@ class ZPlayerView: NSObject, FlutterPlatformView {
 }
 
 class ZCameraView: NSObject, FlutterPlatformView {
-//     private var _view: CustomVideoRecorder
-    private var _view: UIView
+    private var _view: CustomVideoRecorder
+//     private var _view: UIView
     private var _methodChannel: FlutterMethodChannel
     private var _ziggeo: Ziggeo
 
@@ -580,16 +580,16 @@ class ZCameraView: NSObject, FlutterPlatformView {
         binaryMessenger messenger: FlutterBinaryMessenger?
     ) {
         _ziggeo = ziggeo
-        _view = UIView()
-//         _view = CustomVideoRecorder(ziggeo: _ziggeo)
+//         _view = UIView()
+        _view = CustomVideoRecorder(ziggeo: _ziggeo)
         _methodChannel = FlutterMethodChannel(name: "z_camera_recorder", binaryMessenger: messenger!)
         super.init()
         _methodChannel.setMethodCallHandler(onMethodCall)
     }
 
     func view() -> UIView {
-        return _view
-//         return _view.view
+//         return _view
+        return _view.view
     }
 
     func onMethodCall(call: FlutterMethodCall, result: FlutterResult) {
@@ -598,20 +598,20 @@ class ZCameraView: NSObject, FlutterPlatformView {
                 setText(call:call, result:result)
             case "getCallback":
                 setText(call:call, result:result)
-//             case "getRecordedFile":
-//                 result( _view.getRecordedFile() );
+            case "getRecordedFile":
+                result( _view.getRecordedFile() );
             case "start":
                 setText(call:call, result:result)
             case "stop":
                 setText(call:call, result:result)
-//             case "loadConfigs":
-//                 _view.isControllerEnable = false;
-//             case "startRecording":
-//                 _view.startRecording()
-//             case "stopRecording":
-//                 _view.stopRecording()
-//             case "switchCamera":
-//                 _view.changeCamera()
+            case "loadConfigs":
+                _view.isControllerEnable = false;
+            case "startRecording":
+                _view.startRecording()
+            case "stopRecording":
+                _view.stopRecording()
+            case "switchCamera":
+                _view.changeCamera()
             default:
                 result(FlutterMethodNotImplemented)
             }
