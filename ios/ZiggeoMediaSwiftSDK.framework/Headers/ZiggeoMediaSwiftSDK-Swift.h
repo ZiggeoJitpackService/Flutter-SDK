@@ -260,18 +260,19 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
-@import AVFAudio;
 @import AVFoundation;
 @import CoreFoundation;
-@import CoreGraphics;
 @import CoreMedia;
+@import CoreVideo;
 @import Foundation;
 @import MessageUI;
 @import ObjectiveC;
-@import QuartzCore;
+@import Photos;
 @import ReplayKit;
 @import UIKit;
 #endif
+
+#import <ZiggeoMediaSwiftSDK/ZiggeoMediaSwiftSDK.h>
 
 #endif
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -292,58 +293,18 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+@class PHAsset;
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK9AudioData")
-@interface AudioData : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK10AssetStore")
+@interface AssetStore : NSObject
+@property (nonatomic, readonly, copy) NSArray<PHAsset *> * _Nonnull assets;
+- (nonnull instancetype)initWithAssets:(NSArray<PHAsset *> * _Nonnull)assets OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly) NSInteger count;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class UIProgressView;
-@class NSLayoutConstraint;
 @class NSCoder;
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK14AudioLevelView")
-@interface AudioLevelView : UIView
-@property (nonatomic, strong) IBOutlet UIView * _Null_unspecified contentView;
-@property (nonatomic, weak) IBOutlet UIProgressView * _Null_unspecified progressBar;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint * _Null_unspecified widthConstraint;
-- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
-@property (nonatomic) IBInspectable double currentLevel;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK18AudioPlayerManager")
-@interface AudioPlayerManager : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-@class AVAudioPlayer;
-
-@interface AudioPlayerManager (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <AVAudioPlayerDelegate>
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer * _Nonnull)player successfully:(BOOL)flag;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK20AudioRecorderManager")
-@interface AudioRecorderManager : NSObject
-- (void)timerDidUpdateMeter;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-@class AVAudioRecorder;
-
-@interface AudioRecorderManager (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <AVAudioRecorderDelegate>
-- (void)audioRecorderDidFinishRecording:(AVAudioRecorder * _Nonnull)recorder successfully:(BOOL)flag;
-- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder * _Nonnull)recorder error:(NSError * _Nullable)error;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK15AudioStreamData")
-@interface AudioStreamData : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 
 /// <ul>
 ///   <li>
@@ -386,8 +347,7 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK15AudioStreamData")
 /// </ul>
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK11BaseNibView")
 @interface BaseNibView : UIView
-@property (nonatomic, strong) IBOutlet UIView * _Null_unspecified contentView;
-- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (void)awakeFromNib;
 @end
@@ -406,6 +366,7 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK22AudioVisualizationView")
 @property (nonatomic, copy) NSArray<NSNumber *> * _Nullable meteringLevels;
 @property (nonatomic, strong) IBInspectable UIColor * _Nonnull gradientStartColor;
 @property (nonatomic, strong) IBInspectable UIColor * _Nonnull gradientEndColor;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (void)drawRect:(CGRect)rect;
 - (void)reset;
@@ -414,8 +375,8 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK22AudioVisualizationView")
 - (void)playFrom:(NSURL * _Nonnull)url;
 - (void)playFor:(NSTimeInterval)duration;
 - (void)pause;
+- (void)resume;
 - (void)stop;
-- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
 @end
 
 typedef SWIFT_ENUM(NSInteger, AudioVisualizationMode, closed) {
@@ -439,6 +400,7 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK11Chronometer")
 - (nonnull instancetype)initWithTimeInterval:(NSTimeInterval)timeInterval OBJC_DESIGNATED_INITIALIZER;
 - (void)startWithShouldFire:(BOOL)fire;
 - (void)pause;
+- (void)resume;
 - (void)stop;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -447,7 +409,8 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK11Chronometer")
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK12ContentModel")
 @interface ContentModel : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @class UITableView;
@@ -458,9 +421,7 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK12ContentModel")
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK13CoverSelector")
 @interface CoverSelector : UIViewController <UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, weak) IBOutlet UITableView * _Null_unspecified tableView;
 - (void)viewDidLoad;
-- (IBAction)useDefaultCover:(id _Nonnull)sender;
 @property (nonatomic, readonly) BOOL prefersStatusBarHidden;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
@@ -470,34 +431,49 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK13CoverSelector")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
-@class UIImageView;
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK22CoverSelectorTableCell")
 @interface CoverSelectorTableCell : UITableViewCell
-@property (nonatomic, weak) IBOutlet UIImageView * _Null_unspecified coverView;
 - (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER SWIFT_AVAILABILITY(ios,introduced=3.0);
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK14DeviceInfoData")
-@interface DeviceInfoData : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK4Face")
-@interface Face : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK15FaceOutlineView")
-@interface FaceOutlineView : UIView
-- (void)drawRect:(CGRect)rect;
-- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK17CustomVideoPlayer")
+@interface CustomVideoPlayer : UIViewController
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly) BOOL shouldAutorotate;
+@property (nonatomic, readonly) UIStatusBarStyle preferredStatusBarStyle;
+- (void)viewDidAppear:(BOOL)animated;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
+
+@protocol UIViewControllerTransitionCoordinator;
+
+SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK19CustomVideoRecorder")
+@interface CustomVideoRecorder : UIViewController
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly) BOOL shouldAutorotate;
+@property (nonatomic, readonly) UIInterfaceOrientationMask supportedInterfaceOrientations;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator> _Nonnull)coordinator;
+- (void)viewWillAppear:(BOOL)animated;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)viewDidDisappear:(BOOL)animated;
+- (void)observeValueForKeyPath:(NSString * _Nullable)keyPath ofObject:(id _Nullable)object change:(NSDictionary<NSKeyValueChangeKey, id> * _Nullable)change context:(void * _Nullable)context;
+- (void)viewDidLoad;
+- (IBAction)onCloseButtonTap:(id _Nonnull)sender;
+- (IBAction)changeCamera:(id _Nonnull)sender;
+- (IBAction)toggleMovieRecording:(id _Nonnull)sender;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+@end
+
+@class AVCaptureOutput;
+@class AVCaptureConnection;
+
+@interface CustomVideoRecorder (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
+- (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
+@end
+
 
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK12FileInfoData")
@@ -512,29 +488,84 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK18FileSelectorConfig")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class BSImagePickerSettings;
+@class UIBarButtonItem;
+@class UIButton;
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK9ImageData")
-@interface ImageData : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS_NAMED("ImagePickerController")
+@interface BSImagePickerController : UINavigationController
+@property (nonatomic, strong) BSImagePickerSettings * _Nonnull settings;
+@property (nonatomic, strong) UIBarButtonItem * _Nonnull doneButton;
+@property (nonatomic, strong) UIBarButtonItem * _Nonnull cancelButton;
+@property (nonatomic, strong) UIButton * _Nonnull albumButton;
+@property (nonatomic, readonly, copy) NSArray<PHAsset *> * _Nonnull selectedAssets;
+/// Title to use for button
+@property (nonatomic, copy) NSString * _Nonnull doneButtonTitle;
+- (nonnull instancetype)initWithSelectedAssets:(NSArray<PHAsset *> * _Nonnull)selectedAssets OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)viewDidLoad;
+- (void)deselectWithAsset:(PHAsset * _Nonnull)asset;
+- (nonnull instancetype)initWithNavigationBarClass:(Class _Nullable)navigationBarClass toolbarClass:(Class _Nullable)toolbarClass SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithRootViewController:(UIViewController * _Nonnull)rootViewController SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK15ImageStreamData")
-@interface ImageStreamData : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@interface BSImagePickerController (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK))
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) PHAuthorizationStatus currentAuthorization;)
++ (PHAuthorizationStatus)currentAuthorization SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class UIPresentationController;
+
+@interface BSImagePickerController (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <UIAdaptivePresentationControllerDelegate>
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController * _Nonnull)presentationController SWIFT_WARN_UNUSED_RESULT SWIFT_AVAILABILITY(ios,introduced=13);
+- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController SWIFT_AVAILABILITY(ios,introduced=13);
 @end
 
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK12LuxMeterView")
-@interface LuxMeterView : UIView
-@property (nonatomic, strong) IBOutlet UIView * _Null_unspecified contentView;
-@property (nonatomic, weak) IBOutlet UIImageView * _Null_unspecified imageView;
+
+
+
+@interface BSImagePickerController (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK))
+- (void)imagePicker:(BSImagePickerController * _Nonnull)imagePicker didSelectAsset:(PHAsset * _Nonnull)asset;
+- (void)imagePicker:(BSImagePickerController * _Nonnull)imagePicker didDeselectAsset:(PHAsset * _Nonnull)asset;
+- (void)imagePicker:(BSImagePickerController * _Nonnull)imagePicker didFinishWithAssets:(NSArray<PHAsset *> * _Nonnull)assets;
+- (void)imagePicker:(BSImagePickerController * _Nonnull)imagePicker didCancelWithAssets:(NSArray<PHAsset *> * _Nonnull)assets;
+- (void)imagePicker:(BSImagePickerController * _Nonnull)imagePicker didReachSelectionLimit:(NSInteger)count;
+@end
+
+
+IB_DESIGNABLE
+SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK9ImageView")
+@interface ImageView : UIView
+@property (nonatomic, getter=isUserInteractionEnabled) BOOL userInteractionEnabled;
+@property (nonatomic, strong) UIColor * _Null_unspecified tintColor;
+@property (nonatomic) UIViewContentMode contentMode;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
-@property (nonatomic) IBInspectable double currentLuminousity;
+- (void)layoutSubviews;
+@end
+
+@class UIImage;
+
+@interface ImageView (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK))
+/// See UIImageView documentation
+@property (nonatomic, strong) IBInspectable UIImage * _Nullable image;
+/// See UIImageView documentation
+@property (nonatomic, strong) IBInspectable UIImage * _Nullable highlightedImage;
+/// See UIImageView documentation
+@property (nonatomic) IBInspectable BOOL isHighlighted;
 @end
 
 
+
+
+SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK11PlayerStyle")
+@interface PlayerStyle : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
 
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK18QRCodeReaderConfig")
@@ -542,87 +573,123 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK18QRCodeReaderConfig")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class CALayer;
-@class UITouch;
-@class UIEvent;
+@class Theme;
+@class BSImagePickerSelection;
+@class BSImagePickerList;
+@class BSImagePickerFetch;
+@class Dismiss;
+@class Preview;
 
-IB_DESIGNABLE
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK11RangeSlider")
-@interface RangeSlider : UIControl
-@property (nonatomic) IBInspectable BOOL lowerLayerSelected;
-@property (nonatomic) IBInspectable double minimumValue;
-@property (nonatomic) IBInspectable double maximumValue;
-@property (nonatomic) IBInspectable double lowerValue;
-@property (nonatomic) IBInspectable double upperValue;
-@property (nonatomic, strong) IBInspectable UIColor * _Nonnull trackTintColor;
-@property (nonatomic, strong) IBInspectable UIColor * _Nonnull trackHighlightTintColor;
-@property (nonatomic, strong) IBInspectable UIColor * _Nonnull thumbTintColor;
-@property (nonatomic, strong) IBInspectable UIColor * _Nonnull thumbBorderColor;
-@property (nonatomic) IBInspectable CGFloat thumbBorderWidth;
-@property (nonatomic) IBInspectable CGFloat curvaceousness;
-@property (nonatomic) CGRect frame;
-- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-- (void)layoutSublayersOfLayer:(CALayer * _Nonnull)of;
-- (BOOL)beginTrackingWithTouch:(UITouch * _Nonnull)touch withEvent:(UIEvent * _Nullable)event SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)continueTrackingWithTouch:(UITouch * _Nonnull)touch withEvent:(UIEvent * _Nullable)event SWIFT_WARN_UNUSED_RESULT;
-- (void)endTrackingWithTouch:(UITouch * _Nullable)touch withEvent:(UIEvent * _Nullable)event;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK21RangeSliderThumbLayer")
-@interface RangeSliderThumbLayer : CALayer
-- (void)drawInContext:(CGContextRef _Nonnull)ctx;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithLayer:(id _Nonnull)layer OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK21RangeSliderTrackLayer")
-@interface RangeSliderTrackLayer : CALayer
-- (void)drawInContext:(CGContextRef _Nonnull)ctx;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithLayer:(id _Nonnull)layer OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK18ScalableConstraint")
-@interface ScalableConstraint : NSLayoutConstraint
-@property (nonatomic) IBInspectable CGFloat scale;
-@property (nonatomic) IBInspectable CGFloat basicConstant;
+SWIFT_CLASS_NAMED("Settings")
+@interface BSImagePickerSettings : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BSImagePickerSettings * _Nonnull shared;)
++ (BSImagePickerSettings * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+/// Theme settings
+@property (nonatomic, strong) Theme * _Nonnull theme;
+/// Selection settings
+@property (nonatomic, strong) BSImagePickerSelection * _Nonnull selection;
+/// List settings
+@property (nonatomic, strong) BSImagePickerList * _Nonnull list;
+/// Fetch settings
+@property (nonatomic, strong) BSImagePickerFetch * _Nonnull fetch;
+/// Dismiss settings
+@property (nonatomic, strong) Dismiss * _Nonnull dismiss;
+/// Preview options
+@property (nonatomic, strong) Preview * _Nonnull preview;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK15SelectionScreen")
-@interface SelectionScreen : UIViewController
-@property (nonatomic, strong) IBOutlet UIImageView * _Null_unspecified imageView;
-- (void)loadView;
-- (void)viewDidLoad;
-- (IBAction)CloseModal:(id _Nonnull)sender;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS_NAMED("Selection")
+@interface BSImagePickerSelection : NSObject
+/// Max number of selections allowed
+@property (nonatomic) NSInteger max;
+/// Min number of selections you have to make
+@property (nonatomic) NSInteger min;
+/// If it reaches the max limit, unselect the first selection, and allow the new selection
+@property (nonatomic) BOOL unselectOnReachingMax;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class NSNotification;
+
+SWIFT_CLASS_NAMED("List")
+@interface BSImagePickerList : NSObject
+/// How much spacing between cells
+@property (nonatomic) CGFloat spacing;
+/// How many cells per row
+@property (nonatomic, copy) NSInteger (^ _Nonnull cellsPerRow)(UIUserInterfaceSizeClass, UIUserInterfaceSizeClass);
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class BSImagePickerAlbum;
+@class BSImagePickerAssets;
+@class Preview;
+
+SWIFT_CLASS_NAMED("Fetch")
+@interface BSImagePickerFetch : NSObject
+/// Album fetch settings
+@property (nonatomic, strong) BSImagePickerAlbum * _Nonnull album;
+/// Asset fetch settings
+@property (nonatomic, strong) BSImagePickerAssets * _Nonnull assets;
+/// Preview fetch settings
+@property (nonatomic, strong) Preview * _Nonnull preview;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class PHFetchOptions;
+@class PHAssetCollection;
+
+SWIFT_CLASS_NAMED("Album")
+@interface BSImagePickerAlbum : NSObject
+/// Fetch options for albums/collections
+@property (nonatomic, strong) PHFetchOptions * _Nonnull options;
+/// Fetch results for asset collections you want to present to the user
+/// Some other fetch results that you might wanna use:
+/// PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumFavorites, options: options),
+/// PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: options),
+/// PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumSelfPortraits, options: options),
+/// PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumPanoramas, options: options),
+/// PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumVideos, options: options),
+@property (nonatomic, copy) NSArray<PHFetchResult<PHAssetCollection *> *> * _Nonnull fetchResults;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS_NAMED("Assets")
+@interface BSImagePickerAssets : NSObject
+@property (nonatomic) float maxDuration;
+@property (nonatomic, strong) PHFetchOptions * _Nonnull options;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK14TPGAudioPlayer")
 @interface TPGAudioPlayer : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-/// <hr/>
-- (void)playingStalled:(NSNotification * _Nonnull)notification;
-- (void)playerDidReachEnd:(NSNotification * _Nonnull)notification;
-- (void)playerItemTimeJumpedNotification:(NSNotification * _Nonnull)notification;
 @end
 
 
 
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK9VideoData")
-@interface VideoData : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+
+
+@interface UIViewController (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK))
+/// Present a image picker
+/// \param imagePicker The image picker to present
+///
+/// \param animated Should presentation be animated
+///
+/// \param select Selection callback
+///
+/// \param deselect Deselection callback
+///
+/// \param cancel Cancel callback
+///
+/// \param finish Finish callback
+///
+/// \param completion Presentation completion callback
+///
+- (void)presentImagePickerWithMax:(NSInteger)max mediaTypes:(NSArray<NSString *> * _Nonnull)mediaTypes maxDuration:(float)maxDuration animated:(BOOL)animated select:(void (^ _Nullable)(PHAsset * _Nonnull))select deselect:(void (^ _Nullable)(PHAsset * _Nonnull))deselect cancel:(void (^ _Nullable)(NSArray<PHAsset *> * _Nonnull))cancel finish:(void (^ _Nullable)(NSArray<PHAsset *> * _Nonnull))finish completion:(void (^ _Nullable)(void))completion;
 @end
 
 
@@ -638,12 +705,6 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK19VideoRecorderConfig")
 @end
 
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK15VideoStreamData")
-@interface VideoStreamData : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK9ViewModel")
 @interface ViewModel : NSObject
 @property (nonatomic, copy) NSURL * _Nullable audioFilePathLocal;
@@ -654,6 +715,8 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK9ViewModel")
 - (void)askAudioRecordingPermissionWithCompletion:(void (^ _Nullable)(BOOL))completion;
 - (void)startRecordingWithCompletion:(void (^ _Nonnull)(NSURL * _Nullable, NSArray<NSNumber *> * _Nullable, NSError * _Nullable))completion;
 - (BOOL)stopRecordingAndReturnError:(NSError * _Nullable * _Nullable)error;
+- (BOOL)pauseRecordingAndReturnError:(NSError * _Nullable * _Nullable)error;
+- (BOOL)resumeRecordingAndReturnError:(NSError * _Nullable * _Nullable)error;
 - (BOOL)resetRecordingAndReturnError:(NSError * _Nullable * _Nullable)error;
 - (double)startPlaying SWIFT_WARN_UNUSED_RESULT;
 - (void)setCurrentTime:(NSTimeInterval)currentTime;
@@ -663,8 +726,7 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK9ViewModel")
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK6Ziggeo")
 @interface Ziggeo : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 @class MFMailComposeViewController;
@@ -680,57 +742,16 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK6Ziggeo")
 - (void)imagePickerControllerDidCancel:(UIImagePickerController * _Nonnull)picker;
 @end
 
-@class UILabel;
 @class UISlider;
-@class UIActivityIndicatorView;
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK17ZiggeoAudioPlayer")
-@interface ZiggeoAudioPlayer : UIViewController
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified statusLabel;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified currentTimeLabel;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified totalTimeLabel;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified durationLabel;
-@property (nonatomic, weak) IBOutlet UIImageView * _Null_unspecified playImageView;
-@property (nonatomic, weak) IBOutlet UISlider * _Null_unspecified timeSlider;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified beforeButtonView;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified rewindButtonView;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified playButtonView;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified forwardButtonView;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified nextButtonView;
-@property (nonatomic, weak) IBOutlet UIActivityIndicatorView * _Null_unspecified loadingIndicator;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
-- (void)viewWillAppear:(BOOL)animated;
-- (void)viewWillDisappear:(BOOL)animated;
-- (void)viewDidLoad;
-- (IBAction)onChangeCurrentTime:(UISlider * _Nonnull)sender;
-- (IBAction)onPlayOrPause:(id _Nonnull)sender;
-- (IBAction)onClose:(id _Nonnull)sender;
-- (IBAction)onPlayBeforeItem:(id _Nonnull)sender;
-- (IBAction)onPlayRewind:(id _Nonnull)sender;
-- (IBAction)onPlayForward:(id _Nonnull)sender;
-- (IBAction)onPlayNextItem:(id _Nonnull)sender;
-- (void)sliderTimerTriggered;
-- (void)episodeLoadedNotification:(NSNotification * _Nonnull)notification;
-- (void)playerDidReachEndNotification:(NSNotification * _Nonnull)notification;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
-@end
-
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK19ZiggeoAudioRecorder")
 @interface ZiggeoAudioRecorder : UIViewController
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified statusLabel;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified timeLabel;
-@property (nonatomic, weak) IBOutlet AudioVisualizationView * _Null_unspecified audioVisualizationView;
-@property (nonatomic, weak) IBOutlet UISlider * _Null_unspecified timeSlider;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified durationLabel;
-@property (nonatomic, weak) IBOutlet UIImageView * _Null_unspecified reloadImageView;
-@property (nonatomic, weak) IBOutlet UIImageView * _Null_unspecified recordImageView;
-@property (nonatomic, weak) IBOutlet UIImageView * _Null_unspecified uploadImageView;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (void)viewDidLoad;
 - (IBAction)onClose:(id _Nonnull)sender;
 - (IBAction)onRerecord:(id _Nonnull)sender;
 - (IBAction)onRecord:(id _Nonnull)sender;
+- (IBAction)onPauseOrResume:(id _Nonnull)sender;
 - (IBAction)onUpload:(id _Nonnull)sender;
 - (IBAction)timeChanged:(UISlider * _Nonnull)sender;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
@@ -771,44 +792,23 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK13ZiggeoConnect")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class NSURLResponse;
 
-SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK14ZiggeoDelegate_")
-@protocol ZiggeoDelegate
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK26ZiggeoFileSelectorDelegate_")
+@protocol ZiggeoFileSelectorDelegate
 @optional
-- (void)ziggeoRecorderLuxMeter:(double)luminousity;
-- (void)ziggeoRecorderAudioMeter:(double)audioLevel;
-- (void)ziggeoRecorderFaceDetected:(NSInteger)faceID rect:(CGRect)rect;
-- (void)ziggeoRecorderReady;
-- (void)ziggeoRecorderCanceled;
-- (void)ziggeoRecorderStarted;
-- (void)ziggeoRecorderStopped:(NSString * _Nonnull)path;
-- (void)ziggeoRecorderCurrentRecordedDurationSeconds:(double)seconds;
-- (void)ziggeoRecorderPlaying;
-- (void)ziggeoRecorderPaused;
-- (void)ziggeoRecorderRerecord;
-- (void)ziggeoRecorderManuallySubmitted;
-- (void)ziggeoStreamingStarted;
-- (void)ziggeoStreamingStopped;
-- (void)preparingToUpload:(NSString * _Nonnull)path;
-- (void)failedToUpload:(NSString * _Nonnull)path;
-- (void)uploadStarted:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken backgroundTask:(NSURLSessionTask * _Nonnull)backgroundTask;
-- (void)uploadProgress:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend;
-- (void)uploadFinished:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken;
-- (void)uploadVerified:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error json:(NSDictionary * _Nullable)json;
-- (void)uploadProcessing:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken;
-- (void)uploadProcessed:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken;
-- (void)delete:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error json:(NSDictionary * _Nullable)json;
+- (void)uploadSelected:(NSArray<NSString *> * _Nonnull)paths;
+- (void)uploadCancelledByUser;
+@end
+
+
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK32ZiggeoHardwarePermissionDelegate_")
+@protocol ZiggeoHardwarePermissionDelegate
+@optional
 - (void)checkCameraPermission:(BOOL)granted;
 - (void)checkMicrophonePermission:(BOOL)granted;
 - (void)checkPhotoLibraryPermission:(BOOL)granted;
 - (void)checkHasCamera:(BOOL)hasCamera;
 - (void)checkHasMicrophone:(BOOL)hasMicrophone;
-- (void)ziggeoPlayerPlaying;
-- (void)ziggeoPlayerPaused;
-- (void)ziggeoPlayerEnded;
-- (void)ziggeoPlayerSeek:(double)positionMillis;
-- (void)ziggeoPlayerReadyToPlay;
 @end
 
 
@@ -824,72 +824,46 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK12ZiggeoPlayer")
 @interface ZiggeoPlayer : AVQueuePlayer
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithURL:(NSURL * _Nonnull)url OBJC_DESIGNATED_INITIALIZER;
-- (void)contentDidFinishPlaying:(NSNotification * _Nonnull)notification;
 - (void)observeValueForKeyPath:(NSString * _Nullable)keyPath ofObject:(id _Nullable)object change:(NSDictionary<NSKeyValueChangeKey, id> * _Nullable)change context:(void * _Nullable)context;
 - (nonnull instancetype)initWithItems:(NSArray<AVPlayerItem *> * _Nonnull)items SWIFT_UNAVAILABLE;
 - (nonnull instancetype)initWithPlayerItem:(AVPlayerItem * _Nullable)item SWIFT_UNAVAILABLE;
 @end
 
 
-SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK26ZiggeoQRCodeReaderDelegate_")
-@protocol ZiggeoQRCodeReaderDelegate
-- (void)ziggeoQRCodeScaned:(NSString * _Nonnull)qrCode;
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK20ZiggeoPlayerDelegate_")
+@protocol ZiggeoPlayerDelegate
+@optional
+- (void)playerPlaying;
+- (void)playerPaused;
+- (void)playerEnded;
+- (void)playerSeek:(double)positionMillis;
+- (void)playerReadyToPlay;
+- (void)playerCancelledByUser;
 @end
 
 
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK32ZiggeoQRCodeReaderViewController")
-@interface ZiggeoQRCodeReaderViewController : UIViewController
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified preview;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-- (void)viewDidLoad;
-- (IBAction)onBack:(id _Nonnull)sender;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK23ZiggeoQRScannerDelegate_")
+@protocol ZiggeoQRScannerDelegate
+@optional
+- (void)qrCodeScaned:(NSString * _Nonnull)qrCode;
+- (void)qrCodeScanCancelledByUser;
 @end
 
-@class AVCaptureMetadataOutput;
-@class AVMetadataObject;
-@class AVCaptureConnection;
-
-@interface ZiggeoQRCodeReaderViewController (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <AVCaptureMetadataOutputObjectsDelegate>
-- (void)captureOutput:(AVCaptureMetadataOutput * _Nonnull)output didOutputMetadataObjects:(NSArray<AVMetadataObject *> * _Nonnull)metadataObjects fromConnection:(AVCaptureConnection * _Nonnull)connection;
-@end
-
-@class UIButton;
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK26ZiggeoRecordedVideoPreview")
 @interface ZiggeoRecordedVideoPreview : UIViewController
-@property (nonatomic, weak) IBOutlet UIButton * _Null_unspecified playPauseButton;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified videoPlaceholder;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly) BOOL shouldAutorotate;
 @property (nonatomic, readonly) UIStatusBarStyle preferredStatusBarStyle;
-- (void)itemDidFinishPlaying:(NSNotification * _Nonnull)notification;
 - (void)viewDidAppear:(BOOL)animated;
-- (IBAction)retake:(id _Nonnull)sender;
-- (IBAction)play:(id _Nonnull)sender;
-- (IBAction)upload:(id _Nonnull)sender;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
-@protocol UIViewControllerTransitionCoordinator;
 @class UIGestureRecognizer;
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK14ZiggeoRecorder")
 @interface ZiggeoRecorder : UIViewController
-@property (nonatomic, weak) IBOutlet CapturePreviewView * _Null_unspecified previewView;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified cameraUnavailableLabel;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified recordingDurationLabel;
-@property (nonatomic, weak) IBOutlet UILabel * _Null_unspecified startDelayLabel;
-@property (nonatomic, weak) IBOutlet UIButton * _Null_unspecified recordButton;
-@property (nonatomic, weak) IBOutlet UIButton * _Null_unspecified cameraButton;
-@property (nonatomic, weak) IBOutlet UIButton * _Null_unspecified closeButton;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified controlsView;
-@property (nonatomic, weak) IBOutlet UIImageView * _Null_unspecified blurringPreviewView;
-@property (nonatomic, weak) IBOutlet LuxMeterView * _Null_unspecified luxMeterView;
-@property (nonatomic, weak) IBOutlet AudioLevelView * _Null_unspecified audioLevelView;
-@property (nonatomic, weak) IBOutlet FaceOutlineView * _Null_unspecified faceOutlineView;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly) UIStatusBarStyle preferredStatusBarStyle;
 @property (nonatomic, readonly) BOOL shouldAutorotate;
@@ -904,26 +878,50 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK14ZiggeoRecorder")
 - (IBAction)changeCamera:(id _Nonnull)sender;
 - (IBAction)focusAndExposeTap:(UIGestureRecognizer * _Nonnull)gestureRecognizer;
 - (IBAction)toggleMovieRecording:(id _Nonnull)sender;
-- (void)updateStartDelay;
-- (void)updateDuration;
-- (void)subjectAreaDidChange:(NSNotification * _Nonnull)notification;
-- (void)sessionRuntimeError:(NSNotification * _Nonnull)notification;
-- (void)sessionWasInterrupted:(NSNotification * _Nonnull)notification;
-- (void)sessionInterruptionEnded:(NSNotification * _Nonnull)notification;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
+@class AVCaptureMetadataOutput;
+@class AVMetadataObject;
 
 @interface ZiggeoRecorder (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <AVCaptureMetadataOutputObjectsDelegate>
 - (void)captureOutput:(AVCaptureMetadataOutput * _Nonnull)output didOutputMetadataObjects:(NSArray<AVMetadataObject *> * _Nonnull)metadataObjects fromConnection:(AVCaptureConnection * _Nonnull)connection;
 @end
 
-@class AVCaptureOutput;
+@class SelfieSegmentation;
+
+@interface ZiggeoRecorder (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <SelfieSegmentationDelegate>
+- (void)selfieSegmentation:(SelfieSegmentation * _Null_unspecified)selfieSegmentation didOutputPixelBuffer:(CVPixelBufferRef _Null_unspecified)pixelBuffer;
+@end
+
 
 @interface ZiggeoRecorder (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 - (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
 @end
 
+
+
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK22ZiggeoRecorderDelegate_")
+@protocol ZiggeoRecorderDelegate
+@optional
+- (void)recorderReady;
+- (void)recorderCountdown:(NSInteger)secondsLeft;
+- (void)recorderStarted;
+- (void)recorderCurrentRecordedDurationSeconds:(double)seconds;
+- (void)recorderPaused;
+- (void)recorderStopped:(NSString * _Nonnull)path;
+- (void)recorderRerecord;
+- (void)recorderPlaying;
+- (void)recorderManuallySubmitted;
+- (void)streamingStarted;
+- (void)streamingStopped;
+- (void)recorderCancelledByUser;
+@end
+
+
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK28ZiggeoScreenRecorderDelegate_")
+@protocol ZiggeoScreenRecorderDelegate
+@end
 
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK33ZiggeoScreenRecorderSampleHandler")
@@ -937,51 +935,55 @@ SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK33ZiggeoScreenRecorderSampleHandler")
 @end
 
 
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK20ZiggeoSensorDelegate_")
+@protocol ZiggeoSensorDelegate
+@optional
+- (void)luxMeter:(double)luminousity;
+- (void)audioMeter:(double)audioLevel;
+- (void)faceDetected:(NSInteger)faceID rect:(CGRect)rect;
+@end
+
+@class NSURLResponse;
+
+SWIFT_PROTOCOL("_TtP19ZiggeoMediaSwiftSDK23ZiggeoUploadingDelegate_")
+@protocol ZiggeoUploadingDelegate
+@optional
+- (void)preparingToUpload:(NSString * _Nonnull)path;
+- (void)failedToUpload:(NSString * _Nonnull)path;
+- (void)uploadStarted:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken backgroundTask:(NSURLSessionTask * _Nonnull)backgroundTask;
+- (void)uploadProgress:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend;
+- (void)uploadFinished:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken;
+- (void)uploadVerified:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error json:(NSDictionary * _Nullable)json;
+- (void)uploadProcessing:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken;
+- (void)uploadProcessed:(NSString * _Nonnull)path token:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken;
+- (void)delete:(NSString * _Nonnull)token streamToken:(NSString * _Nonnull)streamToken response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error json:(NSDictionary * _Nullable)json;
+- (void)cancelUpload:(NSString * _Nonnull)path deleteFile:(BOOL)deleteFile;
+- (void)cancelCurrentUpload:(BOOL)deleteFile;
+@end
+
+
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK22ZiggeoUploadingHandler")
 @interface ZiggeoUploadingHandler : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class UITapGestureRecognizer;
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK17ZiggeoVideoEditor")
 @interface ZiggeoVideoEditor : UIViewController
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified videoLayer;
-@property (nonatomic, weak) IBOutlet UIButton * _Null_unspecified cropButton;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified frameContainerView;
-@property (nonatomic, weak) IBOutlet UIView * _Null_unspecified imageFrameView;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (void)viewDidLoad;
 - (void)didReceiveMemoryWarning;
-- (IBAction)cropVideo:(id _Nonnull)sender;
-- (IBAction)onClose:(id _Nonnull)sender;
-- (void)tapOnVideoLayerWithTap:(UITapGestureRecognizer * _Nonnull)tap;
-- (void)rangeSliderValueChanged:(RangeSlider * _Nonnull)rangeSlider;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
-
-SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK18ZiggeoVideoLibrary")
-@interface ZiggeoVideoLibrary : UIImagePickerController
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
-- (void)viewDidAppear:(BOOL)animated;
-- (nonnull instancetype)initWithNavigationBarClass:(Class _Nullable)navigationBarClass toolbarClass:(Class _Nullable)toolbarClass SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithRootViewController:(UIViewController * _Nonnull)rootViewController SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
-@end
-
-@class UINavigationController;
-
-@interface ZiggeoVideoLibrary (SWIFT_EXTENSION(ZiggeoMediaSwiftSDK)) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-- (void)imagePickerController:(UIImagePickerController * _Nonnull)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> * _Nonnull)info;
-- (void)imagePickerControllerDidCancel:(UIImagePickerController * _Nonnull)picker;
-- (void)navigationController:(UINavigationController * _Nonnull)navigationController didShowViewController:(UIViewController * _Nonnull)viewController animated:(BOOL)animated;
-@end
-
+@class NSOperationQueue;
 
 SWIFT_CLASS("_TtC19ZiggeoMediaSwiftSDK12ZiggeoVideos")
-@interface ZiggeoVideos : NSObject
+@interface ZiggeoVideos : NSObject <NSFilePresenter>
+@property (nonatomic, copy) NSURL * _Nullable presentedItemURL;
+@property (nonatomic, strong) NSOperationQueue * _Nonnull presentedItemOperationQueue;
+- (void)presentedItemDidChange;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

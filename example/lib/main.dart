@@ -8,8 +8,8 @@ import 'package:provider/single_child_widget.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/screens/drawer.dart';
 import 'package:ziggeo_example/screens/splash.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// import 'package:firebase_core/firebase_core.dart';
 
 import 'localization.dart';
 

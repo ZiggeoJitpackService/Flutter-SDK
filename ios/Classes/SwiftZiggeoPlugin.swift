@@ -3,7 +3,7 @@ import Flutter
 import Combine
 import UIKit
 
-public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDelegate {
+public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate {
     // for screen recorder
     public let SCREEN_RECORDER_BACKGROUND_COLOR = "background_color"
     public let SCREEN_RECORDER_TEXT_COLOR = "title_color"
@@ -33,9 +33,12 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
     var m_flutterPluginRegistrar: FlutterPluginRegistrar? = nil;
     var result: ((String) -> ())? = nil ;
 
-    public func ziggeoQRCodeScaned(_ qrCode: String) {
+    public func qrCodeScaned(_ qrCode: String) {
        self.result?(qrCode);
     }
+
+     public func qrCodeScanCancelledByUser() {
+        }
 
     init(registrar: FlutterPluginRegistrar){
        self.m_flutterPluginRegistrar = registrar;
@@ -54,12 +57,13 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
        if (call.method == "setAppToken") {
           if let args = call.arguments as? Dictionary<String, Any>,
             let appToken = args["appToken"] as? String{
-            m_ziggeo = Ziggeo(token: appToken,delegate: viewController! as! ZiggeoDelegate);
+            m_ziggeo = Ziggeo(token: appToken);
             registerAllTheChannels();
           }
         } else if (call.method == "startQrScanner") {
             self.result = { res in result(res);};
-            m_ziggeo = Ziggeo(qrCodeReaderDelegate: self as! ZiggeoQRCodeReaderDelegate);
+            m_ziggeo = Ziggeo();
+            m_ziggeo?.qrScannerDelegate = self;
             m_ziggeo?.startQrScanner();
         } else if (call.method == "getPlayerConfig") {
                   var res = m_ziggeo?.getVideoPlayerConfig()
@@ -225,6 +229,7 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
                    m_ziggeo?.cancelUpload(path, deleteFile);
                }
         } else if (call.method == "cancelCurrentUpload") {
+//         _ path: String?, _ delete_file: Bool
 //              m_ziggeo?.cancelUpload();
         } else if (call.method == "getClientAuthToken") {
                 result(m_ziggeo?.getClientAuthToken());
@@ -252,9 +257,9 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
         } else if (call.method == "startAudioPlayerByPath") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let paths = args["path"] as? String{
-                 m_ziggeo?.startAudioPlayerByPaths( [paths]);
+//                  m_ziggeo?.startAudioPlayerByPaths( [paths]);
              }
-          m_ziggeo?.startAudioPlayerByPaths( ["paths"]);
+//           m_ziggeo?.startAudioPlayerByPaths( ["paths"]);
         } else if (call.method == "showImageByToken") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let tokens = args["token"] as? String{
@@ -263,7 +268,7 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
         } else if (call.method == "showImageByPath") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let paths = args["path"] as? String{
-                 m_ziggeo?.showImageByPath( [paths]);
+//                  m_ziggeo?.showImageByPath( [paths]);
              }
         } else if (call.method == "startImageRecorder") {
              m_ziggeo?.startImageRecorder();
@@ -321,22 +326,18 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRCodeReaderDeleg
                  }
 
           m_ziggeo?.startScreenRecorder(
-                    addRecordingButtonToView: button as! UIView,
-                    frame: CGRect(
-                         x: 0, y: 0,
-                         width: viewController!.view.bounds.width,
-                         height: viewController!.view.bounds.height),
-                    appGroup: "com.ziggeo.sdk"
+                    appGroup: "com.ziggeo.sdk",
+                    preferredExtension: ""
           );
         } else if (call.method == "uploadFromFileSelector") {
-//              if let args = call.arguments as? Dictionary<String, Any>,
-//                  let data = args["args"] as? Dictionary<String, Any>{
+             if let args = call.arguments as? Dictionary<String, Any>,
+                 let data = args["args"] as? Dictionary<String, Any>{
                     m_ziggeo?.uploadFromFileSelector(
                        [Ziggeo_Key_Type.MEDIA_TYPES.rawValue:[Media_Type.Video.rawValue,
                        Media_Type.Audio.rawValue,
                        Media_Type.Image.rawValue]]
                     );
-//              }
+             }
         } else if (call.method == "sendReport") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let logs = args["logs"] as? [String]{
@@ -413,141 +414,3 @@ extension UIColor {
 
         static let allValues = [BYTES_SENT, BYTES_TOTAL, FILE_NAME, PATH, QR, TOKEN, /*ERROR,*/ PERMISSIONS, SOUND_LEVEL, SECONDS_LEFT, MILLIS_PASSED, MILLIS, FILES, VALUE, MEDIA_TYPES, BLUR_EFFECT, CLIENT_AUTH, SERVER_AUTH, TAGS]
     }
-
-extension UIViewController: ZiggeoDelegate {
-    // ZiggeoRecorderDelegate
-    public func ziggeoRecorderLuxMeter(_ luminousity: Double) {
-    }
-
-    public func ziggeoRecorderAudioMeter(_ audioLevel: Double) {
-    }
-
-    public func ziggeoRecorderFaceDetected(_ faceID: Int, rect: CGRect) {
-    }
-
-    public func ziggeoRecorderReady() {
-//        Common.addLog("Recorder Ready")
-    }
-
-    public func ziggeoRecorderCanceled() {
-//        Common.addLog("Recorder Canceled")
-    }
-
-    public func ziggeoRecorderStarted() {
-//        Common.addLog("Recorder Started")
-    }
-
-    public func ziggeoRecorderStopped(_ path: String) {
-//        Common.addLog("Recorder Stopped")
-    }
-
-    public func ziggeoRecorderCurrentRecordedDurationSeconds(_ seconds: Double) {
-//        Common.addLog("Recorder Recording Duration: \(seconds)")
-    }
-
-    public func ziggeoRecorderPlaying() {
-//        Common.addLog("Recorder Playing")
-    }
-
-    public func ziggeoRecorderPaused() {
-//        Common.addLog("Recorder Paused")
-    }
-
-    public func ziggeoRecorderRerecord() {
-//        Common.addLog("Recorder Rerecord")
-    }
-
-    public func ziggeoRecorderManuallySubmitted() {
-//        Common.addLog("Recorder Manually Submitted")
-    }
-
-
-    public func ziggeoStreamingStarted() {
-//        Common.addLog("Streaming Started")
-    }
-
-    public func ziggeoStreamingStopped() {
-//        Common.addLog("Streaming Stopped")
-    }
-
-
-    // ZiggeoUploadDelegate
-    public func preparingToUpload(_ path: String) {
-//        Common.addLog("Preparing To Upload: \(path)")
-    }
-
-    public func failedToUpload(_ path: String) {
-//        Common.addLog("Failed To Upload: \(path)")
-    }
-
-    public func uploadStarted(_ path: String, token: String, streamToken: String, backgroundTask: URLSessionTask) {
-//        Common.addLog("Upload Started: \(token) - \(streamToken)")
-    }
-
-    public func uploadProgress(_ path: String, token: String, streamToken: String, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-//        Common.addLog("Upload Progress: \(totalBytesSent) - \(totalBytesExpectedToSend)")
-    }
-
-    public func uploadFinished(_ path:String, token: String, streamToken: String) {
-//        Common.addLog("Upload Finished: \(token) - \(streamToken)")
-
-//        Common.recordingVideosController?.getRecordings()
-//        Common.recordingAudiosController?.getRecordings()
-//        Common.recordingImagesController?.getRecordings()
-    }
-
-    public func uploadVerified(_ path:String, token: String, streamToken: String, response: URLResponse?, error: Error?, json: NSDictionary?) {
-//        Common.addLog("Upload Verified: \(token) - \(streamToken)")
-    }
-
-    public func uploadProcessing(_ path: String, token: String, streamToken: String) {
-//        Common.addLog("Upload Processing: \(token) - \(streamToken)")
-    }
-
-    public func uploadProcessed(_ path: String, token: String, streamToken: String) {
-//        Common.addLog("Upload Processed: \(token) - \(streamToken)")
-    }
-
-    public func delete(_ token: String, streamToken: String, response: URLResponse?, error: Error?, json: NSDictionary?) {
-//        Common.addLog("delete: \(token) - \(streamToken)")
-    }
-
-
-    // ZiggeoHardwarePermissionCheckDelegate
-    public func checkCameraPermission(_ granted: Bool) {
-    }
-
-    public func checkMicrophonePermission(_ granted: Bool) {
-    }
-
-    public func checkPhotoLibraryPermission(_ granted: Bool) {
-    }
-
-    public func checkHasCamera(_ hasCamera: Bool) {
-    }
-
-    public func checkHasMicrophone(_ hasMicrophone: Bool) {
-    }
-
-
-    // ZiggeoPlayerDelegate
-    public func ziggeoPlayerPlaying() {
-//        Common.addLog("Player Playing")
-    }
-
-    public func ziggeoPlayerPaused() {
-//        Common.addLog("Player Paused")
-    }
-
-    public func ziggeoPlayerEnded() {
-//        Common.addLog("Player Ended")
-    }
-
-    public func ziggeoPlayerSeek(_ positionMillis: Double) {
-//        Common.addLog("Player Seek: \(positionMillis)")
-    }
-
-    public func ziggeoPlayerReadyToPlay() {
-//        Common.addLog("Player Ready To Play")
-    }
-}

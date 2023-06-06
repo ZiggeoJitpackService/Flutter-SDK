@@ -30,7 +30,7 @@ class _AboutScreenState extends State<AboutScreen> {
             Expanded(
               child: Html(
                 data: AppLocalizations.instance.text('about_text'),
-                onLinkTap: (url, _, __, ___) => onVisitUrlPressed(url),
+                onLinkTap: (url, _, __) => onVisitUrlPressed(url),
               ),
             ),
           ],
