@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/ziggeo.dart';
@@ -34,77 +34,91 @@ class _CameraRecorderScreenState extends State<CameraRecorderScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () => onBack(),
-        child: Scaffold(
-            body: Container(
-                child: Stack(fit: StackFit.expand, children: <Widget>[
-                  Container(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: ZCameraRecorder(
-                          onZCameraRecorderCreated: _onZCameraRecorderCreated,
-                        ),
-                      )),
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.all(common_margin),
-                          child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Visibility(
-                                    visible: isPlayModeOn,
-                                    child: IconButton(
-                                      color: Colors.white,
-                                      onPressed: () => onPlayVideoClick(),
-                                      icon: Icon(Icons.play_arrow),
-                                      iconSize: btn_ic_size,
-                                    )),
-                                Visibility(
-                                    visible: !isRecording,
-                                    child: IconButton(
-                                      color: Colors.white,
-                                      onPressed: () => onMoveFrontCameraClick(),
-                                      icon: isCameraFront
-                                          ? Icon(Icons.camera_rear_rounded)
-                                          : Icon(Icons.camera_front),
-                                      iconSize: btn_ic_size,
-                                    )),
-                                Visibility(
-                                    visible: !isRecording,
-                                    child: IconButton(
-                                      color: Colors.white,
-                                      onPressed: () => onRecordClick(),
-                                      icon: Icon(Icons.videocam),
-                                      iconSize: btn_ic_size,
-                                    )),
-                                Visibility(
-                                    visible: isRecording,
-                                    child: IconButton(
-                                      color: Colors.white,
-                                      onPressed: () => onSaveClick(),
-                                      icon: Icon(Icons.check),
-                                      iconSize: btn_ic_size,
-                                    ))
-                              ]))
-                    ],
+      onWillPop: () => onBack(),
+      child: Scaffold(
+        body: Container(
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Container(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: ZCameraRecorder(
+                    onZCameraRecorderCreated: _onZCameraRecorderCreated,
                   ),
-                  Stack(
-                    alignment: Alignment.topLeft,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(common_margin),
-                        child: IconButton(
-                          onPressed: null,
-                          icon: Icon(Icons.mic),
-                          iconSize: btn_mic_size,
+                ),
+              ),
+              Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(common_margin),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Visibility(
+                          visible: isPlayModeOn,
+                          child: IconButton(
+                            color: Colors.white,
+                            onPressed: () => onPlayVideoClick(),
+                            icon: Icon(Icons.play_arrow),
+                            iconSize: btn_ic_size,
+                          ),
                         ),
-                      )
-                    ],
+                        Visibility(
+                          visible: !isRecording,
+                          child: IconButton(
+                            color: Colors.white,
+                            onPressed: () => onMoveFrontCameraClick(),
+                            icon: isCameraFront
+                                ? Icon(Icons.camera_rear_rounded)
+                                : Icon(Icons.camera_front),
+                            iconSize: btn_ic_size,
+                          ),
+                        ),
+                        Visibility(
+                          visible: !isRecording,
+                          child: IconButton(
+                            color: Colors.white,
+                            onPressed: () => onRecordClick(),
+                            icon: Icon(Icons.videocam),
+                            iconSize: btn_ic_size,
+                          ),
+                        ),
+                        Visibility(
+                          visible: isRecording,
+                          child: IconButton(
+                            color: Colors.white,
+                            onPressed: () => onSaveClick(),
+                            icon: Icon(Icons.check),
+                            iconSize: btn_ic_size,
+                          ),
+                        )
+                      ],
+                    ),
                   )
-                ]))));
+                ],
+              ),
+              Stack(
+                alignment: Alignment.topLeft,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(common_margin),
+                    child: IconButton(
+                      onPressed: null,
+                      icon: Icon(Icons.mic),
+                      iconSize: btn_mic_size,
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+    // }
   }
 
   void _onZCameraRecorderCreated(ZCameraRecorderController controller) {
@@ -119,26 +133,33 @@ class _CameraRecorderScreenState extends State<CameraRecorderScreen> {
   }
 
   onMoveFrontCameraClick() {
-    setState(() {
-      isCameraFront = !isCameraFront;
-      controller?.switchCamera();
-    });
+    setState(
+      () {
+        isCameraFront = !isCameraFront;
+        controller?.switchCamera();
+      },
+    );
   }
 
   onPlayVideoClick() {
-    controller?.getRecordedFile().then((path) async {
-      if (path != null) {
-        await SharedPreferences.getInstance().then((value) {
-          if (value.getBool(Utils.keyCustomPlayerMode) != null &&
-              (value.getBool(Utils.keyCustomPlayerMode) ?? false )) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => VideoPlayerScreen(ziggeo, null, path)));
-          } else {
-            ziggeo.startPlayerFromPath([path]);
-          }
-        });
-      }
-    });
+    controller?.getRecordedFile().then(
+      (path) async {
+        if (path != null) {
+          await SharedPreferences.getInstance().then(
+            (value) {
+              if (value.getBool(Utils.keyCustomPlayerMode) != null &&
+                  (value.getBool(Utils.keyCustomPlayerMode) ?? false)) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) =>
+                        VideoPlayerScreen(ziggeo, null, path)));
+              } else {
+                ziggeo.startPlayerFromPath([path]);
+              }
+            },
+          );
+        }
+      },
+    );
   }
 
   onRecordClick() {
@@ -146,16 +167,20 @@ class _CameraRecorderScreenState extends State<CameraRecorderScreen> {
       controller?.startRecording();
     }
 
-    setState(() {
-      isRecording = !isRecording;
-    });
+    setState(
+      () {
+        isRecording = !isRecording;
+      },
+    );
   }
 
   onSaveClick() {
     controller?.stopRecording();
-    setState(() {
-      isPlayModeOn = true;
-      isRecording = false;
-    });
+    setState(
+      () {
+        isPlayModeOn = true;
+        isRecording = false;
+      },
+    );
   }
 }

@@ -6,14 +6,19 @@ class FileSelectorConfig extends BaseConfig {
   static const audioMediaType = 0x02;
   static const imageMediaType = 0x04;
 
+  static const iosMovieMediaType = "public.movie";
+  static const iosVideoMediaType = "public.video";
+  static const iosAudioMediaType = "public.audio";
+  static const iosImageMediaType = "public.image";
+
   var shouldAllowMultipleSelection = false;
-  var mediaType = [videoMediaType];
+  var mediaType = videoMediaType;
 
   FileSelectorEventsListener? eventsListener;
 
   FileSelectorConfig({
     this.shouldAllowMultipleSelection = false,
-    this.mediaType = const [videoMediaType],
+    this.mediaType = videoMediaType,
   });
 
   @override
@@ -29,12 +34,35 @@ class FileSelectorConfig extends BaseConfig {
         map["shouldAllowMultipleSelection"] ?? false;
     var mediaType = map["mediaType"];
 
+    switch (map["mediaType"].toString()) {
+      case iosVideoMediaType:
+        {
+          mediaType = videoMediaType;
+          break;
+        }
+      case iosMovieMediaType:
+        {
+          mediaType = videoMediaType;
+          break;
+        }
+      case iosAudioMediaType:
+        {
+          mediaType = audioMediaType;
+          break;
+        }
+      case iosImageMediaType:
+        {
+          mediaType = imageMediaType;
+          break;
+        }
+    }
+
     print("mediaType");
     print(mediaType);
 
     return FileSelectorConfig(
       shouldAllowMultipleSelection: shouldAllowMultipleSelection,
-      mediaType: [mediaType],
+      mediaType: mediaType,
     );
   }
 }

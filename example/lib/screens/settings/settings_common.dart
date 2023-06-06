@@ -257,12 +257,15 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
   }
 
   onSavedBtnPressed() async {
-    ziggeo.fileSelectorConfig = FileSelectorConfig(
-      shouldAllowMultipleSelection: _shouldAllowMultipleSelection,
-      mediaType: (_mediaType != null)
-          ? [int.parse(_mediaType![0])]
-          : ([ziggeo.fileSelectorConfig?.mediaType[0] ??
-              FileSelectorConfig.videoMediaType]),
+    await SharedPreferences.getInstance().then(
+      (value) {
+        setState(
+          () {
+            value.setBool(Utils.keyCustomPlayerMode, isCustomVideoSwitched);
+            value.setBool(Utils.keyCustomCameraMode, isCustomCameraSwitched);
+          },
+        );
+      },
     );
     ziggeo.qrScannerConfig = QrScannerConfig(
       shouldCloseAfterSuccessfulScan: _shouldCloseAfterSuccessfulScan,
@@ -279,6 +282,13 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
           : (ziggeo.uploadingConfig?.lostConnectionAction ??
               UploadingConfig.UPLOADING_ERROR_ACTION_ERROR_NOTIFICATION),
     );
+    ziggeo.fileSelectorConfig = FileSelectorConfig(
+      shouldAllowMultipleSelection: _shouldAllowMultipleSelection,
+      mediaType: (_mediaType != null)
+          ? int.parse(_mediaType!)
+          : (ziggeo.fileSelectorConfig?.mediaType ??
+              FileSelectorConfig.videoMediaType),
+    );
   }
 
   init() async {
@@ -290,7 +300,7 @@ class _CommonSettingsScreenState extends State<CommonSettingsScreen> {
               isCustomVideoSwitched =
                   value.getBool(Utils.keyCustomPlayerMode) ?? false;
             }
-            if (value.getBool(Utils.keyCustomPlayerMode) != null) {
+            if (value.getBool(Utils.keyCustomCameraMode) != null) {
               isCustomCameraSwitched =
                   value.getBool(Utils.keyCustomCameraMode) ?? false;
             }

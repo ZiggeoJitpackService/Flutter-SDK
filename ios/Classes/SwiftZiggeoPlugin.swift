@@ -76,10 +76,25 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
                       print(error)
                   }
         } else if (call.method == "getPlayerStyle") {
-//              no getters
+//                 var res = m_ziggeo?.getVideoPlayerStyle()
+//                   let encoder = JSONEncoder()
+//                   do {
+//                       let modelData = try encoder.encode(res)
+//                       let jsonString = String(data: modelData, encoding: .utf8)
+//                       result(jsonString)
+//                   } catch {
+//                       print(error)
+//                   }
         } else if (call.method == "setPlayerConfig") {
           var shouldShowSubtitlesParam = false;
           var isMutedParam = false;
+          var controllerStyleParam = 0
+          var textColorParam: Int? = nil
+          var unplayedColorParam: Int? = nil
+          var playedColorParam: Int? = nil
+          var tintColorParam: Int? = nil
+          var muteOffImageDrawableParam: Int? = nil
+          var muteOnImageDrawableParam: Int? = nil
           if let args = call.arguments as? Dictionary<String, Any>{
              if let shouldShowSubtitles = args["shouldShowSubtitles"] as? Bool{
                  shouldShowSubtitlesParam = shouldShowSubtitles;
@@ -87,12 +102,79 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
              if let isMuted = args["isMuted"] as? Bool{
                  isMutedParam = isMuted;
                 }
+             if let playerStyle = args["playerStyle"] as? Dictionary<String, Any>{
+                if let controllerStyle = playerStyle["controllerStyle"] as? Int{
+                 controllerStyleParam = controllerStyle;
+                 }
+                if let textColor = playerStyle["textColor"] as? Int{
+                 textColorParam = textColor;
+                 }
+                if let unplayedColor = playerStyle["unplayedColor"] as? Int{
+                 unplayedColorParam = unplayedColor;
+                 }
+                if let playedColor = playerStyle["playedColor"] as? Int{
+                 playedColorParam = playedColor;
+                 }
+                if let tintColor = playerStyle["tintColor"] as? Int{
+                 tintColorParam = tintColor;
+                 }
+                if let muteOffImageDrawable = playerStyle["muteOffImageDrawable"] as? Int{
+                 muteOffImageDrawableParam = muteOffImageDrawable;
+                 }
+                if let muteOnImageDrawable = playerStyle["muteOnImageDrawable"] as? Int{
+                 muteOnImageDrawableParam = muteOnImageDrawable;
+                 }
              }
-          m_ziggeo?.setVideoPlayerConfig(["shouldShowSubtitles": shouldShowSubtitlesParam,
-                                     "isMuted": isMutedParam
-                                    ]);
+          }
+//           m_ziggeo?.setVideoPlayerConfig(["shouldShowSubtitles": shouldShowSubtitlesParam,
+//                                      "isMuted": isMutedParam,
+//                                      "playerStyle": ["controllerStyle": controllerStyleParam,
+//                                                      "textColor": textColorParam,
+//                                                      "unplayedColor": unplayedColorParam,
+//                                                      "playedColor": playedColorParam,
+//                                                      "tintColor": tintColorParam,
+//                                                      "muteOffImageDrawable": muteOffImageDrawableParam,
+//                                                      "muteOnImageDrawable": muteOnImageDrawableParam]
+//           ]);
         } else if (call.method == "setPlayerStyle") {
-//              todo  add PlayerStyle params
+          var controllerStyleParam = 0
+          var textColorParam: Int? = nil
+          var unplayedColorParam: Int? = nil
+          var playedColorParam: Int? = nil
+          var tintColorParam: Int? = nil
+          var muteOffImageDrawableParam: Int? = nil
+          var muteOnImageDrawableParam: Int? = nil
+             if let playerStyle = call.arguments as? Dictionary<String, Any>{
+                if let controllerStyle = playerStyle["controllerStyle"] as? Int{
+                 controllerStyleParam = controllerStyle;
+                 }
+                if let textColor = playerStyle["textColor"] as? Int{
+                 textColorParam = textColor;
+                 }
+                if let unplayedColor = playerStyle["unplayedColor"] as? Int{
+                 unplayedColorParam = unplayedColor;
+                 }
+                if let playedColor = playerStyle["playedColor"] as? Int{
+                 playedColorParam = playedColor;
+                 }
+                if let tintColor = playerStyle["tintColor"] as? Int{
+                 tintColorParam = tintColor;
+                 }
+                if let muteOffImageDrawable = playerStyle["muteOffImageDrawable"] as? Int{
+                 muteOffImageDrawableParam = muteOffImageDrawable;
+                 }
+                if let muteOnImageDrawable = playerStyle["muteOnImageDrawable"] as? Int{
+                 muteOnImageDrawableParam = muteOnImageDrawable;
+                 }
+             }
+//               m_ziggeo?.setVideoPlayerStyle(["controllerStyle": controllerStyleParam,
+//                                              "textColor": textColorParam,
+//                                              "unplayedColor": unplayedColorParam,
+//                                              "playedColor": playedColorParam,
+//                                              "tintColor": tintColorParam,
+//                                              "muteOffImageDrawable": muteOffImageDrawableParam,
+//                                              "muteOnImageDrawable": muteOnImageDrawableParam]
+//                        );
         } else if (call.method == "getFileSelectorConfig") {
                   var res = m_ziggeo?.getFileSelectorConfig()
                   let encoder = JSONEncoder()
@@ -257,9 +339,8 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
         } else if (call.method == "startAudioPlayerByPath") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let paths = args["path"] as? String{
-//                  m_ziggeo?.startAudioPlayerByPaths( [paths]);
+//                  m_ziggeo?.startAudioPlayer( urls: [paths]);
              }
-//           m_ziggeo?.startAudioPlayerByPaths( ["paths"]);
         } else if (call.method == "showImageByToken") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let tokens = args["token"] as? String{
@@ -268,7 +349,7 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
         } else if (call.method == "showImageByPath") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let paths = args["path"] as? String{
-//                  m_ziggeo?.showImageByPath( [paths]);
+                 m_ziggeo?.showImage( [paths]);
              }
         } else if (call.method == "startImageRecorder") {
              m_ziggeo?.startImageRecorder();
@@ -283,61 +364,11 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
                  m_ziggeo?.playFromUri( [paths]);
              }
         } else if (call.method == "startScreenRecorder") {
-        //todo
-          let button = UIButton(type: .system)
-          button.addTarget(self, action: "Action:", for: UIControl.Event.touchUpInside)
-            if let data = call.arguments as? Dictionary<String, Any>,
-               let args = data["args"] as? Dictionary<String, Any>{
-               if let background_color = args[SCREEN_RECORDER_BACKGROUND_COLOR] as? String{
-                     button.backgroundColor = UIColor(hex: background_color)
-                 } else {
-                     button.backgroundColor = .white
-               }
-               if let title = args[SCREEN_RECORDER_TITLE] as? String{
-                     button.setTitle(title, for: UIControl.State.normal)
-                 } else {
-                     button.setTitle("Record", for: UIControl.State.normal)
-               }
-               if let title_color = args[SCREEN_RECORDER_TEXT_COLOR] as? String{
-                     button.setTitleColor(UIColor(hex: title_color), for: .normal)
-                 } else {
-                     button.setTitleColor(.black, for: .normal)
-               }
-               if let frame = args[SCREEN_RECORDER_FRAME] as? Dictionary<String, Int>,
-                  let frame_x_start = frame[SCREEN_RECORDER_FRAME_X_START] as? Int,
-                  let frame_y_start = frame[SCREEN_RECORDER_FRAME_Y_START] as? Int,
-                  let frame_x_end = frame[SCREEN_RECORDER_FRAME_X_END] as? Int,
-                  let frame_y_end = frame[SCREEN_RECORDER_FRAME_Y_END] as? Int{
-                     button.frame = CGRectMake(
-                        CGFloat(frame_x_start),
-                        CGFloat(frame_y_start),
-                        CGFloat(frame_x_end),
-                        CGFloat(frame_y_end))
-                 } else {
-                     button.frame = CGRectMake(16, viewController!.view.bounds.height - 96, 50, 50)
-               }
-               viewController!.view.addSubview(button)
-            } else {
-                     button.backgroundColor = .white
-                     button.frame = CGRectMake(16, viewController!.view.bounds.height - 96, 50, 50)
-                     button.setTitle("Record", for: UIControl.State.normal)
-                     button.setTitleColor(.black, for: .normal)
-                     viewController!.view.addSubview(button)
-                 }
-
           m_ziggeo?.startScreenRecorder(
-                    appGroup: "com.ziggeo.sdk",
-                    preferredExtension: ""
+                    appGroup: "com.ziggeo.sdk", preferredExtension: ""
           );
         } else if (call.method == "uploadFromFileSelector") {
-             if let args = call.arguments as? Dictionary<String, Any>,
-                 let data = args["args"] as? Dictionary<String, Any>{
-                    m_ziggeo?.uploadFromFileSelector(
-                       [Ziggeo_Key_Type.MEDIA_TYPES.rawValue:[Media_Type.Video.rawValue,
-                       Media_Type.Audio.rawValue,
-                       Media_Type.Image.rawValue]]
-                    );
-             }
+          m_ziggeo?.uploadFromFileSelector( [:]);
         } else if (call.method == "sendReport") {
              if let args = call.arguments as? Dictionary<String, Any>,
                  let logs = args["logs"] as? [String]{
@@ -353,6 +384,8 @@ public class SwiftZiggeoPlugin: NSObject, FlutterPlugin, ZiggeoQRScannerDelegate
         SwiftAudioApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
         SwiftImageApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
         SwiftStreamApiPlugin.registerZiggeo(registrar: m_flutterPluginRegistrar!, ziggeo: m_ziggeo!);
+        m_flutterPluginRegistrar!.register(ZPlayerViewFactory(messenger: m_flutterPluginRegistrar!.messenger(), ziggeo: m_ziggeo!), withId: "z_video_player");
+        m_flutterPluginRegistrar!.register(ZCameraViewFactory(messenger: m_flutterPluginRegistrar!.messenger(), ziggeo: m_ziggeo!), withId: "z_camera_view");
     }
 
 }
@@ -414,3 +447,179 @@ extension UIColor {
 
         static let allValues = [BYTES_SENT, BYTES_TOTAL, FILE_NAME, PATH, QR, TOKEN, /*ERROR,*/ PERMISSIONS, SOUND_LEVEL, SECONDS_LEFT, MILLIS_PASSED, MILLIS, FILES, VALUE, MEDIA_TYPES, BLUR_EFFECT, CLIENT_AUTH, SERVER_AUTH, TAGS]
     }
+
+class ZCameraViewFactory: NSObject, FlutterPlatformViewFactory {
+    private var messenger: FlutterBinaryMessenger
+    private var _ziggeo: Ziggeo
+
+    init(messenger: FlutterBinaryMessenger, ziggeo: Ziggeo) {
+        self.messenger = messenger
+        self._ziggeo = ziggeo
+        super.init()
+    }
+
+    func create(
+        withFrame frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?
+    ) -> FlutterPlatformView {
+        return ZCameraView(
+            ziggeo: _ziggeo,
+            frame: frame,
+            viewIdentifier: viewId,
+            arguments: args,
+            binaryMessenger: messenger)
+    }
+}
+
+
+class ZPlayerViewFactory: NSObject, FlutterPlatformViewFactory {
+    private var messenger: FlutterBinaryMessenger
+    private var ziggeo: Ziggeo
+
+    init(messenger: FlutterBinaryMessenger, ziggeo: Ziggeo) {
+            self.messenger = messenger
+            self.ziggeo = ziggeo
+            super.init()
+        }
+
+    func create(
+        withFrame frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?
+    ) -> FlutterPlatformView {
+        return ZPlayerView(
+            ziggeo: ziggeo,
+            frame: frame,
+            viewIdentifier: viewId,
+            arguments: args,
+            binaryMessenger: messenger)
+    }
+}
+
+class ZPlayerView: NSObject, FlutterPlatformView {
+//     private var _view: CustomVideoPlayer
+    private var _view: UIView
+    private var _methodChannel: FlutterMethodChannel
+    private var _ziggeo: Ziggeo
+
+    init(
+        ziggeo: Ziggeo,
+        frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?,
+        binaryMessenger messenger: FlutterBinaryMessenger?
+    ) {
+        _ziggeo = ziggeo
+         _view = UIView()
+//         _view = CustomVideoPlayer(ziggeo: ziggeo)
+        _methodChannel = FlutterMethodChannel(name: "z_video_view", binaryMessenger: messenger!)
+        super.init()
+        // iOS views can be created here
+        _methodChannel.setMethodCallHandler(onMethodCall)
+    }
+
+    func view() -> UIView {
+//         return _view.view
+        return _view
+    }
+
+    func createNativeView(view _view: UIView){
+        _view.backgroundColor = UIColor.blue
+        let nativeLabel = UILabel()
+        nativeLabel.text = "Native text from iOS"
+        nativeLabel.textColor = UIColor.white
+        nativeLabel.textAlignment = .center
+        nativeLabel.frame = CGRect(x: 0, y: 0, width: 180, height: 48.0)
+        _view.addSubview(nativeLabel)
+    }
+
+        func onMethodCall(call: FlutterMethodCall, result: FlutterResult) {
+            switch(call.method){
+            case "onResume":
+            setText(call:call, result:result)
+            case "initViews":
+            setText(call:call, result:result)
+            case "getCallback":
+            setText(call:call, result:result)
+//             case "prepareQueueAndStartPlaying":
+//                 _view.play();
+//             case "setVideoToken":
+//                if let args = call.arguments as? Dictionary<String, Any>,
+//                   let videoToken = args["videoToken"] as? String{
+//                      _view.videoURL = URL( string: _ziggeo.videos.getVideoUrl(videoToken));
+//                   }
+//             case "setVideoPath":
+//                if let args = call.arguments as? Dictionary<String, Any>,
+//                   let videoPath = args["videoPath"] as? String{
+//                      _view.videoURL = URL( string: videoPath);
+//                   }
+//             case "loadConfigs":
+//                 _view.isRecordingPreview = true
+//                 _view.videoRecorder = CustomVideoRecorder(ziggeo: _ziggeo)
+            default:
+                result(FlutterMethodNotImplemented)
+            }
+        }
+        func setText(call: FlutterMethodCall, result: FlutterResult){
+
+        }
+}
+
+class ZCameraView: NSObject, FlutterPlatformView {
+//     private var _view: CustomVideoRecorder
+    private var _view: UIView
+    private var _methodChannel: FlutterMethodChannel
+    private var _ziggeo: Ziggeo
+
+    init(
+        ziggeo: Ziggeo,
+        frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?,
+        binaryMessenger messenger: FlutterBinaryMessenger?
+    ) {
+        _ziggeo = ziggeo
+        _view = UIView()
+//         _view = CustomVideoRecorder(ziggeo: _ziggeo)
+        _methodChannel = FlutterMethodChannel(name: "z_camera_recorder", binaryMessenger: messenger!)
+        super.init()
+        _methodChannel.setMethodCallHandler(onMethodCall)
+    }
+
+    func view() -> UIView {
+        return _view
+//         return _view.view
+    }
+
+    func onMethodCall(call: FlutterMethodCall, result: FlutterResult) {
+            switch(call.method){
+            case "isRecording":
+                setText(call:call, result:result)
+            case "getCallback":
+                setText(call:call, result:result)
+//             case "getRecordedFile":
+//                 result( _view.getRecordedFile() );
+            case "start":
+                setText(call:call, result:result)
+            case "stop":
+                setText(call:call, result:result)
+//             case "loadConfigs":
+//                 _view.isControllerEnable = false;
+//             case "startRecording":
+//                 _view.startRecording()
+//             case "stopRecording":
+//                 _view.stopRecording()
+//             case "switchCamera":
+//                 _view.changeCamera()
+            default:
+                result(FlutterMethodNotImplemented)
+            }
+    }
+
+    func setText(call: FlutterMethodCall, result: FlutterResult){
+        print("call")
+    }
+}
+
+

@@ -66,7 +66,7 @@ class Ziggeo {
   }
 
   Future<PlayerStyle?> getPlayerStyle() async {
-    return _playerConfig?.playerStyle?.convertFromMap(
+    return PlayerStyle.convertFromMap(
         json.decode((await _ziggeoChannel.invokeMethod('getPlayerStyle')))
             as Map<String, dynamic>);
   }
@@ -132,8 +132,8 @@ class Ziggeo {
     _recorderConfig = value;
     _ziggeoChannel.invokeMethod(
         'setRecorderConfig', recorderConfig?.convertToMap());
-    _ziggeoChannel.invokeMethod('setRecordingConfirmationDialogConfig',
-        recorderConfig?.stopRecordingConfirmationDialogConfig?.convertToMap());
+    // _ziggeoChannel.invokeMethod('setRecordingConfirmationDialogConfig',
+    //     recorderConfig?.stopRecordingConfirmationDialogConfig?.convertToMap());
   }
 
   set stopRecordingConfirmationDialogConfig(

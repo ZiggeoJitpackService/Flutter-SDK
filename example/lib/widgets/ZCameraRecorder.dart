@@ -26,6 +26,12 @@ class _ZCameraRecorderState extends State<ZCameraRecorder> {
         onPlatformViewCreated: _onPlatformViewCreated,
       );
     }
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return UiKitView(
+        viewType: 'z_camera_view',
+        onPlatformViewCreated: _onPlatformViewCreated,
+      );
+    }
     return Text('$defaultTargetPlatform is not yet supported by the plugin');
   }
 
@@ -52,7 +58,7 @@ class ZCameraRecorderController {
   }
 
   Future<String?> getRecordedFile() async {
-    return _channel.invokeMethod('getRecordedFile') as Future<String>;
+    return await _channel.invokeMethod('getRecordedFile');
   }
 
   Future<void> start() async {

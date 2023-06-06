@@ -7,10 +7,10 @@ typedef void ZVideoPlayerCreatedCallback(VideoPlayerController controller);
 class ZVideoPlayer extends StatefulWidget {
   const ZVideoPlayer({
     Key? key,
-    this.onTVideoPlayerCreated,
+    this.onVideoPlayerCreated,
   }) : super(key: key);
 
-  final ZVideoPlayerCreatedCallback? onTVideoPlayerCreated;
+  final ZVideoPlayerCreatedCallback? onVideoPlayerCreated;
 
   @override
   State<StatefulWidget> createState() => _ZVideoPlayerState();
@@ -25,14 +25,20 @@ class _ZVideoPlayerState extends State<ZVideoPlayer> {
         onPlatformViewCreated: _onPlatformViewCreated,
       );
     }
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return UiKitView(
+        viewType: 'z_video_player',
+        onPlatformViewCreated: _onPlatformViewCreated,
+      );
+    }
     return Text('$defaultTargetPlatform is not yet supported by the plugin');
   }
 
   void _onPlatformViewCreated(int id) {
-    if (widget.onTVideoPlayerCreated == null) {
+    if (widget.onVideoPlayerCreated == null) {
       return;
     }
-    widget.onTVideoPlayerCreated!(new VideoPlayerController._(id));
+    widget.onVideoPlayerCreated!(new VideoPlayerController._(id));
   }
 }
 

@@ -25,17 +25,20 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: Container(
-                child: Align(
-      alignment: Alignment.center,
-      child: ZVideoPlayer(
-        onTVideoPlayerCreated: _onTVideoPlayerCreated,
+      body: Center(
+        child: Container(
+          child: Align(
+            alignment: Alignment.center,
+            child: ZVideoPlayer(
+              onVideoPlayerCreated: _onVideoPlayerCreated,
+            ),
+          ),
+        ),
       ),
-    ))));
+    );
   }
 
-  void _onTVideoPlayerCreated(VideoPlayerController controller) {
+  void _onVideoPlayerCreated(VideoPlayerController controller) {
     controller.loadConfigs();
     controller.initViews();
     if (tokens != null) {
