@@ -91,11 +91,11 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
         } else if (call.method == "destroy") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String{
-                      m_ziggeo?.videos.destroy(videoToken,
-                          callback: { content, response, error in
-                              let resultString = String(describing: content);
-                              result(resultString);
-                          });
+//                       m_ziggeo?.videos.destroy(videoToken,
+//                           callback: { content, response, error in
+//                               let resultString = String(describing: content);
+//                               result(resultString);
+//                           });
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
@@ -411,20 +411,36 @@ public class SwiftStreamApiPlugin: NSObject, FlutterPlugin {
                 if let args = call.arguments as? Dictionary<String, Any>,
                      let videoToken = args["videoToken"] as? String,
                      let streamToken = args["streamToken"] as? String{
-                     //todo create method
+//                      m_ziggeo?.videos.confirm( videoToken,
+//                                                streamToken: streamToken,
+//                                                data: [:],
+//                                                callback: {jsonObject, response, error in
+//                                                    let resultString = String(describing: jsonObject);
+//                                                    result(resultString);
+//                                                });
                 }
         } else if (call.method == "destroy") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String,
                   let streamToken = args["streamToken"] as? String{
-                     //todo create method
+                    m_ziggeo?.videos.destroy( videoToken,
+//                                               streamToken: streamToken,
+                                              callback: {jsonObject, response, error in
+                                                       let resultString = String(describing: jsonObject);
+                                                       result(resultString);
+                                              });
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String,
                   let path = args["path"] as? String,
                   let params = args["args"] as? Dictionary<String, String>{
-                     //todo create method
+                    m_ziggeo?.videos.createStream( videoToken,
+                                              data: params  as NSDictionary?,
+                                              callback: {jsonObject, response, error in
+                                                       let resultString = String(describing: jsonObject);
+                                                       result(resultString);
+                                              });
                   }
         } else {
                result(FlutterError(code:"Not implemented Stream", message:"Not implemented",details: ""))
