@@ -31,35 +31,36 @@ class _LogScreenState extends State<LogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.all(common_margin),
-      child: Stack(
-        children: <Widget>[
-          Align(
-              alignment: Alignment.topCenter,
-              child: logs.isEmpty
-                  ? Container(
-                      margin:
-                          EdgeInsets.only(top: list_empty_message_margin_top),
-                      child: TextLocalized('message_log_empty'))
-                  : Container(
-                      child: ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return Divider();
-                      },
-                      itemCount: logs.length,
-                      itemBuilder: (context, index) => getListItem(index),
-                    ))),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: RaisedButton(
-              onPressed: () => this.onSendReportBtnPressed(),
-              child: TextLocalized('btn_send_report'),
-            ),
-          )
-        ],
+      body: Padding(
+        padding: EdgeInsets.all(common_margin),
+        child: Stack(
+          children: <Widget>[
+            Align(
+                alignment: Alignment.topCenter,
+                child: logs.isEmpty
+                    ? Container(
+                        margin:
+                            EdgeInsets.only(top: list_empty_message_margin_top),
+                        child: TextLocalized('message_log_empty'))
+                    : Container(
+                        child: ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return Divider();
+                        },
+                        itemCount: logs.length,
+                        itemBuilder: (context, index) => getListItem(index),
+                      ))),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: () => this.onSendReportBtnPressed(),
+                child: TextLocalized('btn_send_report'),
+              ),
+            )
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   onSendReportBtnPressed() {

@@ -67,17 +67,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: TextStyle(fontSize: message_text_size),
                       ),
                       Align(
-                          alignment: Alignment.centerRight,
-                          child: Switch(
-                            value: isCustomVideoSwitched,
-                            onChanged: (value) {
-                              setState(
-                                () {
-                                  isCustomVideoSwitched = value;
-                                },
-                              );
-                            },
-                          )),
+                        alignment: Alignment.centerRight,
+                        child: Switch(
+                          value: isCustomVideoSwitched,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                isCustomVideoSwitched = value;
+                              },
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -140,7 +141,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: SizedBox(
                 width: btn_qr_width,
                 height: btn_qr_height,
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () {
                     onSavedBtnPressed();
                   },
@@ -176,10 +177,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await SharedPreferences.getInstance().then((value) {
       setState(() {
         if (value.getBool(Utils.keyCustomPlayerMode) != null) {
-          isCustomVideoSwitched = value.getBool(Utils.keyCustomPlayerMode) ?? false;
+          isCustomVideoSwitched =
+              value.getBool(Utils.keyCustomPlayerMode) ?? false;
         }
         if (value.getBool(Utils.keyCustomPlayerMode) != null) {
-          isCustomCameraSwitched = value.getBool(Utils.keyCustomCameraMode) ?? false;
+          isCustomCameraSwitched =
+              value.getBool(Utils.keyCustomCameraMode) ?? false;
         }
         if (value.getBool(Utils.keyBlurMode) != null) {
           isBlurSwitched = value.getBool(Utils.keyBlurMode) ?? false;

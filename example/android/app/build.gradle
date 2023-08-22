@@ -24,7 +24,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -37,9 +37,9 @@ android {
     defaultConfig {
         applicationId "com.ziggeo.flutter.demo"
         minSdkVersion 21
-        targetSdkVersion 32
-        versionCode 8
-        versionName "1.0.8"
+        targetSdkVersion 33
+        versionCode 9
+        versionName "1.0.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         setProperty("archivesBaseName", "androidFlutter-v" + versionName)
