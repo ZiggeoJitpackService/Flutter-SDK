@@ -6,7 +6,6 @@ on:
 jobs:
   run_tests:
     runs-on: macos-latest
-    needs: publishing_sdk
     defaults:
       run:
         working-directory: ./example
