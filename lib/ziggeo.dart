@@ -25,7 +25,6 @@ class Ziggeo {
   static const _uplChannel = const MethodChannel('ziggeo_upl_callback');
   static const _plChannel = const MethodChannel('ziggeo_pl_callback');
   static const _qrChannel = const MethodChannel('ziggeo_qr_callback');
-  static const _zvChannel = const MethodChannel('z_video_view');
   static const _smChannel = const MethodChannel('ziggeo_sensor_manager');
 
   Ziggeo(String? token) {
@@ -207,7 +206,7 @@ class Ziggeo {
   }
 
   Future<void> startAudioPlayerByToken(String token) async {
-    if (token != null) {
+    if (token.isNotEmpty) {
       return await _ziggeoChannel
           .invokeMethod('startAudioPlayerByToken', {"token": token});
     } else {
@@ -216,7 +215,7 @@ class Ziggeo {
   }
 
   Future<void> startAudioPlayerByPath(Uri path) async {
-    if (path != null) {
+    if (path.toString().isNotEmpty) {
       return await _ziggeoChannel
           .invokeMethod('startAudioPlayerByPath', {"path": path});
     } else {

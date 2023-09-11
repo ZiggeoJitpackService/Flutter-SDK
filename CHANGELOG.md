@@ -1,3 +1,9 @@
+## 0.2.11
+----------------------------
+* Fixed different issues.
+## 0.2.10
+----------------------------
+* Compile android SDK up to 33.
 ## 0.2.9
 ----------------------------
 * Added pausable audio, image uploading.
