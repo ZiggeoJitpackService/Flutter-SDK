@@ -36,7 +36,6 @@ jobs:
             profile: Nexus 5
             script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
-
   run_tests_ios:
     runs-on: macos-latest
     defaults:
