@@ -1,7 +1,7 @@
 import Flutter
 import Combine
 import UIKit
-import ZiggeoMediaSwiftSDK
+import ZiggeoMediaSDK
 
 public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
 
@@ -24,14 +24,14 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
        if (call.method == "index") {
                 if let args = call.arguments as? Dictionary<String, Any>,
                      let argsss = args as? Dictionary<String, Any>{
-                     m_ziggeo?.videos.index(
+                    m_ziggeo?.videos()?.index(
                          argsss, callback: { array, error in
                                var recordings: String = "["
 
-                               for item in array {
+                               for item in array! {
                                   let encoder = JSONEncoder()
                                   do {
-                                      let modelData = try encoder.encode(item)
+                                      let modelData = try encoder.encode(item as! ContentModel)
                                       let jsonString = String(data: modelData, encoding: .utf8)
                                       recordings.append(jsonString!);
                                       recordings.append(",");
@@ -49,7 +49,7 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
         if (call.method == "get") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String{
-                      m_ziggeo?.videos.get(videoToken,
+                      m_ziggeo?.videos()?.get(videoToken,
                           data: [:],
                           callback: { content, response, error in
                               let resultString = String(describing: content);
@@ -59,19 +59,19 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
         } else if (call.method == "getVideoUrl") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String{
-                      result(m_ziggeo?.videos.getVideoUrl(videoToken));
+                      result(m_ziggeo?.videos()?.getVideoUrl(videoToken));
                   }
         } else if (call.method == "getImageUrl") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String{
-                      result(m_ziggeo?.videos.getImageUrl(videoToken));
+                      result(m_ziggeo?.videos()?.getImageUrl(videoToken));
                   }
         } else if (call.method == "update") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let data = args["mapData"] as? Dictionary<String, Any> {
                       if(data != nil){
                             let token = data["token"] as! String
-                            m_ziggeo?.videos.update(
+                            m_ziggeo?.videos()?.update(
                                  token,
                                  data: data,
                                  callback: { content, response, error in
@@ -91,17 +91,17 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
         } else if (call.method == "destroy") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String{
-//                       m_ziggeo?.videos.destroy(videoToken,
-//                           callback: { content, response, error in
-//                               let resultString = String(describing: content);
-//                               result(resultString);
-//                           });
+                   m_ziggeo?.videos()?.destroy(videoToken,
+                           callback: { content, response, error in
+                               let resultString = String(describing: content);
+                               result(resultString);
+                           });
                   }
         } else if (call.method == "create") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let params = args["data"] as? Dictionary<String, Any>,
                   let path = args["path"] as? String{
-                         m_ziggeo?.videos.create(
+                         m_ziggeo?.videos()?.create(
                           path,
                           data: params,
                           callback: { content, response, error in
@@ -144,7 +144,7 @@ extension String{
    }
 }
 
-extension ZiggeoMediaSwiftSDK.ContentModel:Encodable{
+extension ZiggeoMediaSDK.ContentModel:Encodable{
 
     public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
@@ -189,13 +189,13 @@ public class SwiftAudioApiPlugin: NSObject, FlutterPlugin {
        if (call.method == "index") {
                 if let args = call.arguments as? Dictionary<String, Any>,
                      let argsss = args as? Dictionary<String, Any>{
-                     m_ziggeo?.audios.index(
+                     m_ziggeo?.audios()?.index(
                          argsss, callback: { array, error in
                                var recordings: String = "["
-                               for item in array {
+                               for item in array! {
                                   let encoder = JSONEncoder()
                                   do {
-                                      let modelData = try encoder.encode(item)
+                                      let modelData = try encoder.encode(item as! ContentModel)
                                       let jsonString = String(data: modelData, encoding: .utf8)
                                       recordings.append(jsonString!);
                                       recordings.append(",");
@@ -212,7 +212,7 @@ public class SwiftAudioApiPlugin: NSObject, FlutterPlugin {
         } else if (call.method == "get") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["tokenOrKey"] as? String{
-                      m_ziggeo?.audios.get(videoToken,
+                      m_ziggeo?.audios()?.get(videoToken,
                           data: [:],
                           callback: { content, response, error in
                               let resultString = String(describing: content);
@@ -224,7 +224,7 @@ public class SwiftAudioApiPlugin: NSObject, FlutterPlugin {
                   let data = args["mapData"] as? Dictionary<String, Any> {
                       if(data != nil){
                             let token = data["token"] as! String
-                            m_ziggeo?.audios.update(
+                            m_ziggeo?.audios()?.update(
                                  token,
                                  data: data,
                                  callback: { content, response, error in
@@ -244,7 +244,7 @@ public class SwiftAudioApiPlugin: NSObject, FlutterPlugin {
         } else if (call.method == "destroy") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["tokenOrKey"] as? String{
-                      m_ziggeo?.audios.destroy(videoToken,
+                      m_ziggeo?.audios()?.destroy(videoToken,
                           callback: { content, response, error in
                               let resultString = String(describing: content);
                               result(resultString);
@@ -254,7 +254,7 @@ public class SwiftAudioApiPlugin: NSObject, FlutterPlugin {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let params = args["data"] as? Dictionary<String, Any>,
                   let path = args["path"] as? String{
-                      m_ziggeo?.audios.create(
+                      m_ziggeo?.audios()?.create(
                           path,
                           data: params,
                           callback: { content, response, error in
@@ -296,13 +296,13 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
        if (call.method == "index") {
                 if let args = call.arguments as? Dictionary<String, Any>,
                      let argsss = args as? Dictionary<String, Any>{
-                     m_ziggeo?.images.index(
+                     m_ziggeo?.images()?.index(
                          argsss, callback: { array, error in
                                var recordings: String = "["
-                               for item in array {
+                               for item in array! {
                                   let encoder = JSONEncoder()
                                   do {
-                                      let modelData = try encoder.encode(item)
+                                      let modelData = try encoder.encode(item as! ContentModel)
                                       let jsonString = String(data: modelData, encoding: .utf8)
                                       recordings.append(jsonString!);
                                       recordings.append(",");
@@ -320,7 +320,7 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
         if (call.method == "get") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["tokenOrKey"] as? String{
-                      m_ziggeo?.images.get(videoToken,
+                      m_ziggeo?.images()?.get(videoToken,
                           data: [:],
                           callback: { content, response, error in
                               let resultString = String(describing: content);
@@ -332,7 +332,7 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
                   let data = args["mapData"] as? Dictionary<String, Any> {
                       if(data != nil){
                             let token = data["token"] as! String
-                            m_ziggeo?.images.update(
+                            m_ziggeo?.images()?.update(
                                  token,
                                  data: data,
                                  callback: { content, response, error in
@@ -352,7 +352,7 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
         } else if (call.method == "destroy") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["tokenOrKey"] as? String{
-                      m_ziggeo?.images.destroy(videoToken,
+                      m_ziggeo?.images()?.destroy(videoToken,
                           callback: { content, response, error in
                               let resultString = String(describing: content);
                               result(resultString);
@@ -362,7 +362,7 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let params = args["data"] as? Dictionary<String, Any>,
                   let path = args["path"] as? String{
-                         m_ziggeo?.images.create(
+                         m_ziggeo?.images()?.create(
                           path,
                           data: params,
                           callback: { content, response, error in
@@ -379,7 +379,7 @@ public class SwiftImageApiPlugin: NSObject, FlutterPlugin {
         } else if (call.method == "getImageUrl") {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let tokenOrKey = args["tokenOrKey"] as? String{
-                      result(m_ziggeo?.images.getImageUrl(tokenOrKey));
+                      result(m_ziggeo?.images()?.getImageUrl(tokenOrKey));
              }
         }
         else {
@@ -423,7 +423,7 @@ public class SwiftStreamApiPlugin: NSObject, FlutterPlugin {
                if let args = call.arguments as? Dictionary<String, Any>,
                   let videoToken = args["videoToken"] as? String,
                   let streamToken = args["streamToken"] as? String{
-                    m_ziggeo?.videos.destroy( videoToken,
+                    m_ziggeo?.videos()?.destroy( videoToken,
 //                                               streamToken: streamToken,
                                               callback: {jsonObject, response, error in
                                                        let resultString = String(describing: jsonObject);
@@ -435,12 +435,12 @@ public class SwiftStreamApiPlugin: NSObject, FlutterPlugin {
                   let videoToken = args["videoToken"] as? String,
                   let path = args["path"] as? String,
                   let params = args["args"] as? Dictionary<String, String>{
-                    m_ziggeo?.videos.createStream( videoToken,
-                                              data: params  as NSDictionary?,
-                                              callback: {jsonObject, response, error in
-                                                       let resultString = String(describing: jsonObject);
-                                                       result(resultString);
-                                              });
+//                    m_ziggeo?.videos()?.createStream( videoToken,
+//                                              data: params  as NSDictionary?,
+//                                              callback: {jsonObject, response, error in
+//                                                       let resultString = String(describing: jsonObject);
+//                                                       result(resultString);
+//                                              });
                   }
         } else {
                result(FlutterError(code:"Not implemented Stream", message:"Not implemented",details: ""))

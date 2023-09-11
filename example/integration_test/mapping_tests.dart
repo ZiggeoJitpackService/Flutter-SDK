@@ -36,33 +36,30 @@ void main() {
 
       final listFinder = find.byType(Scrollable);
 
-      if (Platform.isAndroid) {
-        expect(
-            find.text(
-                'shouldAllowMultipleSelection$shouldAllowMultipleSelection'),
-            findsOneWidget);
-        expect(find.text('mediaType$mediaType'), findsOneWidget);
+      expect(
+          find.text(
+              'shouldAllowMultipleSelection$shouldAllowMultipleSelection'),
+          findsOneWidget);
+      expect(find.text('mediaType$mediaType'), findsOneWidget);
 
-        final itemFinder = find.byKey(ValueKey('shouldTurnOffUploader: '));
-        // Scroll until the item to be found appears.
-        await tester.scrollUntilVisible(
-          itemFinder,
-          50.0,
-          scrollable: listFinder,
-        );
+      final itemFinder = find.byKey(ValueKey('shouldTurnOffUploader: '));
+      // Scroll until the item to be found appears.
+      await tester.scrollUntilVisible(
+        itemFinder,
+        50.0,
+        scrollable: listFinder,
+      );
 
-        // Trigger a frame.
-        await tester.pumpAndSettle();
+      // Trigger a frame.
+      await tester.pumpAndSettle();
 
-        expect(itemFinder, findsOneWidget);
-        expect(
-            find.text('shouldUseWifiOnly$shouldUseWifiOnly'), findsOneWidget);
-        expect(find.text('syncInterval$syncInterval'), findsOneWidget);
-        expect(find.text('lostConnectionAction$lostConnectionAction'),
-            findsOneWidget);
-        expect(find.text('shouldTurnOffUploader$shouldTurnOffUploader'),
-            findsOneWidget);
-      }
+      expect(itemFinder, findsOneWidget);
+      expect(find.text('shouldUseWifiOnly$shouldUseWifiOnly'), findsOneWidget);
+      expect(find.text('syncInterval$syncInterval'), findsOneWidget);
+      expect(find.text('lostConnectionAction$lostConnectionAction'),
+          findsOneWidget);
+      expect(find.text('shouldTurnOffUploader$shouldTurnOffUploader'),
+          findsOneWidget);
 
       final itemTwoFinder =
           find.byKey(ValueKey('shouldCloseAfterSuccessfulScan: '));
@@ -100,16 +97,14 @@ void main() {
 
       expect(find.text('shouldShowFaceOutline$shouldShowFaceOutline'),
           findsOneWidget);
-      expect(find.text('isLiveStreaming$isLiveStreaming'), findsOneWidget);
-      expect(find.text('shouldAutoStartRecording$shouldAutoStartRecording'),
-          findsOneWidget);
       expect(find.text('startDelay$startDelay'), findsOneWidget);
       expect(find.text('blurMode$blurMode'), findsOneWidget);
       expect(find.text('shouldSendImmediately$shouldSendImmediately'),
           findsOneWidget);
-      if (Platform.isAndroid) {
-        expect(find.text('isPausedMode$isPausedMode'), findsOneWidget);
-      }
+      expect(find.text('isLiveStreaming$isLiveStreaming'), findsOneWidget);
+      expect(find.text('shouldAutoStartRecording$shouldAutoStartRecording'),
+          findsOneWidget);
+      expect(find.text('isPausedMode$isPausedMode'), findsOneWidget);
 
       final itemFourFinder =
           find.byKey(ValueKey('shouldConfirmStopRecording: '));
@@ -126,7 +121,6 @@ void main() {
       expect(itemFourFinder, findsOneWidget);
       expect(find.text('shouldDisableCameraSwitch$shouldDisableCameraSwitch'),
           findsOneWidget);
-
       expect(find.text('videoQuality$videoQuality'), findsOneWidget);
       expect(find.text('facing$facing'), findsOneWidget);
       var newDuration =
@@ -172,19 +166,20 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(itemSixFinder, findsOneWidget);
-
-      expect(find.text('textColor$textColor'), findsOneWidget);
-      expect(find.text('controllerStyle$controllerStyle'), findsOneWidget);
-      expect(find.text('unplayedColor$unplayedColor'), findsOneWidget);
-      expect(find.text('playedColor$playedColor'), findsOneWidget);
       if (Platform.isAndroid) {
+        expect(find.text('textColor$textColor'), findsOneWidget);
+        expect(find.text('controllerStyle$controllerStyle'), findsOneWidget);
+        expect(find.text('unplayedColor$unplayedColor'), findsOneWidget);
+        expect(find.text('playedColor$playedColor'), findsOneWidget);
+
         expect(find.text('bufferedColor$bufferedColor'), findsOneWidget);
+
+        expect(find.text('tintColor$tintColor'), findsOneWidget);
+        expect(find.text('muteOffImageDrawable$muteOffImageDrawable'),
+            findsOneWidget);
+        expect(find.text('muteOnImageDrawable$muteOnImageDrawable'),
+            findsOneWidget);
       }
-      expect(find.text('tintColor$tintColor'), findsOneWidget);
-      expect(find.text('muteOffImageDrawable$muteOffImageDrawable'),
-          findsOneWidget);
-      expect(
-          find.text('muteOnImageDrawable$muteOnImageDrawable'), findsOneWidget);
     });
   });
 }

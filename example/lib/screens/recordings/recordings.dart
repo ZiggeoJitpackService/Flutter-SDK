@@ -11,6 +11,7 @@ import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/file_selector/file_selector_listener.dart';
 import 'package:ziggeo/player/player_config.dart';
 import 'package:ziggeo/player/player_listener.dart';
+import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
 import 'package:ziggeo/recorder/recorder_listener.dart';
 import 'package:ziggeo/styles/player.dart';
@@ -338,6 +339,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initCallbacks() {
+    initQRScanner();
     initFileSelectorCallback();
     initPlayerCallback();
     initRecorderCallback();
@@ -359,6 +361,12 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       onError: (exception) =>
           addLogEvent('ev_fs_error', details: exception.toString()),
     );
+  }
+
+  initQRScanner() {
+    if(ziggeo.qrScannerConfig == null){
+      ziggeo.qrScannerConfig = QrScannerConfig();
+    }
   }
 
   initPlayerCallback() {

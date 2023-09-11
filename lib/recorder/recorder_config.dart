@@ -76,21 +76,39 @@ class RecorderConfig extends BaseConfig {
   });
 
   static RecorderConfig convertFromMap(Map<String, dynamic> map) {
-    var shouldShowFaceOutline = map["shouldShowFaceOutline"];
-    var isLiveStreaming = map["isLiveStreaming"];
-    var shouldAutoStartRecording = map["shouldAutoStartRecording"];
+    var shouldShowFaceOutline = (map["shouldShowFaceOutline"] is bool)
+        ? map["shouldShowFaceOutline"]
+        : map["shouldShowFaceOutline"] == 1;
+    var isLiveStreaming = (map["isLiveStreaming"] is bool)
+        ? map["isLiveStreaming"]
+        : map["isLiveStreaming"] == 1;
+    var shouldAutoStartRecording = (map["shouldAutoStartRecording"] is bool)
+        ? map["shouldAutoStartRecording"]
+        : map["shouldAutoStartRecording"] == 1;
     var startDelay = map["startDelay"];
-    var blurMode = map["blurMode"];
-    var shouldSendImmediately = map["shouldSendImmediately"];
-    var shouldDisableCameraSwitch = map["shouldDisableCameraSwitch"];
+    var blurMode = (map["blurMode"] is bool)
+        ? map["blurMode"]
+        : map["blurMode"] == 1;
+    var shouldSendImmediately = (map["shouldSendImmediately"] is bool)
+        ? map["shouldSendImmediately"]
+        : map["shouldSendImmediately"] == 1;
+    var shouldDisableCameraSwitch = (map["shouldDisableCameraSwitch"] is bool)
+        ? map["shouldDisableCameraSwitch"]
+        : map["shouldDisableCameraSwitch"] == 1;
     var videoQuality = map["videoQuality"];
     var facing = map["facing"];
     var maxDuration = map["maxDuration"];
-    var shouldEnableCoverShot = map["shouldEnableCoverShot"];
-    var shouldConfirmStopRecording = map["shouldConfirmStopRecording"];
+    var shouldEnableCoverShot = (map["shouldEnableCoverShot"] is bool)
+        ? map["shouldEnableCoverShot"]
+        : map["shouldEnableCoverShot"] == 1;
+    var shouldConfirmStopRecording = (map["shouldConfirmStopRecording"] is bool)
+        ? map["shouldConfirmStopRecording"]
+        : map["shouldConfirmStopRecording"] == 1;
     var stopRecordingConfirmationDialogConfig =
         map["stopRecordingConfirmationDialogConfig"];
-    var isPausedMode = map["isPausedMode"];
+    var isPausedMode = (map["isPausedMode"] is bool)
+        ? map["isPausedMode"]
+        : map["isPausedMode"] == 1;
     return RecorderConfig(
       shouldShowFaceOutline: shouldShowFaceOutline,
       isLiveStreaming: isLiveStreaming,

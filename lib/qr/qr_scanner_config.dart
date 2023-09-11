@@ -7,7 +7,10 @@ class QrScannerConfig extends BaseConfig {
   QrScannerEventListener? eventsListener;
 
   static QrScannerConfig convertFromMap(Map<String, dynamic> map) {
-    var shouldCloseAfterSuccessfulScan = map["shouldCloseAfterSuccessfulScan"];
+    var shouldCloseAfterSuccessfulScan =
+        (map["shouldCloseAfterSuccessfulScan"] is bool)
+            ? map["shouldCloseAfterSuccessfulScan"]
+            : map["shouldCloseAfterSuccessfulScan"] == 1;
     return QrScannerConfig(
       shouldCloseAfterSuccessfulScan: shouldCloseAfterSuccessfulScan,
     );

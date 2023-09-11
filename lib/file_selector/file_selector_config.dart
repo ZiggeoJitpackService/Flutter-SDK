@@ -31,7 +31,9 @@ class FileSelectorConfig extends BaseConfig {
 
   static FileSelectorConfig convertFromMap(Map<String, dynamic> map) {
     var shouldAllowMultipleSelection =
-        map["shouldAllowMultipleSelection"] ?? false;
+    (map["shouldAllowMultipleSelection"] is bool)
+        ? map["shouldAllowMultipleSelection"]
+        : map["shouldAllowMultipleSelection"] == 1;
     var mediaType = map["mediaType"];
 
     switch (map["mediaType"].toString()) {

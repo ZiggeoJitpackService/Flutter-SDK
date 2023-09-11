@@ -39,8 +39,7 @@ class _AuthScreenState extends State<AuthScreen> {
       }
     } else {
       _ziggeo
-          ?.startQrScanner(
-              _ziggeo?.qrScannerConfig?.shouldCloseAfterSuccessfulScan)
+          ?.startQrScanner(true)
           .then(
         (value) {
           //need for ios

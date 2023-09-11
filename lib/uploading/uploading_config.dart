@@ -33,9 +33,13 @@ class UploadingConfig extends BaseConfig {
   });
 
   UploadingConfig convertFromMap(Map<String, dynamic> map) {
-    shouldUseWifiOnly = map["shouldUseWifiOnly"];
+    shouldUseWifiOnly = (map["shouldUseWifiOnly"] is bool)
+        ? map["shouldUseWifiOnly"]
+        : map["shouldUseWifiOnly"] == 1;
     syncInterval = map["syncInterval"];
-    shouldTurnOffUploader = map["shouldTurnOffUploader"];
+    shouldTurnOffUploader = (map["shouldTurnOffUploader"] is bool)
+        ? map["shouldTurnOffUploader"]
+        : map["shouldTurnOffUploader"] == 1;
     lostConnectionAction = map["lostConnectionAction"];
     return UploadingConfig(
       shouldUseWifiOnly: shouldUseWifiOnly,

@@ -157,40 +157,39 @@ class _MyHomePageState extends State<MyHomePage> {
       shouldAllowMultipleSelection: shouldAllowMultipleSelection,
       mediaType: mediaType,
     );
-    if (Platform.isAndroid) {
-      var _shouldAllowMultipleSelectionTest =
-          (await widget.ziggeo.getFileSelectorConfig())
-              ?.shouldAllowMultipleSelection;
-      var _mediaTypeTest =
-          (await widget.ziggeo.getFileSelectorConfig())?.mediaType;
 
-      setState(() {
-        _shouldAllowMultipleSelection = _shouldAllowMultipleSelectionTest;
-        _mediaType = _mediaTypeTest;
-      });
-      // test uploading config
-      widget.ziggeo.uploadingConfig = UploadingConfig(
-        syncInterval: syncInterval,
-        shouldUseWifiOnly: shouldUseWifiOnly,
-        shouldTurnOffUploader: shouldTurnOffUploader,
-        lostConnectionAction: lostConnectionAction,
-      );
-      var _syncIntervalTest =
-          (await widget.ziggeo.getUploadingConfig())?.syncInterval;
-      var _shouldUseWifiOnlyTest =
-          (await widget.ziggeo.getUploadingConfig())?.shouldUseWifiOnly;
-      var _shouldTurnOffUploaderTest =
-          (await widget.ziggeo.getUploadingConfig())?.shouldTurnOffUploader;
-      var _lostConnectionActionTest =
-          (await widget.ziggeo.getUploadingConfig())?.lostConnectionAction;
+    var _shouldAllowMultipleSelectionTest =
+        (await widget.ziggeo.getFileSelectorConfig())
+            ?.shouldAllowMultipleSelection;
+    var _mediaTypeTest =
+        (await widget.ziggeo.getFileSelectorConfig())?.mediaType;
 
-      setState(() {
-        _syncInterval = _syncIntervalTest;
-        _shouldUseWifiOnly = _shouldUseWifiOnlyTest;
-        _shouldTurnOffUploader = _shouldTurnOffUploaderTest;
-        _lostConnectionAction = _lostConnectionActionTest;
-      });
-    }
+    setState(() {
+      _shouldAllowMultipleSelection = _shouldAllowMultipleSelectionTest;
+      _mediaType = _mediaTypeTest;
+    });
+    // test uploading config
+    widget.ziggeo.uploadingConfig = UploadingConfig(
+      syncInterval: syncInterval,
+      shouldUseWifiOnly: shouldUseWifiOnly,
+      shouldTurnOffUploader: shouldTurnOffUploader,
+      lostConnectionAction: lostConnectionAction,
+    );
+    var _syncIntervalTest =
+        (await widget.ziggeo.getUploadingConfig())?.syncInterval;
+    var _shouldUseWifiOnlyTest =
+        (await widget.ziggeo.getUploadingConfig())?.shouldUseWifiOnly;
+    var _shouldTurnOffUploaderTest =
+        (await widget.ziggeo.getUploadingConfig())?.shouldTurnOffUploader;
+    var _lostConnectionActionTest =
+        (await widget.ziggeo.getUploadingConfig())?.lostConnectionAction;
+
+    setState(() {
+      _syncInterval = _syncIntervalTest;
+      _shouldUseWifiOnly = _shouldUseWifiOnlyTest;
+      _shouldTurnOffUploader = _shouldTurnOffUploaderTest;
+      _lostConnectionAction = _lostConnectionActionTest;
+    });
 
     //test qrScanner config
     widget.ziggeo.qrScannerConfig = QrScannerConfig(
@@ -225,29 +224,21 @@ class _MyHomePageState extends State<MyHomePage> {
           posBtnText: posBtnText,
           negBtnText: negBtnText,
         ));
-    var _isLiveStreamingTest =
-        (await widget.ziggeo.getRecorderConfig())?.isLiveStreaming;
-    var _shouldShowFaceOutlineTest =
-        (await widget.ziggeo.getRecorderConfig())?.shouldShowFaceOutline;
-    var _shouldAutoStartRecordingTest =
-        (await widget.ziggeo.getRecorderConfig())?.shouldAutoStartRecording;
-    var _startDelayTest = (await widget.ziggeo.getRecorderConfig())?.startDelay;
-    var _blurModeTest = (await widget.ziggeo.getRecorderConfig())?.blurMode;
-    var _shouldSendImmediatelyTest =
-        (await widget.ziggeo.getRecorderConfig())?.shouldSendImmediately;
-    var _shouldDisableCameraSwitchTest =
-        (await widget.ziggeo.getRecorderConfig())?.shouldDisableCameraSwitch;
-    var _videoQualityTest =
-        (await widget.ziggeo.getRecorderConfig())?.videoQuality;
-    var _facingTest = (await widget.ziggeo.getRecorderConfig())?.facing;
-    var _maxDurationRecTest =
-        (await widget.ziggeo.getRecorderConfig())?.maxDuration;
-    var _shouldEnableCoverShotTest =
-        (await widget.ziggeo.getRecorderConfig())?.shouldEnableCoverShot;
+    var videoConfig = (await widget.ziggeo.getRecorderConfig())!;
+    var _isLiveStreamingTest = videoConfig.isLiveStreaming;
+    var _shouldShowFaceOutlineTest = videoConfig.shouldShowFaceOutline;
+    var _shouldAutoStartRecordingTest = videoConfig.shouldAutoStartRecording;
+    var _startDelayTest = videoConfig.startDelay;
+    var _blurModeTest = videoConfig.blurMode;
+    var _shouldSendImmediatelyTest = videoConfig.shouldSendImmediately;
+    var _shouldDisableCameraSwitchTest = videoConfig.shouldDisableCameraSwitch;
+    var _videoQualityTest = videoConfig.videoQuality;
+    var _facingTest = videoConfig.facing;
+    var _maxDurationRecTest = videoConfig.maxDuration;
+    var _shouldEnableCoverShotTest = videoConfig.shouldEnableCoverShot;
     var _shouldConfirmStopRecordingTest =
-        (await widget.ziggeo.getRecorderConfig())?.shouldConfirmStopRecording;
-    var _isPausedModeTest =
-        (await widget.ziggeo.getRecorderConfig())?.isPausedMode;
+        videoConfig.shouldConfirmStopRecording;
+    var _isPausedModeTest = videoConfig.isPausedMode;
 
     setState(() {
       _shouldShowFaceOutline = _shouldShowFaceOutlineTest;
@@ -291,46 +282,48 @@ class _MyHomePageState extends State<MyHomePage> {
         _posBtnText = _posBtnTextTest;
         _negBtnText = _negBtnTextTest;
       });
-    }
-    //test player style
-    widget.ziggeo.playerStyle = PlayerStyle(
-      controllerStyle: controllerStyle,
-      textColor: textColor,
-      unplayedColor: unplayedColor,
-      playedColor: playedColor,
-      bufferedColor: bufferedColor,
-      tintColor: tintColor,
-      muteOffImageDrawable: muteOffImageDrawable,
-      muteOnImageDrawable: muteOnImageDrawable,
-    );
 
-    var _controllerStyleTest =
-        (await widget.ziggeo.getPlayerStyle())?.controllerStyle;
-    var _textColorTest = (await widget.ziggeo.getPlayerStyle())?.textColor;
-    var _unplayedColorTest =
-        (await widget.ziggeo.getPlayerStyle())?.unplayedColor;
-    var _playedColorTest = (await widget.ziggeo.getPlayerStyle())?.playedColor;
-    int? _bufferedColorTest = 123;
-    if (Platform.isAndroid) {
-      _bufferedColorTest =
-          (await widget.ziggeo.getPlayerStyle())?.bufferedColor;
-    }
-    var _tintColorTest = (await widget.ziggeo.getPlayerStyle())?.tintColor;
-    var _muteOffImageDrawableTest =
-        (await widget.ziggeo.getPlayerStyle())?.muteOffImageDrawable;
-    var _muteOnImageDrawableTest =
-        (await widget.ziggeo.getPlayerStyle())?.muteOnImageDrawable;
+      //test player style
+      widget.ziggeo.playerStyle = PlayerStyle(
+        controllerStyle: controllerStyle,
+        textColor: textColor,
+        unplayedColor: unplayedColor,
+        playedColor: playedColor,
+        bufferedColor: bufferedColor,
+        tintColor: tintColor,
+        muteOffImageDrawable: muteOffImageDrawable,
+        muteOnImageDrawable: muteOnImageDrawable,
+      );
 
-    setState(() {
-      _controllerStyle = _controllerStyleTest;
-      _textColor = _textColorTest;
-      _unplayedColor = _unplayedColorTest;
-      _playedColor = _playedColorTest;
-      _bufferedColor = _bufferedColorTest;
-      _tintColor = _tintColorTest;
-      _muteOffImageDrawable = _muteOffImageDrawableTest;
-      _muteOnImageDrawable = _muteOnImageDrawableTest;
-    });
+      var _controllerStyleTest =
+          (await widget.ziggeo.getPlayerStyle())?.controllerStyle;
+      var _textColorTest = (await widget.ziggeo.getPlayerStyle())?.textColor;
+      var _unplayedColorTest =
+          (await widget.ziggeo.getPlayerStyle())?.unplayedColor;
+      var _playedColorTest =
+          (await widget.ziggeo.getPlayerStyle())?.playedColor;
+      int? _bufferedColorTest = 123;
+      if (Platform.isAndroid) {
+        _bufferedColorTest =
+            (await widget.ziggeo.getPlayerStyle())?.bufferedColor;
+      }
+      var _tintColorTest = (await widget.ziggeo.getPlayerStyle())?.tintColor;
+      var _muteOffImageDrawableTest =
+          (await widget.ziggeo.getPlayerStyle())?.muteOffImageDrawable;
+      var _muteOnImageDrawableTest =
+          (await widget.ziggeo.getPlayerStyle())?.muteOnImageDrawable;
+
+      setState(() {
+        _controllerStyle = _controllerStyleTest;
+        _textColor = _textColorTest;
+        _unplayedColor = _unplayedColorTest;
+        _playedColor = _playedColorTest;
+        _bufferedColor = _bufferedColorTest;
+        _tintColor = _tintColorTest;
+        _muteOffImageDrawable = _muteOffImageDrawableTest;
+        _muteOnImageDrawable = _muteOnImageDrawableTest;
+      });
+    }
   }
 
   @override
