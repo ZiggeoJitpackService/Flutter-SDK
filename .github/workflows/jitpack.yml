@@ -49,7 +49,7 @@ jobs:
           channel: stable
           architecture: x64
       - name: Add ios depends
-        run: pub get
+        run: flutter pub get
       - uses: futureware-tech/simulator-action@v2
         with:
           model: 'iPhone 11'
