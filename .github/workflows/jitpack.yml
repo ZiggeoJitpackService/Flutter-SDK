@@ -69,7 +69,7 @@ jobs:
 
   publishing_demo:
     runs-on: macos-latest
-    needs: run_tests_android, run_tests_ios
+    needs: [run_tests_android, run_tests_ios]
     defaults:
       run:
         working-directory: ./example
