@@ -407,7 +407,7 @@ class _RecorderSettingsScreenState extends State<RecorderSettingsScreen> {
     config.shouldConfirmStopRecording = _shouldConfirmStopRecording;
     config.isPausedMode = _isPausedMode;
     if (Platform.isAndroid) {
-      config.stopRecordingConfirmationDialogConfig =
+      ziggeo.stopRecordingConfirmationDialogConfig =
           StopRecordingConfirmationDialogConfig(
         titleText: _titleText,
         mesText: _mesText,

@@ -1,3 +1,6 @@
+## 0.2.12
+----------------------------
+* Added ios paused video recorder, streaming video.
 ## 0.2.11
 ----------------------------
 * Fixed different issues.

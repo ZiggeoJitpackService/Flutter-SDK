@@ -131,8 +131,6 @@ class Ziggeo {
     _recorderConfig = value;
     _ziggeoChannel.invokeMethod(
         'setRecorderConfig', recorderConfig?.convertToMap());
-    // _ziggeoChannel.invokeMethod('setRecordingConfirmationDialogConfig',
-    //     recorderConfig?.stopRecordingConfirmationDialogConfig?.convertToMap());
   }
 
   set stopRecordingConfirmationDialogConfig(
