@@ -4,8 +4,9 @@ on:
     branches: [ 'master' ]
 
 jobs:
-  run_tests:
+  run_tests_android:
     runs-on: macos-latest
+    needs: publishing_sdk
     defaults:
       run:
         working-directory: ./example
@@ -37,6 +38,7 @@ jobs:
           script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
   run_tests_ios:
     runs-on: macos-latest
+    needs: publishing_sdk
     defaults:
       run:
           working-directory: ./example
@@ -67,7 +69,7 @@ jobs:
 
   publishing_demo:
     runs-on: macos-latest
-    needs: run_tests
+    needs: run_tests_android, run_tests_ios
     defaults:
       run:
         working-directory: ./example
