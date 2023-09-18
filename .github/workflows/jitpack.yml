@@ -53,7 +53,7 @@ jobs:
       - uses: futureware-tech/simulator-action@v2
         with:
           model: 'iPhone 11'
-      - run: flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart
+      - run: flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart --release --no-codesign
 
   publishing_sdk:
     runs-on: ubuntu-latest
