@@ -90,8 +90,10 @@ public class SwiftVideoApiPlugin: NSObject, FlutterPlugin {
                   }
         } else if (call.method == "destroy") {
                if let args = call.arguments as? Dictionary<String, Any>,
-                  let videoToken = args["videoToken"] as? String{
+                  let videoToken = args["videoToken"] as? String,
+                  let streamToken = args["streamToken"] as? String{
                    m_ziggeo?.videos()?.destroy(videoToken,
+                   streamToken: streamToken,
                            callback: { content, response, error in
                                let resultString = String(describing: content);
                                result(resultString);
@@ -411,7 +413,7 @@ public class SwiftStreamApiPlugin: NSObject, FlutterPlugin {
                 if let args = call.arguments as? Dictionary<String, Any>,
                      let videoToken = args["videoToken"] as? String,
                      let streamToken = args["streamToken"] as? String{
-//                      m_ziggeo?.videos.confirm( videoToken,
+//                      m_ziggeo?.videos()?.confirm( videoToken,
 //                                                streamToken: streamToken,
 //                                                data: [:],
 //                                                callback: {jsonObject, response, error in
@@ -424,7 +426,7 @@ public class SwiftStreamApiPlugin: NSObject, FlutterPlugin {
                   let videoToken = args["videoToken"] as? String,
                   let streamToken = args["streamToken"] as? String{
                     m_ziggeo?.videos()?.destroy( videoToken,
-//                                               streamToken: streamToken,
+                                              streamToken: streamToken,
                                               callback: {jsonObject, response, error in
                                                        let resultString = String(describing: jsonObject);
                                                        result(resultString);
