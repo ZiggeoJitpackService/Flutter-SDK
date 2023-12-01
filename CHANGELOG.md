@@ -1,3 +1,6 @@
+## 0.2.13
+----------------------------
+* Added ios version up.
 ## 0.2.12
 ----------------------------
 * Added ios paused video recorder, streaming video.
